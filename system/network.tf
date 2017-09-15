@@ -11,6 +11,12 @@ resource "datadog_monitor" "network_incoming" {
   }
 
   renotify_interval = "${var.renotify_interval_mins}"
+  new_host_delay    = "${var.new_host_delay}"
+  notify_no_data    = "${var.notify_no_data}"
+
+  silenced {
+    "*" = "${var.active}"
+  }
 
   tags = ["${module.label.tags}"]
 }
@@ -28,6 +34,12 @@ resource "datadog_monitor" "network_outgoing" {
   }
 
   renotify_interval = "${var.renotify_interval_mins}"
+  new_host_delay    = "${var.new_host_delay}"
+  notify_no_data    = "${var.notify_no_data}"
+
+  silenced {
+    "*" = "${var.active}"
+  }
 
   tags = ["${module.label.tags}"]
 }
@@ -45,6 +57,12 @@ resource "datadog_monitor" "network_incoming_packets" {
   }
 
   renotify_interval = "${var.renotify_interval_mins}"
+  new_host_delay    = "${var.new_host_delay}"
+  notify_no_data    = "${var.notify_no_data}"
+
+  silenced {
+    "*" = "${var.active}"
+  }
 
   tags = ["${module.label.tags}"]
 }
@@ -62,6 +80,12 @@ resource "datadog_monitor" "network_outgoing_packets" {
   }
 
   renotify_interval = "${var.renotify_interval_mins}"
+  new_host_delay    = "${var.new_host_delay}"
+  notify_no_data    = "${var.notify_no_data}"
+
+  silenced {
+    "*" = "${var.active}"
+  }
 
   tags = ["${module.label.tags}"]
 }

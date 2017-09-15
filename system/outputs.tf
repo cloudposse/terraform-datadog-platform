@@ -47,7 +47,7 @@ output "network_incoming_bytes" {
 }
 
 output "network_outgoing_bytes" {
-  value = "${datadog_monitor.network_outgoing_bytes.id}"
+  value = "${datadog_monitor.network_outgoing.id}"
 }
 
 output "network_incoming_packets_per_sec" {

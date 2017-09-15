@@ -28,20 +28,28 @@ variable "alert_type" {
 
 variable "instance" {}
 
-variable "la_time" {
+variable "notify_no_data" {
+  default = false
+}
+
+variable "new_host_delay" {
+  default = "300"
+}
+
+variable "load_average_time" {
   description = "Possible value is: any integer with m/h (eg minutes, hours)"
   default     = "10m"
 }
 
-variable "la_ok_state_value" {
+variable "load_average_ok_state_value" {
   default = "0"
 }
 
-variable "la_warning_state_value" {
+variable "load_average_warning_state_value" {
   default = "1"
 }
 
-variable "la_critical_state_value" {
+variable "load_average_critical_state_value" {
   default = "2"
 }
 
@@ -287,4 +295,8 @@ variable "io_percent_warning_state_value" {
 variable "io_percent_critical_state_value" {
   description = "Percent of time spent writing to disk"
   default     = "80"
+}
+
+variable "active" {
+  default = "1"
 }
