@@ -1,7 +1,7 @@
 resource "datadog_monitor" "swap_free" {
   name    = "Insufficient of free swap space ${module.label.id}"
   type    = "${var.alert_type}"
-  message = "Insufficient of free swap space ${var.swap_time} on host: ${data.aws_instance.monitored.instance_id} with IP: ${data.aws_instance.monitored.instance_id.public_ip}"
+  message = "Insufficient of free swap space on host: ${data.aws_instance.monitored.instance_id} with IP: ${data.aws_instance.monitored.public_ip}"
   query   = "avg(last_${var.swap_time}):avg:system.swap.free{host:${data.aws_instance.monitored.instance_id}} by {host} < ${var.swap_critical_state_value}"
 
   thresholds {
@@ -18,5 +18,5 @@ resource "datadog_monitor" "swap_free" {
     "*" = "${var.active}"
   }
 
-  tags = ["${module.label.tags}"]
+  tags = ["${module.label.id}"]
 }

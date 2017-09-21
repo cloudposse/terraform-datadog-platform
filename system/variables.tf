@@ -277,7 +277,7 @@ variable "read_percent_critical_state_value" {
   default     = "80"
 }
 
-variable "io_percent_time" {
+variable "cpu_io_percent_time" {
   description = "Possible value is: any integer with m/h (eg minutes, hours)"
   default     = "1h"
 }

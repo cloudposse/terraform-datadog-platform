@@ -1,7 +1,7 @@
 resource "datadog_monitor" "fs_free_inodes" {
   name    = "Insufficient of count free inodes ${module.label.id}"
   type    = "${var.alert_type}"
-  message = "Insufficient of count free inodes ${var.free_inodes_time} on host: ${data.aws_instance.monitored.instance_id} with IP: ${data.aws_instance.monitored.instance_id.public_ip}"
+  message = "Insufficient of count free inodes on host: ${data.aws_instance.monitored.instance_id} with IP: ${data.aws_instance.monitored.public_ip}"
   query   = "avg(last_${var.free_inodes_time}):avg:system.fs.inodes.free{host:${data.aws_instance.monitored.instance_id}} by {device,host} < ${var.free_inodes_critical_state_value}"
 
   thresholds {
@@ -18,13 +18,13 @@ resource "datadog_monitor" "fs_free_inodes" {
     "*" = "${var.active}"
   }
 
-  tags = ["${module.label.tags}"]
+  tags = ["${module.label.id}"]
 }
 
 resource "datadog_monitor" "disk_freespace" {
   name    = "Insufficient of free disk space ${module.label.id}"
   type    = "${var.alert_type}"
-  message = "Insufficient of free disk space ${var.freespace_bytes_time} on host: ${data.aws_instance.monitored.instance_id} with IP: ${data.aws_instance.monitored.instance_id.public_ip}"
+  message = "Insufficient of free disk space on host: ${data.aws_instance.monitored.instance_id} with IP: ${data.aws_instance.monitored.public_ip}"
   query   = "avg(last_${var.freespace_bytes_time}):avg:system.disk.free{host:${data.aws_instance.monitored.instance_id}} by {device,host} < ${var.freespace_bytes_critical_state_value}"
 
   thresholds {
@@ -41,5 +41,5 @@ resource "datadog_monitor" "disk_freespace" {
     "*" = "${var.active}"
   }
 
-  tags = ["${module.label.tags}"]
+  tags = ["${module.label.id}"]
 }
