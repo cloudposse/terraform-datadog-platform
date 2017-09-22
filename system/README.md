@@ -106,3 +106,8 @@ module "monitors" {
 | `network_outgoing_bytes_id`           | ID of the Datadog monitor for outgoing bytes             |
 | `network_outgoing_packets_per_sec_id` | ID of the Datadog monitor for outgoing p/s               |
 | `swap_free_id`                        | ID of the Datadog monitor for count of free swap bytes   |
+
+
+# License
+
+Apache 2 Licensed. See LICENSE for full details.
