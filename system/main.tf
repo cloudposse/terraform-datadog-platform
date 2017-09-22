@@ -14,5 +14,5 @@ provider "datadog" {
 }
 
 data "aws_instance" "monitored" {
-  instance_id = "${var.instance}"
+  instance_id = "${var.instance_id}"
 }

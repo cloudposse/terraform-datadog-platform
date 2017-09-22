@@ -1,1 +1,1 @@
-# tf_datadog
+# terraform-datadog-monitor

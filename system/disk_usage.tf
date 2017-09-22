@@ -1,13 +1,14 @@
-resource "datadog_monitor" "fs_free_inodes" {
+resource "datadog_monitor" "fs_inodes_free" {
+  count   = "${var.monitor_enabled}"
   name    = "Insufficient of count free inodes ${module.label.id}"
   type    = "${var.alert_type}"
   message = "Insufficient of count free inodes on host: ${data.aws_instance.monitored.instance_id} with IP: ${data.aws_instance.monitored.public_ip}"
-  query   = "avg(last_${var.free_inodes_time}):avg:system.fs.inodes.free{host:${data.aws_instance.monitored.instance_id}} by {device,host} < ${var.free_inodes_critical_state_value}"
+  query   = "avg(last_${var.fs_inodes_free_time}):avg:system.fs.inodes.free{host:${data.aws_instance.monitored.instance_id}} by {device,host} < ${var.fs_inodes_free_critical_threshold_value}"
 
   thresholds {
-    ok       = "${var.free_inodes_ok_state_value}"
-    warning  = "${var.free_inodes_warning_state_value}"
-    critical = "${var.free_inodes_critical_state_value}"
+    ok       = "${var.fs_inodes_free_ok_threshold_value}"
+    warning  = "${var.fs_inodes_free_warning_threshold_value}"
+    critical = "${var.fs_inodes_free_critical_threshold_value}"
   }
 
   renotify_interval = "${var.renotify_interval_mins}"
@@ -15,22 +16,23 @@ resource "datadog_monitor" "fs_free_inodes" {
   notify_no_data    = "${var.notify_no_data}"
 
   silenced {
-    "*" = "${var.active}"
+    "*" = "${var.monitor_silenced}"
   }
 
   tags = ["${module.label.id}"]
 }
 
-resource "datadog_monitor" "disk_freespace" {
+resource "datadog_monitor" "disk_free" {
+  count   = "${var.monitor_enabled}"
   name    = "Insufficient of free disk space ${module.label.id}"
   type    = "${var.alert_type}"
   message = "Insufficient of free disk space on host: ${data.aws_instance.monitored.instance_id} with IP: ${data.aws_instance.monitored.public_ip}"
-  query   = "avg(last_${var.freespace_bytes_time}):avg:system.disk.free{host:${data.aws_instance.monitored.instance_id}} by {device,host} < ${var.freespace_bytes_critical_state_value}"
+  query   = "avg(last_${var.disk_free_time}):avg:system.disk.free{host:${data.aws_instance.monitored.instance_id}} by {device,host} < ${var.disk_free_critical_threshold_value}"
 
   thresholds {
-    ok       = "${var.freespace_bytes_ok_state_value}"
-    warning  = "${var.freespace_bytes_warning_state_value}"
-    critical = "${var.freespace_bytes_critical_state_value}"
+    ok       = "${var.disk_free_ok_threshold_value}"
+    warning  = "${var.disk_free_warning_threshold_value}"
+    critical = "${var.disk_free_critical_threshold_value}"
   }
 
   renotify_interval = "${var.renotify_interval_mins}"
@@ -38,7 +40,7 @@ resource "datadog_monitor" "disk_freespace" {
   notify_no_data    = "${var.notify_no_data}"
 
   silenced {
-    "*" = "${var.active}"
+    "*" = "${var.monitor_silenced}"
   }
 
   tags = ["${module.label.id}"]
