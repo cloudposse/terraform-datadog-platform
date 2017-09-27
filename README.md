@@ -1,6 +1,6 @@
 # terraform-datadog-monitor
 
-A Terraform module which contains a number of common configurations of monitors in Datadog.
+A Terraform module which contains a number of common configurations of monitors for Datadog.
 
 
 ## Datadog monitors catalog
