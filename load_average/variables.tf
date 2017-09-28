@@ -49,10 +49,6 @@ variable "alert_type" {
   default     = "metric alert"
 }
 
-variable "instance_id" {
-  description = "AWS EC2 instance ID."
-}
-
 variable "notify_no_data" {
   description = "A boolean indicating whether this monitor will notify when data stops reporting."
   default     = "false"
@@ -72,7 +68,7 @@ variable "load_average" {
   type = "map"
 
   default = {
-    time               = "10m"
+    period             = "10m"
     ok_threshold       = "1"
     warning_threshold  = "5"
     critical_threshold = "10"
