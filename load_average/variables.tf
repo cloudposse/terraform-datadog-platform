@@ -41,7 +41,7 @@ variable "monitor_enabled" {
 
 variable "monitor_silenced" {
   description = "Each scope will be muted until the given POSIX timestamp or forever if the value is 0."
-  default     = "0"
+  default     = "1"
 }
 
 variable "alert_type" {
