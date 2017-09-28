@@ -5,16 +5,16 @@ A Terraform module which contains a number of common configurations of monitors 
 
 ## Datadog monitors catalog
 
-- [system](https://github.com/cloudposse/terraform-datadog-monitor/tree/master/system)
-    - Terraform module to provision Standard System Monitors (cpu, memory, swap, io, etc) in Datadog.
+- [load_average](https://github.com/cloudposse/terraform-datadog-monitor/tree/master/load_average)
+    - Terraform module to provision Load Average Monitors in Datadog.
 
 ## Usage
 
-- [system](https://github.com/cloudposse/terraform-datadog-monitor/tree/master/system)
+- [load_average](https://github.com/cloudposse/terraform-datadog-monitor/tree/master/load_average)
 
 ```terraform
 module "monitors" {
-  source          = "https://github.com/cloudposse/terraform-datadog-monitor//system"
+  source          = "https://github.com/cloudposse/terraform-datadog-monitor//load_average"
   namespace       = "${var.namespace}"
   stage           = "${var.stage}"
   name            = "${var.name}"

@@ -11,7 +11,7 @@ resource "datadog_monitor" "load_average_1" {
     critical = "${var.load_average["critical_threshold"]}"
   }
 
-  renotify_interval = "${var.renotify_interval_mins}"
+  renotify_interval = "${var.renotify_interval}"
   new_host_delay    = "${var.new_host_delay}"
   notify_no_data    = "${var.notify_no_data}"
 
@@ -19,7 +19,7 @@ resource "datadog_monitor" "load_average_1" {
     "*" = "${var.monitor_silenced}"
   }
 
-  tags = ["${module.label.id}"]
+  tags = "${var.datadog_monitor_tags}"
 }
 
 resource "datadog_monitor" "load_average_5" {
@@ -35,7 +35,7 @@ resource "datadog_monitor" "load_average_5" {
     critical = "${var.load_average["critical_threshold"]}"
   }
 
-  renotify_interval = "${var.renotify_interval_mins}"
+  renotify_interval = "${var.renotify_interval}"
   new_host_delay    = "${var.new_host_delay}"
   notify_no_data    = "${var.notify_no_data}"
 
@@ -43,7 +43,7 @@ resource "datadog_monitor" "load_average_5" {
     "*" = "${var.monitor_silenced}"
   }
 
-  tags = ["${module.label.id}"]
+  tags = "${var.datadog_monitor_tags}"
 }
 
 resource "datadog_monitor" "load_average_15" {
@@ -59,7 +59,7 @@ resource "datadog_monitor" "load_average_15" {
     critical = "${var.load_average["critical_threshold"]}"
   }
 
-  renotify_interval = "${var.renotify_interval_mins}"
+  renotify_interval = "${var.renotify_interval}"
   new_host_delay    = "${var.new_host_delay}"
   notify_no_data    = "${var.notify_no_data}"
 
@@ -67,5 +67,5 @@ resource "datadog_monitor" "load_average_15" {
     "*" = "${var.monitor_silenced}"
   }
 
-  tags = ["${module.label.id}"]
+  tags = "${var.datadog_monitor_tags}"
 }

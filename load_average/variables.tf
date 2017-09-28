@@ -63,7 +63,7 @@ variable "new_host_delay" {
   default     = "300"
 }
 
-variable "renotify_interval_mins" {
+variable "renotify_interval" {
   description = "The number of minutes after the last notification before a monitor will re-notify on the current status. It will only re-notify if it's not resolved."
   default     = "60"
 }
@@ -77,4 +77,8 @@ variable "load_average" {
     warning_threshold  = "5"
     critical_threshold = "10"
   }
+}
+
+variable "datadog_monitor_tags" {
+  default = ["system", "load_average"]
 }
