@@ -86,3 +86,8 @@ variable "datadog_monitor_selector" {
   type        = "list"
   default     = ["*"]
 }
+
+variable "notify" {
+  description = "Notification email, hipchat or slack user/channel"
+  default     = ""
+}
