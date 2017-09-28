@@ -3,7 +3,7 @@ resource "datadog_monitor" "load_average_1" {
   name    = "High load average 1 ${module.label.id}"
   type    = "${var.alert_type}"
   message = "High load average 1 last ${var.load_average["period"]} on host: {host.name} with IP: {host.ip}"
-  query   = "avg(last_${var.load_average["period"]}):avg:system.load.1{*} by {host} > ${var.load_average["critical_threshold"]}"
+  query   = "avg(last_${var.load_average["period"]}):avg:system.load.1{${join(",", compact(var.datadog_monitor_selector))}} by {host} > ${var.load_average["critical_threshold"]}"
 
   thresholds {
     ok       = "${var.load_average["ok_threshold"]}"
@@ -27,7 +27,7 @@ resource "datadog_monitor" "load_average_5" {
   name    = "High load average 5 ${module.label.id}"
   type    = "${var.alert_type}"
   message = "High load average 5 last ${var.load_average["period"]} on host: {host.name} with IP: {host.ip}"
-  query   = "avg(last_${var.load_average["period"]}):avg:system.load.5{*} by {host} > ${var.load_average["critical_threshold"]}"
+  query   = "avg(last_${var.load_average["period"]}):avg:system.load.5{${join(",", compact(var.datadog_monitor_selector))}} by {host} > ${var.load_average["critical_threshold"]}"
 
   thresholds {
     ok       = "${var.load_average["ok_threshold"]}"
@@ -51,7 +51,7 @@ resource "datadog_monitor" "load_average_15" {
   name    = "High load average 15 ${module.label.id}"
   type    = "${var.alert_type}"
   message = "High load average last 15 last ${var.load_average["period"]} on host: {host.name} with IP: {host.ip}"
-  query   = "avg(last_${var.load_average["period"]}):avg:system.load.15{*} by {host} > ${var.load_average["critical_threshold"]}"
+  query   = "avg(last_${var.load_average["period"]}):avg:system.load.15{${join(",", compact(var.datadog_monitor_selector))}} by {host} > ${var.load_average["critical_threshold"]}"
 
   thresholds {
     ok       = "${var.load_average["ok_threshold"]}"

@@ -76,5 +76,13 @@ variable "load_average" {
 }
 
 variable "datadog_monitor_tags" {
-  default = ["system", "load_average"]
+  description = "Configurable labels that can be applied to monitor"
+  type        = "list"
+  default     = ["system", "load_average"]
+}
+
+variable "datadog_monitor_selector" {
+  description = "Selector for enabling monitor for specific hosts, host tags"
+  type        = "list"
+  default     = ["*"]
 }
