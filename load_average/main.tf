@@ -1,7 +1,3 @@
-variable "datadog_api_key" {}
-
-variable "datadog_app_key" {}
-
 module "label" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.2.1"
   namespace  = "${var.namespace}"
