@@ -12,15 +12,30 @@ A Terraform module which contains a number of common configurations of monitors 
 
 - [load_average](https://github.com/cloudposse/terraform-datadog-monitor/tree/master/load_average)
 
+Create monitor for all hosts in Datadog:
+
 ```terraform
-module "monitors" {
+module "global_monitors" {
   source          = "https://github.com/cloudposse/terraform-datadog-monitor//load_average"
   namespace       = "${var.namespace}"
   stage           = "${var.stage}"
   name            = "${var.name}"
   datadog_api_key = "${var.datadog_api_key}"
   datadog_app_key = "${var.datadog_app_key}"
-  instance_id     = "${var.instance_id}"
+}
+```
+
+Create monitor for tagged hosts in Datadog:
+
+```terraform
+module "tagged_monitors" {
+  source          = "https://github.com/cloudposse/terraform-datadog-monitor//load_average"
+  namespace       = "${var.namespace}"
+  stage           = "${var.stage}"
+  name            = "${var.name}"
+  datadog_api_key = "${var.datadog_api_key}"
+  datadog_app_key = "${var.datadog_app_key}"
+  selector        = ["region:us-east-1"]
 }
 ```
 

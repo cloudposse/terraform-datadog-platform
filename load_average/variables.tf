@@ -28,15 +28,17 @@ variable "tags" {
 
 variable "datadog_api_key" {
   description = "Datadog API key. This can also be set via the DATADOG_API_KEY environment variable."
+  default     = ""
 }
 
 variable "datadog_app_key" {
   description = "Datadog APP key. This can also be set via the DATADOG_APP_KEY environment variable."
+  default     = ""
 }
 
 variable "monitor_enabled" {
   description = "State of monitor."
-  default     = true
+  default     = "true"
 }
 
 variable "monitor_silenced" {
@@ -64,15 +66,20 @@ variable "renotify_interval" {
   default     = "60"
 }
 
-variable "load_average" {
-  type = "map"
+variable "period" {
+  default = "10m"
+}
 
-  default = {
-    period             = "10m"
-    ok_threshold       = "1"
-    warning_threshold  = "5"
-    critical_threshold = "10"
-  }
+variable "ok_threshold" {
+  default = "1"
+}
+
+variable "warning_threshold" {
+  default = "5"
+}
+
+variable "critical_threshold" {
+  default = "10"
 }
 
 variable "datadog_monitor_tags" {
@@ -81,7 +88,7 @@ variable "datadog_monitor_tags" {
   default     = ["system", "load_average"]
 }
 
-variable "datadog_monitor_selector" {
+variable "selector" {
   description = "Selector for enabling monitor for specific hosts, host tags"
   type        = "list"
   default     = ["*"]
