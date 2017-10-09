@@ -98,3 +98,17 @@ variable "notify" {
   description = "Notification email, hipchat or slack user/channel"
   default     = ""
 }
+
+variable "escalation_notify" {
+  description = "Escalation notification email, hipchat or slack user/channel"
+  default     = ""
+}
+
+variable "group_by" {
+  default = "{host}"
+}
+
+variable "remediation" {
+  description = "Could be added a URL to internal documentation for instructions as to how to remediate"
+  default     = ""
+}
