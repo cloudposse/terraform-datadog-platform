@@ -71,15 +71,18 @@ variable "period" {
 }
 
 variable "ok_threshold" {
-  default = "1"
+  description = "Percent of CPU usage for ok threshold."
+  default     = "20"
 }
 
 variable "warning_threshold" {
-  default = "5"
+  description = "Percent of CPU usage for warning threshold."
+  default     = "50"
 }
 
 variable "critical_threshold" {
-  default = "10"
+  description = "Percent of CPU usage for cirtical threshold."
+  default     = "80"
 }
 
 variable "datadog_monitor_tags" {
