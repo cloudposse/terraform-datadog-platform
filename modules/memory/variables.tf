@@ -71,17 +71,17 @@ variable "period" {
 }
 
 variable "ok_threshold" {
-  description = "Count in bytes of swap  ok threshold."
+  description = "Count in bytes of memory  ok threshold."
   default     = "104857600"
 }
 
 variable "warning_threshold" {
-  description = "Count in bytes of swap for warning threshold."
+  description = "Count in bytes of memory for warning threshold."
   default     = "54857600"
 }
 
 variable "critical_threshold" {
-  description = "Count in bytes of swap for critical threshold."
+  description = "Count in bytes of memory for critical threshold."
   default     = "24857600"
 }
 

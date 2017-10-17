@@ -1,15 +1,15 @@
 resource "datadog_monitor" "memory_free" {
   count = "${var.monitor_enabled ? 1 : 0}"
-  name  = "Insufficient of free memory space ${module.label.id}"
+  name  = "Insufficient of free memory ${module.label.id}"
   type  = "${var.alert_type}"
 
   message = <<EOF
-  Insufficient of free memory space  ${var.period} on host {host.name} ({host.ip})
+  Insufficient of free memory ${var.period} on host {host.name} ({host.ip})
   ${var.remediation}
   ${var.notify}
   EOF
 
-  escalation_message = "Insufficient of free memory space  on host {host.name} ({host.ip}) hasn't been solved ${var.escalation_notify}"
+  escalation_message = "Insufficient of free memory on host {host.name} ({host.ip}) hasn't been solved ${var.escalation_notify}"
   query              = "avg(last_${var.period}):avg:system.mem.free{${join(",", compact(var.selector))}} by ${var.group_by} > ${var.critical_threshold}"
 
   thresholds {
