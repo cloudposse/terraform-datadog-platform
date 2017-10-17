@@ -5,18 +5,18 @@ A Terraform module which contains a number of common configurations of monitors 
 
 ## Datadog monitors catalog
 
-- [load_average](https://github.com/cloudposse/terraform-datadog-monitor/tree/master/load_average)
+- [load_average](https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average)
     - Terraform module to provision Load Average Monitors in Datadog.
 
 ## Usage
 
-- [load_average](https://github.com/cloudposse/terraform-datadog-monitor/tree/master/load_average)
+- [load_average](https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average)
 
 Create monitor for all hosts in Datadog:
 
 ```terraform
 module "global_monitors" {
-  source          = "https://github.com/cloudposse/terraform-datadog-monitor//load_average"
+  source          = "https://github.com/cloudposse/terraform-datadog-monitor//modules/load_average"
   namespace       = "${var.namespace}"
   stage           = "${var.stage}"
   name            = "${var.name}"
@@ -29,7 +29,7 @@ Create monitor for tagged hosts in Datadog:
 
 ```terraform
 module "tagged_monitors" {
-  source          = "https://github.com/cloudposse/terraform-datadog-monitor//load_average"
+  source          = "https://github.com/cloudposse/terraform-datadog-monitor//modules/load_average"
   namespace       = "${var.namespace}"
   stage           = "${var.stage}"
   name            = "${var.name}"
