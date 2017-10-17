@@ -1,15 +1,15 @@
 resource "datadog_monitor" "swap_free" {
   count = "${var.monitor_enabled ? 1 : 0}"
-  name  = "Insufficient of free swap space ${module.label.id}"
+  name  = "Insufficient of free swap ${module.label.id}"
   type  = "${var.alert_type}"
 
   message = <<EOF
-  Insufficient of free swap space  ${var.period} on host {host.name} ({host.ip})
+  Insufficient of free swap ${var.period} on host {host.name} ({host.ip})
   ${var.remediation}
   ${var.notify}
   EOF
 
-  escalation_message = "Insufficient of free swap space  on host {host.name} ({host.ip}) hasn't been solved ${var.escalation_notify}"
+  escalation_message = "Insufficient of free swap on host {host.name} ({host.ip}) hasn't been solved ${var.escalation_notify}"
   query              = "avg(last_${var.period}):avg:system.swap.free{${join(",", compact(var.selector))}} by ${var.group_by} > ${var.critical_threshold}"
 
   thresholds {
