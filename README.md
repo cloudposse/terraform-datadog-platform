@@ -1,6 +1,6 @@
 # terraform-datadog-monitor
 
-A Terraform module which contains a number of common configurations of monitors for Datadog.
+A Terraform module with a number of common configurations of monitors for Datadog.
 
 
 ## Datadog monitors catalog
@@ -14,7 +14,7 @@ A Terraform module which contains a number of common configurations of monitors 
 
 Create monitor for all hosts in Datadog:
 
-```terraform
+```hcl
 module "global_monitors" {
   source          = "https://github.com/cloudposse/terraform-datadog-monitor//modules/load_average"
   namespace       = "${var.namespace}"
@@ -27,7 +27,7 @@ module "global_monitors" {
 
 Create monitor for tagged hosts in Datadog:
 
-```terraform
+```hcl
 module "tagged_monitors" {
   source          = "https://github.com/cloudposse/terraform-datadog-monitor//modules/load_average"
   namespace       = "${var.namespace}"
@@ -38,6 +38,7 @@ module "tagged_monitors" {
   selector        = ["region:us-east-1"]
 }
 ```
+
 
 ## License
 
