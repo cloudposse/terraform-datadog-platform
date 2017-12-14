@@ -4,8 +4,7 @@ A Terraform module repository which contains a number of common configurations (
 
 ## Datadog Monitors Catalogs
 
-- [load_average](https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average)
-    - Terraform module to provision Load Average Monitors in Datadog
+- [load_average](https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average) - Terraform module to provision Load Average Monitors in Datadog
 
 ## Usage
 
