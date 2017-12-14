@@ -2,43 +2,46 @@
 
 A Terraform module repository which contains a number of common configurations ("submodules") of Datadog monitors.
 
-## Datadog Monitors Catalog
+## Datadog Monitors Catalogs
 
 - [load_average](https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average)
-    - Terraform module to provision Load Average Monitors in Datadog.
+    - Terraform module to provision Load Average Monitors in Datadog
 
 ## Usage
 
 - [load_average](https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average)
 
-Create monitor for all hosts in Datadog:
+Create Load Average monitor for all hosts in Datadog:
 
 ```hcl
 module "global_monitors" {
-  source          = "https://github.com/cloudposse/terraform-datadog-monitor//modules/load_average"
-  namespace       = "${var.namespace}"
-  stage           = "${var.stage}"
-  name            = "${var.name}"
-  datadog_api_key = "${var.datadog_api_key}"
-  datadog_app_key = "${var.datadog_app_key}"
+  source          = "https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average"
+  namespace       = "cp"
+  stage           = "prod"
+  name            = "app"
+  datadog_api_key = "xxxxxxxxxxxxxxxxxxxxx"
+  datadog_app_key = "yyyyyyyyyyyyyyyyyyyyy"
 }
 ```
 
-Create monitor for tagged hosts in Datadog:
+Create Load Average monitor for tagged hosts in Datadog:
 
 ```hcl
 module "tagged_monitors" {
-  source          = "https://github.com/cloudposse/terraform-datadog-monitor//modules/load_average"
-  namespace       = "${var.namespace}"
-  stage           = "${var.stage}"
-  name            = "${var.name}"
-  datadog_api_key = "${var.datadog_api_key}"
-  datadog_app_key = "${var.datadog_app_key}"
+  source          = "https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average"
+  namespace       = "cp"
+  stage           = "prod"
+  name            = "app"
+  datadog_api_key = "xxxxxxxxxxxxxxxxxxxxx"
+  datadog_app_key = "yyyyyyyyyyyyyyyyyyyyy"
   selector        = ["region:us-east-1"]
 }
 ```
 
 
+
 ## License
 
-Apache 2 Licensed. See LICENSE for full details.
+[APACHE 2.0](LICENSE) © 2017 [Cloud Posse, LLC](https://cloudposse.com)
+
+See [`LICENSE`](LICENSE) for full details.
