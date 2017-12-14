@@ -1,6 +1,6 @@
 resource "datadog_monitor" "load_average_1" {
   count = "${var.monitor_enabled == "true" ? 1 : 0}"
-  name  = "High 1m load average ${module.label.id}"
+  name  = "[${module.label.id}] High 1m load average"
   type  = "${var.alert_type}"
 
   message = <<EOF
@@ -31,7 +31,7 @@ resource "datadog_monitor" "load_average_1" {
 
 resource "datadog_monitor" "load_average_5" {
   count = "${var.monitor_enabled == "true" ? 1 : 0}"
-  name  = "High 5m load average ${module.label.id}"
+  name  = "[${module.label.id}] High 5m load average"
   type  = "${var.alert_type}"
 
   message = <<EOF
@@ -62,7 +62,7 @@ resource "datadog_monitor" "load_average_5" {
 
 resource "datadog_monitor" "load_average_15" {
   count = "${var.monitor_enabled == "true" ? 1 : 0}"
-  name  = "High 15m load average ${module.label.id}"
+  name  = "[${module.label.id}] High 15m load average"
   type  = "${var.alert_type}"
 
   message = <<EOF
