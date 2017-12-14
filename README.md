@@ -13,7 +13,7 @@ A Terraform module repository which contains a number of common configurations (
 Create Load Average monitor for all hosts in Datadog:
 
 ```hcl
-module "global_monitors" {
+module "datadog_load_average_global" {
   source          = "https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average"
   namespace       = "cp"
   stage           = "prod"
@@ -26,7 +26,7 @@ module "global_monitors" {
 Create Load Average monitor for tagged hosts in Datadog:
 
 ```hcl
-module "tagged_monitors" {
+module "datadog_load_average_us_east_1" {
   source          = "https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average"
   namespace       = "cp"
   stage           = "prod"
