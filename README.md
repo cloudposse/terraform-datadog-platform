@@ -1,9 +1,8 @@
 # terraform-datadog-monitor
 
-A Terraform module with a number of common configurations of monitors for Datadog.
+A Terraform module repository which contains a number of common configurations ("submodules") of Datadog monitors.
 
-
-## Datadog monitors catalog
+## Datadog Monitors Catalog
 
 - [load_average](https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average)
     - Terraform module to provision Load Average Monitors in Datadog.

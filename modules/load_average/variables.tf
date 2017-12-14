@@ -28,12 +28,10 @@ variable "tags" {
 
 variable "datadog_api_key" {
   description = "Datadog API key. This can also be set via the DATADOG_API_KEY environment variable."
-  default     = ""
 }
 
 variable "datadog_app_key" {
   description = "Datadog APP key. This can also be set via the DATADOG_APP_KEY environment variable."
-  default     = ""
 }
 
 variable "monitor_enabled" {

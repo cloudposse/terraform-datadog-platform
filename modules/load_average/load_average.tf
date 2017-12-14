@@ -1,5 +1,5 @@
 resource "datadog_monitor" "load_average_1" {
-  count = "${var.monitor_enabled ? 1 : 0}"
+  count = "${var.monitor_enabled == "true" ? 1 : 0}"
   name  = "High 1m load average ${module.label.id}"
   type  = "${var.alert_type}"
 
@@ -30,7 +30,7 @@ resource "datadog_monitor" "load_average_1" {
 }
 
 resource "datadog_monitor" "load_average_5" {
-  count = "${var.monitor_enabled ? 1 : 0}"
+  count = "${var.monitor_enabled == "true" ? 1 : 0}"
   name  = "High 5m load average ${module.label.id}"
   type  = "${var.alert_type}"
 
@@ -61,7 +61,7 @@ resource "datadog_monitor" "load_average_5" {
 }
 
 resource "datadog_monitor" "load_average_15" {
-  count = "${var.monitor_enabled ? 1 : 0}"
+  count = "${var.monitor_enabled == "true" ? 1 : 0}"
   name  = "High 15m load average ${module.label.id}"
   type  = "${var.alert_type}"
 
