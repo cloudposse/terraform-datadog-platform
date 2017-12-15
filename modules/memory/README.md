@@ -17,7 +17,7 @@ module "datadog_memory_usage_global" {
   name               = "app"
   attributes         = ["global"]
   datadog_api_key    = "xxxxxxxxxxxxxxxxxxxxx"
-  datadog_app_key    = "yyyyyyyyyyyyyyyyyyyyy"
+  datadog_app_key    = "xxxxxxxxxxxxxxxxxxxxx"
   ok_threshold       = "104857600"
   warning_threshold  = "54857600"
   critical_threshold = "24857600"
@@ -34,7 +34,7 @@ module "datadog_memory_usage_us_east_1" {
   name               = "app"
   attributes         = ["global"]
   datadog_api_key    = "xxxxxxxxxxxxxxxxxxxxx"
-  datadog_app_key    = "yyyyyyyyyyyyyyyyyyyyy"
+  datadog_app_key    = "xxxxxxxxxxxxxxxxxxxxx"
   ok_threshold       = "104857600"
   warning_threshold  = "54857600"
   critical_threshold = "24857600"

@@ -17,7 +17,7 @@ module "datadog_cpu_usage_global" {
   name               = "app"
   attributes         = ["global"]
   datadog_api_key    = "xxxxxxxxxxxxxxxxxxxxx"
-  datadog_app_key    = "yyyyyyyyyyyyyyyyyyyyy"
+  datadog_app_key    = "xxxxxxxxxxxxxxxxxxxxx"
   ok_threshold       = "20"
   warning_threshold  = "50"
   critical_threshold = "80"
@@ -34,7 +34,7 @@ module "datadog_cpu_usage_us_east_1" {
   name               = "app"
   attributes         = ["global"]
   datadog_api_key    = "xxxxxxxxxxxxxxxxxxxxx"
-  datadog_app_key    = "yyyyyyyyyyyyyyyyyyyyy"
+  datadog_app_key    = "xxxxxxxxxxxxxxxxxxxxx"
   ok_threshold       = "20"
   warning_threshold  = "50"
   critical_threshold = "80"

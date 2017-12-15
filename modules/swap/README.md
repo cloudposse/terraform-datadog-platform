@@ -17,7 +17,7 @@ module "datadog_swap_space_global" {
   name               = "app"
   attributes         = ["global"]
   datadog_api_key    = "xxxxxxxxxxxxxxxxxxxxx"
-  datadog_app_key    = "yyyyyyyyyyyyyyyyyyyyy"
+  datadog_app_key    = "xxxxxxxxxxxxxxxxxxxxx"
   ok_threshold       = "1000000000"
   warning_threshold  = "500000000"
   critical_threshold = "100000000"
@@ -34,7 +34,7 @@ module "datadog_swap_space_us_east_1" {
   name               = "app"
   attributes         = ["global"]
   datadog_api_key    = "xxxxxxxxxxxxxxxxxxxxx"
-  datadog_app_key    = "yyyyyyyyyyyyyyyyyyyyy"
+  datadog_app_key    = "xxxxxxxxxxxxxxxxxxxxx"
   ok_threshold       = "1000000000"
   warning_threshold  = "500000000"
   critical_threshold = "100000000"
