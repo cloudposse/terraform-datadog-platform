@@ -87,26 +87,26 @@ variable "period" {
 
 variable "ok_threshold" {
   type        = "string"
-  description = "OK threshold"
-  default     = "1"
+  description = "Percent of CPU usage for OK threshold"
+  default     = "20"
 }
 
 variable "warning_threshold" {
   type        = "string"
-  description = "Warning threshold"
-  default     = "5"
+  description = "Percent of CPU usage for warning threshold"
+  default     = "50"
 }
 
 variable "critical_threshold" {
   type        = "string"
-  description = "Critical threshold"
-  default     = "10"
+  description = "Percent of CPU usage for cirtical threshold"
+  default     = "80"
 }
 
 variable "datadog_monitor_tags" {
   description = "Configurable labels that can be applied to monitor"
   type        = "list"
-  default     = ["system", "load_average"]
+  default     = ["system", "cpu"]
 }
 
 variable "selector" {

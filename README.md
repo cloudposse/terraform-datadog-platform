@@ -1,42 +1,22 @@
 # terraform-datadog-monitor
 
-A Terraform module repository which contains a number of common configurations ("submodules") of Datadog monitors.
+A Terraform module repository which contains a number of common configurations ("submodules") of Datadog monitors
+
 
 ## Datadog Monitors Catalog
 
-- [load_average](https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average) - Terraform module to provision Load Average Monitors in Datadog
+- [Load Average](tree/master/modules/load_average) - Terraform module to provision Load Average monitors
+- [CPU](tree/master/modules/cpu) - Terraform module to provision CPU Usage monitors
+- [Memory](tree/master/modules/memory) - Terraform module to provision Memory Usage monitors
+- [Swap](tree/master/modules/swap) - Terraform module to provision Swap Space monitors
+
 
 ## Usage
 
-- [load_average](https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average)
-
-Create Load Average monitor for all hosts in Datadog:
-
-```hcl
-module "datadog_load_average_global" {
-  source          = "https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average"
-  namespace       = "cp"
-  stage           = "prod"
-  name            = "app"
-  datadog_api_key = "xxxxxxxxxxxxxxxxxxxxx"
-  datadog_app_key = "yyyyyyyyyyyyyyyyyyyyy"
-}
-```
-
-Create Load Average monitor for tagged hosts in Datadog:
-
-```hcl
-module "datadog_load_average_us_east_1" {
-  source          = "https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average"
-  namespace       = "cp"
-  stage           = "prod"
-  name            = "app"
-  datadog_api_key = "xxxxxxxxxxxxxxxxxxxxx"
-  datadog_app_key = "yyyyyyyyyyyyyyyyyyyyy"
-  selector        = ["region:us-east-1"]
-}
-```
-
+- [Load Average](tree/master/modules/load_average)
+- [CPU](tree/master/modules/cpu)
+- [Memory](tree/master/modules/memory)
+- [Swap](tree/master/modules/swap)
 
 
 ## License

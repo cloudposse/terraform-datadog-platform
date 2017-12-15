@@ -87,26 +87,26 @@ variable "period" {
 
 variable "ok_threshold" {
   type        = "string"
-  description = "OK threshold"
-  default     = "1"
+  description = "Swap space OK threshold in bytes"
+  default     = "104857600"
 }
 
 variable "warning_threshold" {
   type        = "string"
-  description = "Warning threshold"
-  default     = "5"
+  description = "Swap space warning threshold in bytes"
+  default     = "54857600"
 }
 
 variable "critical_threshold" {
   type        = "string"
-  description = "Critical threshold"
-  default     = "10"
+  description = "Swap space critical threshold in bytes"
+  default     = "24857600"
 }
 
 variable "datadog_monitor_tags" {
   description = "Configurable labels that can be applied to monitor"
   type        = "list"
-  default     = ["system", "load_average"]
+  default     = ["system", "swap"]
 }
 
 variable "selector" {
