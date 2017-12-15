@@ -11,13 +11,16 @@ Create Datadog Memory Usage monitor for all hosts:
 
 ```hcl
 module "datadog_memory_usage_global" {
-  source          = "https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/memory"
-  namespace       = "cp"
-  stage           = "prod"
-  name            = "app"
-  attributes      = ["global"]
-  datadog_api_key = "xxxxxxxxxxxxxxxxxxxxx"
-  datadog_app_key = "yyyyyyyyyyyyyyyyyyyyy"
+  source             = "https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/memory"
+  namespace          = "cp"
+  stage              = "prod"
+  name               = "app"
+  attributes         = ["global"]
+  datadog_api_key    = "xxxxxxxxxxxxxxxxxxxxx"
+  datadog_app_key    = "yyyyyyyyyyyyyyyyyyyyy"
+  ok_threshold       = "104857600"
+  warning_threshold  = "54857600"
+  critical_threshold = "24857600"
 }
 ```
 
@@ -25,14 +28,17 @@ Create Datadog Memory Usage monitor for tagged hosts:
 
 ```hcl
 module "datadog_memory_usage_us_east_1" {
-  source          = "https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/memory"
-  namespace       = "cp"
-  stage           = "prod"
-  name            = "app"
-  attributes      = ["us-east-1"]
-  datadog_api_key = "xxxxxxxxxxxxxxxxxxxxx"
-  datadog_app_key = "yyyyyyyyyyyyyyyyyyyyy"
-  selector        = ["region:us-east-1"]
+  source             = "https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/memory"
+  namespace          = "cp"
+  stage              = "prod"
+  name               = "app"
+  attributes         = ["global"]
+  datadog_api_key    = "xxxxxxxxxxxxxxxxxxxxx"
+  datadog_app_key    = "yyyyyyyyyyyyyyyyyyyyy"
+  ok_threshold       = "104857600"
+  warning_threshold  = "54857600"
+  critical_threshold = "24857600"
+  selector           = ["region:us-east-1"]
 }
 ```
 

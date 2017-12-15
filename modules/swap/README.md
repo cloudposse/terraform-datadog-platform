@@ -11,13 +11,16 @@ Create Datadog Swap Space monitor for all hosts:
 
 ```hcl
 module "datadog_swap_space_global" {
-  source          = "https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/swap"
-  namespace       = "cp"
-  stage           = "prod"
-  name            = "app"
-  attributes      = ["global"]
-  datadog_api_key = "xxxxxxxxxxxxxxxxxxxxx"
-  datadog_app_key = "yyyyyyyyyyyyyyyyyyyyy"
+  source             = "https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/swap"
+  namespace          = "cp"
+  stage              = "prod"
+  name               = "app"
+  attributes         = ["global"]
+  datadog_api_key    = "xxxxxxxxxxxxxxxxxxxxx"
+  datadog_app_key    = "yyyyyyyyyyyyyyyyyyyyy"
+  ok_threshold       = "1000000000"
+  warning_threshold  = "500000000"
+  critical_threshold = "100000000"
 }
 ```
 
@@ -25,14 +28,17 @@ Create Datadog Swap Space monitor for tagged hosts:
 
 ```hcl
 module "datadog_swap_space_us_east_1" {
-  source          = "https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/swap"
-  namespace       = "cp"
-  stage           = "prod"
-  name            = "app"
-  attributes      = ["us-east-1"]
-  datadog_api_key = "xxxxxxxxxxxxxxxxxxxxx"
-  datadog_app_key = "yyyyyyyyyyyyyyyyyyyyy"
-  selector        = ["region:us-east-1"]
+  source             = "https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/swap"
+  namespace          = "cp"
+  stage              = "prod"
+  name               = "app"
+  attributes         = ["global"]
+  datadog_api_key    = "xxxxxxxxxxxxxxxxxxxxx"
+  datadog_app_key    = "yyyyyyyyyyyyyyyyyyyyy"
+  ok_threshold       = "1000000000"
+  warning_threshold  = "500000000"
+  critical_threshold = "100000000"
+  selector           = ["region:us-east-1"]
 }
 ```
 

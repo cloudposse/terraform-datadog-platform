@@ -88,19 +88,19 @@ variable "period" {
 variable "ok_threshold" {
   type        = "string"
   description = "Swap space OK threshold in bytes"
-  default     = "104857600"
+  default     = "1000000000"
 }
 
 variable "warning_threshold" {
   type        = "string"
   description = "Swap space warning threshold in bytes"
-  default     = "54857600"
+  default     = "500000000"
 }
 
 variable "critical_threshold" {
   type        = "string"
   description = "Swap space critical threshold in bytes"
-  default     = "24857600"
+  default     = "100000000"
 }
 
 variable "datadog_monitor_tags" {
