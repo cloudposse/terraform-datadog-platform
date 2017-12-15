@@ -15,7 +15,7 @@ variable "name" {
 
 variable "delimiter" {
   type        = "string"
-  description = "Delimiter to be used between `name`, `namespace`, `stage`, 'attributes`"
+  description = "Delimiter to be used between `name`, `namespace`, `stage`, `attributes`"
   default     = "-"
 }
 
@@ -45,7 +45,7 @@ variable "datadog_app_key" {
 
 variable "monitor_enabled" {
   type        = "string"
-  description = "State of monitor"
+  description = "State of the monitor"
   default     = "true"
 }
 
@@ -57,13 +57,13 @@ variable "monitor_silenced" {
 
 variable "alert_type" {
   type        = "string"
-  description = "The type of the monitor (e.g. metric alert, service check, event alert, query alert)"
+  description = "Type of the monitor (e.g. `metric alert`, `service check`, `event alert`, `query alert`)"
   default     = "metric alert"
 }
 
 variable "notify_no_data" {
   type        = "string"
-  description = "A boolean indicating whether this monitor will notify when data stops reporting"
+  description = "A flag indicating whether this monitor will notify when data stops reporting"
   default     = "false"
 }
 
@@ -99,7 +99,7 @@ variable "warning_threshold" {
 
 variable "critical_threshold" {
   type        = "string"
-  description = "Percent of CPU usage for cirtical threshold"
+  description = "Percent of CPU usage for critical threshold"
   default     = "80"
 }
 
@@ -129,7 +129,7 @@ variable "escalation_notify" {
 
 variable "group_by" {
   type        = "string"
-  description = "Group By"
+  description = "Monitor query group by selector"
   default     = "{host}"
 }
 
