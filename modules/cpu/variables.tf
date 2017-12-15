@@ -1,26 +1,26 @@
 variable "namespace" {
   type        = "string"
-  description = "Namespace (e.g. cp or cloudposse)"
+  description = "Namespace (e.g. `cp` or `cloudposse`)"
 }
 
 variable "stage" {
   type        = "string"
-  description = "Stage (e.g. prod, dev, staging)"
+  description = "Stage (e.g. `prod`, `dev`, `staging`)"
 }
 
 variable "name" {
   type        = "string"
-  description = "Name (e.g. bastion or db)"
+  description = "Application or solution name (e.g. `app`)"
 }
 
 variable "delimiter" {
   type        = "string"
-  description = "Delimiter to be used between `name`, `namespace`, `stage`, etc."
+  description = "Delimiter to be used between `name`, `namespace`, `stage`, 'attributes`"
   default     = "-"
 }
 
 variable "attributes" {
-  description = "Additional attributes (e.g. policy or role)"
+  description = "Additional attributes (e.g. `policy` or `role`)"
   type        = "list"
   default     = []
 }

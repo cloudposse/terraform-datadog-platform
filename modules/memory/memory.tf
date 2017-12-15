@@ -1,4 +1,4 @@
-resource "datadog_monitor" "memory_free" {
+resource "datadog_monitor" "memory_usage" {
   count = "${var.monitor_enabled == "true" ? 1 : 0}"
   name  = "[${module.label.id}] memory usage"
   type  = "${var.alert_type}"

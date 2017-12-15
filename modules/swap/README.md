@@ -1,4 +1,5 @@
 # terraform-datadog-monitor
+
 ## Swap Space
 
 Terraform module to configure Swap Space Datadog monitor
@@ -14,6 +15,7 @@ module "datadog_swap_space_global" {
   namespace       = "cp"
   stage           = "prod"
   name            = "app"
+  attributes      = ["global"]
   datadog_api_key = "xxxxxxxxxxxxxxxxxxxxx"
   datadog_app_key = "yyyyyyyyyyyyyyyyyyyyy"
 }
@@ -27,11 +29,31 @@ module "datadog_swap_space_us_east_1" {
   namespace       = "cp"
   stage           = "prod"
   name            = "app"
+  attributes      = ["us-east-1"]
   datadog_api_key = "xxxxxxxxxxxxxxxxxxxxx"
   datadog_app_key = "yyyyyyyyyyyyyyyyyyyyy"
   selector        = ["region:us-east-1"]
 }
 ```
+
+
+## Inputs
+
+|  Name                          |  Default                          |  Description                                                                                                                    | Required |
+|:-------------------------------|:---------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------|:--------:|
+| `namespace`                    | ``                                | Namespace (_e.g._ `cp` or `cloudposse`)                                                                                         | Yes      |
+| `stage`                        | ``                                | Stage (_e.g._ `prod`, `dev`, `staging`)                                                                                         | Yes      |
+| `name`                         | ``                                | Application or solution name (_e.g._ `app`)                                                                                     | Yes      |
+| `attributes`                   | `[]`                              | Additional attributes (_e.g._ `global` or `us-eat-1`)                                                                           | No       |
+| `tags`                         | `{}`                              | Additional tags (_e.g._ `map("BusinessUnit","XYZ")`                                                                             | No       |
+| `delimiter`                    | `-`                               | Delimiter to be used between `name`, `namespace`, `stage`, 'attributes`                                                         | No       |
+
+
+## Outputs
+
+| Name                        | Description                             |
+|:----------------------------|:----------------------------------------|
+| `swap_space_id`             | ID of Swap Space monitor                |
 
 
 

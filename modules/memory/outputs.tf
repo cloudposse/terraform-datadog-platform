@@ -1,3 +1,3 @@
-output "memory_free_id" {
-  value = "${datadog_monitor.memory_free.id}"
+output "memory_usage_id" {
+  value = "${datadog_monitor.memory_usage.id}"
 }
