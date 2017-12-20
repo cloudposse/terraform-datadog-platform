@@ -80,11 +80,3 @@ module "datadog_load_average_us_east_1" {
 | `load_average_1_id`         | ID of 1m Load Average monitor           |
 | `load_average_5_id`         | ID of 5m Load Average monitor           |
 | `load_average_15_id`        | ID of 15m Load Average monitor          |
-
-
-
-## License
-
-[APACHE 2.0](LICENSE) © 2017 [Cloud Posse, LLC](https://cloudposse.com)
-
-See [`LICENSE`](LICENSE) for full details.
