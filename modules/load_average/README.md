@@ -11,7 +11,7 @@ Create Datadog Load Average monitor for all hosts:
 
 ```hcl
 module "datadog_load_average_global" {
-  source             = "https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average"
+  source             = "git::https://github.com/cloudposse/terraform-datadog-monitor.git//modules/load_average?ref=master"
   namespace          = "cp"
   stage              = "prod"
   name               = "app"
@@ -28,7 +28,7 @@ Create Datadog Load Average monitor for tagged hosts:
 
 ```hcl
 module "datadog_load_average_us_east_1" {
-  source             = "https://github.com/cloudposse/terraform-datadog-monitor/tree/master/modules/load_average"
+  source             = "git::https://github.com/cloudposse/terraform-datadog-monitor.git//modules/load_average?ref=master"
   namespace          = "cp"
   stage              = "prod"
   name               = "app"
