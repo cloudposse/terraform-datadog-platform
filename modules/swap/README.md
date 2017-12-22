@@ -1,5 +1,3 @@
-# terraform-datadog-monitor
-
 ## Swap Space
 
 Terraform module to configure Swap Space Datadog monitor
