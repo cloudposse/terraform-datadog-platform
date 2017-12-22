@@ -1,5 +1,3 @@
-# terraform-datadog-monitor
-
 ## CPU Usage
 
 Terraform module to configure CPU Usage Datadog monitor
