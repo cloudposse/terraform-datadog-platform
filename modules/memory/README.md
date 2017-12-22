@@ -1,5 +1,3 @@
-# terraform-datadog-monitor
-
 ## Memory Usage
 
 Terraform module to configure Memory Usage Datadog monitor
