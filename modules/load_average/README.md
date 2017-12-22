@@ -1,5 +1,3 @@
-# terraform-datadog-monitor
-
 ## Load Average
 
 Terraform module to configure Load Average Datadog monitor
