@@ -1,41 +1,41 @@
-## Load Average
+## Swap Space
 
-Terraform module to configure Load Average Datadog monitor
+Terraform module to configure Swap Space Datadog monitor
 
 
 ## Usage
 
-Create Datadog Load Average monitor for all hosts:
+Create Datadog Swap Space monitor for all hosts:
 
 ```hcl
-module "datadog_load_average_global" {
-  source             = "git::https://github.com/cloudposse/terraform-datadog-monitor.git//modules/load_average?ref=master"
+module "datadog_swap_space_global" {
+  source             = "git::https://github.com/cloudposse/terraform-datadog-monitor.git//modules/swap?ref=master"
   namespace          = "cp"
   stage              = "prod"
   name               = "app"
   attributes         = ["global"]
   datadog_api_key    = "xxxxxxxxxxxxxxxxxxxxx"
   datadog_app_key    = "xxxxxxxxxxxxxxxxxxxxx"
-  ok_threshold       = "1"
-  warning_threshold  = "5"
-  critical_threshold = "10"
+  ok_threshold       = "1000000000"
+  warning_threshold  = "500000000"
+  critical_threshold = "100000000"
 }
 ```
 
-Create Datadog Load Average monitor for tagged hosts:
+Create Datadog Swap Space monitor for tagged hosts:
 
 ```hcl
-module "datadog_load_average_us_east_1" {
-  source             = "git::https://github.com/cloudposse/terraform-datadog-monitor.git//modules/load_average?ref=master"
+module "datadog_swap_space_us_east_1" {
+  source             = "git::https://github.com/cloudposse/terraform-datadog-monitor.git//modules/swap?ref=master"
   namespace          = "cp"
   stage              = "prod"
   name               = "app"
   attributes         = ["us-east-1"]
   datadog_api_key    = "xxxxxxxxxxxxxxxxxxxxx"
   datadog_app_key    = "xxxxxxxxxxxxxxxxxxxxx"
-  ok_threshold       = "1"
-  warning_threshold  = "5"
-  critical_threshold = "10"
+  ok_threshold       = "1000000000"
+  warning_threshold  = "500000000"
+  critical_threshold = "100000000"
   selector           = ["region:us-east-1"]
 }
 ```
@@ -60,10 +60,10 @@ module "datadog_load_average_us_east_1" {
 | `new_host_delay`               | `300`                             | Time (in seconds) to allow a host to boot and applications to fully start before starting the evaluation of monitor results     | No       |
 | `renotify_interval`            | `60`                              | The number of minutes after the last notification before a monitor will re-notify on the current status. It will only re-notify if it's not resolved | No       |
 | `period`                       | `10m`                             | Monitoring period in minutes                                                                                                    | No       |
-| `ok_threshold`                 | `1`                               | OK threshold                                                                                                                    | No       |
-| `warning_threshold`            | `5`                               | Warning threshold                                                                                                               | No       |
-| `critical_threshold`           | `10`                              | Critical threshold                                                                                                              | No       |
-| `datadog_monitor_tags`         | `["system", "load_average"]`      | Configurable labels that can be applied to monitor                                                                              | No       |
+| `ok_threshold`                 | `1000000000`                      | Swap space OK threshold in bytes                                                                                                | No       |
+| `warning_threshold`            | `500000000`                       | Swap space warning threshold in bytes                                                                                           | No       |
+| `critical_threshold`           | `100000000`                       | Swap space critical threshold in bytes                                                                                          | No       |
+| `datadog_monitor_tags`         | `["system", "swap"]`              | Configurable labels that can be applied to monitor                                                                              | No       |
 | `selector`                     | `["*"]`                           | Selector for enabling monitor for specific hosts, host tags                                                                     | No       |
 | `notify`                       | ``                                | Notification email, hipchat or slack user/channel                                                                               | No       |
 | `escalation_notify`            | ``                                | Escalation notification email, hipchat or slack user/channel                                                                    | No       |
@@ -75,6 +75,4 @@ module "datadog_load_average_us_east_1" {
 
 | Name                        | Description                             |
 |:----------------------------|:----------------------------------------|
-| `load_average_1_id`         | ID of 1m Load Average monitor           |
-| `load_average_5_id`         | ID of 5m Load Average monitor           |
-| `load_average_15_id`        | ID of 15m Load Average monitor          |
+| `swap_space_id`             | ID of Swap Space monitor                |
