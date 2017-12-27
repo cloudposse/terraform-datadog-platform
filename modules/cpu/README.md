@@ -75,5 +75,5 @@ module "datadog_cpu_usage_us_east_1" {
 
 | Name                        | Description                             |
 |:----------------------------|:----------------------------------------|
-| `cpu_average_percent_id`    | ID of CPU Usage monitor                 |
-| `cpu_iowait_percent_id`     | ID of CPU IOWait monitor                |
+| `cpu_usage_id`              | ID of CPU Usage monitor                 |
+| `cpu_iowait_id`             | ID of CPU IOWait monitor                |
