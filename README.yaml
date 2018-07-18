@@ -1,0 +1,64 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name: terraform-datadog-monitor
+
+# Logo for this project
+#logo: docs/logo.png
+
+# License of this project
+license: "APACHE2"
+
+# Canonical GitHub repo
+github_repo: cloudposse/terraform-datadog-monitor
+
+# Badges to display
+badges:
+  - name: "Build Status"
+    image: "https://travis-ci.org/cloudposse/terraform-datadog-monitor.svg?branch=master"
+    url: "https://travis-ci.org/cloudposse/terraform-datadog-monitor"
+  - name: "Latest Release"
+    image: "https://img.shields.io/github/release/cloudposse/terraform-datadog-monitor.svg"
+    url: "https://github.com/cloudposse/terraform-datadog-monitor/releases/latest"
+  - name: "Slack Community"
+    image: "https://slack.cloudposse.com/badge.svg"
+    url: "https://slack.cloudposse.com"
+
+related:
+  - name: "terraform-aws-datadog-integration"
+    description: "Terraform Module for integration DataDog with AWS"
+    url: "https://github.com/cloudposse/terraform-aws-datadog-integration"
+
+# Short description of this project
+description: |-
+  Terraform module repository with a number of common configurations ("submodules") of Datadog monitors
+
+introduction: |-
+  ## Datadog Monitors Catalog
+
+  - [Load Average](modules/load_average) - Terraform module to provision Load Average monitors
+  - [CPU](modules/cpu) - Terraform module to provision CPU Usage monitors
+  - [Memory](modules/memory) - Terraform module to provision Memory Usage monitors
+  - [Swap](modules/swap) - Terraform module to provision Swap Space monitors
+
+# How to use this project
+usage: |-
+  - [Load Average](modules/load_average)
+  - [CPU](modules/cpu)
+  - [Memory](modules/memory)
+  - [Swap](modules/swap)
+
+include:
+  - "docs/targets.md"
+  - "docs/terraform.md"
+
+# Contributors to this project
+contributors:
+  - name: "Andriy Knysh"
+    github: "aknysh"
+  - name: "Vladimir"
+    github: "SweetOps"
