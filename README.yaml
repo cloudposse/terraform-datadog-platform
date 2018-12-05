@@ -10,6 +10,7 @@ name: terraform-datadog-monitor
 # Tags of this project
 tags:
   - terraform
+  - terraform-modules
   - monitor
   - datadog
   - monitoring
