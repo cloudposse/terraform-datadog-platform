@@ -30,9 +30,6 @@ github_repo: cloudposse/terraform-datadog-monitor
 
 # Badges to display
 badges:
-  - name: "Build Status"
-    image: "https://travis-ci.org/cloudposse/terraform-datadog-monitor.svg?branch=master"
-    url: "https://travis-ci.org/cloudposse/terraform-datadog-monitor"
   - name: "Latest Release"
     image: "https://img.shields.io/github/release/cloudposse/terraform-datadog-monitor.svg"
     url: "https://github.com/cloudposse/terraform-datadog-monitor/releases/latest"
@@ -42,7 +39,7 @@ badges:
 
 related:
   - name: "terraform-aws-datadog-integration"
-    description: "Terraform Module for integration DataDog with AWS"
+    description: "Terraform module to configure Datadog AWS integration"
     url: "https://github.com/cloudposse/terraform-aws-datadog-integration"
 
 # Short description of this project
@@ -59,10 +56,17 @@ introduction: |-
 
 # How to use this project
 usage: |-
+  For a complete example, see [examples/complete](examples/complete).
+
+  For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest) (which tests and deploys the example on AWS), see [test](test).
+
   - [Load Average](modules/load_average)
   - [CPU](modules/cpu)
   - [Memory](modules/memory)
   - [Swap](modules/swap)
+
+examples: |-
+  Review the [complete example](examples/complete) to see how to use this module.
 
 include:
   - "docs/targets.md"
@@ -70,6 +74,8 @@ include:
 
 # Contributors to this project
 contributors:
+  - name: "Erik Osterman"
+    github: "osterman"
   - name: "Andriy Knysh"
     github: "aknysh"
   - name: "Vladimir"
