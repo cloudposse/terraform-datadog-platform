@@ -1,7 +1,7 @@
 name: chatops
 on:
   issue_comment:
-    types: [created]
+    types: [ created ]
 
 jobs:
   default:
@@ -33,5 +33,3 @@ jobs:
           permission: triage
           issue-type: pull-request
           reactions: false
-
-
