@@ -1,0 +1,229 @@
+# The official Datadog API documentation with available query parameters & alert types:
+# https://docs.datadoghq.com/api/v1/monitors/#create-a-monitor
+
+rulesets:
+  - name: eks
+    monitors:
+      unavailable-replica-alert:
+        name: "Unavailable Replica(s) Detected"
+        type: metric alert
+        query: |
+          max(last_10m):max:kubernetes_state.deployment.replicas_unavailable{*} by {cluster_name} > 0
+        message: |
+          ({{event.tags.cluster_name}}) Detected unavailable replicas for longer than 10 minutes
+        escalation_message: ""
+        tags: [ ]
+        options:
+          notify_no_data: false
+          renotify_interval: 60
+          notify_audit: false
+          timeout_h: 60
+          include_tags: true
+          require_full_window: false
+          thresholds:
+            critical: 0
+            # These values are available, but not required
+            #warning:
+            #unknown:
+            #ok:
+            #critical_recovery:
+            #warning_recovery:
+      node-status-unschedulable:
+        name: "Detected Unschedulable Node(s)"
+        type: metric alert
+        query: |
+          sum(last_5m):sum:kubernetes_state.node.status{status:unschedulable} by {status} > 0
+        message: |
+          ({{event.tags.cluster_name}}) Number of unscheduleable nodes is greater than 0
+        escalation_message: ""
+        tags: [ ]
+        options:
+          notify_no_data: false
+          renotify_interval: 60
+          notify_audit: false
+          timeout_h: 60
+          include_tags: true
+          require_full_window: false
+          thresholds:
+            critical: 0
+      event-imagepullbackoff:
+        name: "ImagePullBackOff Error Detected"
+        type: event alert
+        query: |
+          events('ImagePullBackOff priority:all sources:kubernetes').rollup('count').last('5m') > 0
+        message: |
+          ({{event.tags.cluster_name}}) ImagePullBackOff error detected for {{event.tags.namespace}}/{{event.tags.name}}
+        escalation_message: ""
+        tags: [ ]
+        options:
+          notify_no_data: false
+          renotify_interval: 60
+          notify_audit: false
+          timeout_h: 60
+          include_tags: true
+          thresholds:
+            critical: 0
+      high-cpu-usage:
+        name: "High CPU Usage Detected"
+        type: metric alert
+        query: |
+          avg(last_10m):avg:system.cpu.system{*} by {host} > 90
+        message: |
+          ({{cluster_name}}) High CPU usage for the last 10 minutes on {host}
+        escalation_message: ""
+        tags: [ ]
+        options:
+          notify_no_data: false
+          renotify_interval: 60
+          notify_audit: false
+          timeout_h: 60
+          include_tags: true
+          require_full_window: true
+          thresholds:
+            critical: 90
+            warning: 60
+      high-disk-usage:
+        name: "High Disk Usage Detected"
+        type: metric alert
+        query: |
+          min(last_5m):min:system.disk.used{*} by {host,cluster_name} / avg:system.disk.total{*} by {host,cluster_name} * 100 > 90
+        message: |
+          ({{cluster_name}} High disk usage detected on {{host}}
+        escalation_message: ""
+        tags: [ ]
+        options:
+          notify_no_data: false
+          renotify_interval: 60
+          notify_audit: false
+          timeout_h: 60
+          include_tags: true
+          thresholds:
+            critical: 90
+            warning: 75
+      high-memory-usage:
+        name: "High Memory Usage Detected"
+        type: metric alert
+        query: |
+          avg(last_10m):avg:kubernetes.memory.usage_pct{*} by {cluster_name} > 90
+        message: |
+          {{#is_warning}}
+          {{cluster_name}} memory usage greater than 80% for 10 minutes
+          {{/is_warning}}
+          {{#is_alert}}
+          {{cluster_name}} memory usage greater than 90% for 10 minutes
+          {{/is_alert}}
+        options:
+          thresholds:
+            critical: 90
+            warning: 80
+      high-filesystem-usage:
+        name: "High Filesystem Usage Detected"
+        type: metric alert
+        query: |
+          avg(last_10m):avg:kubernetes.filesystem.usage_pct{*} by {cluster_name} > 90
+        message: |
+          {{#is_warning}}
+          {{cluster_name}} filesystem usage greater than 80% for 10 minutes
+          {{/is_warning}}
+          {{#is_alert}}
+          {{cluster_name}} filesystem usage greater than 90% for 10 minutes
+          {{/is_alert}}
+        options:
+          thresholds:
+            critical: 90
+            warning: 80
+      network-tx-errors:
+        name: "High Network TX (send) Errors"
+        type: metric alert
+        query: |
+          avg(last_10m):avg:kubernetes.network.tx_errors{*} by {cluster_name} > 100
+        message: |
+          {{#is_warning}}
+          {{cluster_name}} network TX (send) errors occurring 10 times per second
+          {{/is_warning}}
+          {{#is_alert}}
+          {{cluster_name}} network TX (send) errors occurring 100 times per second
+          {{/is_alert}}
+        options:
+          thresholds:
+            critical: 100
+            warning: 10
+      network-rx-errors:
+        name: "High Network RX (receive) Errors"
+        type: metric alert
+        query: |
+          avg(last_10m):avg:kubernetes.network.rx_errors{*} by {cluster_name} > 100
+        message: |
+          {{#is_warning}}
+          {{cluster_name}} network RX (receive) errors occurring 10 times per second
+          {{/is_warning}}
+          {{#is_alert}}
+          {{cluster_name}} network RX (receive) errors occurring 100 times per second
+          {{/is_alert}}
+        options:
+          thresholds:
+            critical: 100
+            warning: 10
+      service-node-not-ready:
+        name: "Node Not Ready"
+        type: service check
+        query: |
+          "kubernetes_state.node.ready".by('host').last(5).count_by_status()
+        message: |
+          ({{host}} {{region}}) Node is reporting 'Not Ready' status
+        escalation_message: ""
+        tags: [ ]
+        options:
+          notify_no_data: false
+          renotify_interval: 60
+          notify_audit: false
+          timeout_h: 60
+          include_tags: true
+          thresholds:
+            critical: 3
+  - name: ec2
+    monitors:
+      failed-status-check:
+        name: "Failed Status Check"
+        type: metric alert
+        query: |
+          avg(last_10m):avg:aws.ec2.status_check_failed{*} by {instance_id} > 0
+        message: |
+          ({stage} {region}) {instance_id} failed a status check
+        escalation_message: ""
+        tags: [ ]
+        options:
+          notify_no_data: false
+          renotify_interval: 60
+          notify_audit: false
+          timeout_h: 60
+          include_tags: true
+          require_full_window: false
+          thresholds:
+            critical: 0
+  - name: rds
+    monitors:
+      aurora-replica-lag:
+        name: "Aurora Replica Lag Detected"
+        type: metric alert
+        query: |
+          min(last_15m):min:aws.rds.aurora_replica_lag{*} by {dbinstanceidentifier} > 1000
+        message: |
+          {{#is_warning}}
+          ({dbinstanceidentifier}) Replica lag has been greater than half a second for more than 15 minutes
+          {{/is_warning}}
+          {{#is_alert}}
+          ({dbinstanceidentifier}) Replica lag has been greater than 1s for more than 15 minutes
+          {{/is_alert}}
+        escalation_message: ""
+        tags: [ ]
+        options:
+          notify_no_data: false
+          renotify_interval: 60
+          notify_audit: false
+          timeout_h: 60
+          include_tags: true
+          require_full_window: true
+          thresholds:
+            critical: 1000
+            warning: 500

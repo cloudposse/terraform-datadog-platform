@@ -44,26 +44,32 @@ related:
 
 # Short description of this project
 description: |-
-  Terraform module repository with a number of common configurations ("submodules") of Datadog monitors
+  Terraform module to configure [Datadog monitors](https://docs.datadoghq.com/api/v1/monitors/).
 
 introduction: |-
-  ## Datadog Monitors Catalog
+  Datadog monitors are configured in a YAML configuration file.
 
-  - [Load Average](modules/load_average) - Terraform module to provision Load Average monitors
-  - [CPU](modules/cpu) - Terraform module to provision CPU Usage monitors
-  - [Memory](modules/memory) - Terraform module to provision Memory Usage monitors
-  - [Swap](modules/swap) - Terraform module to provision Swap Space monitors
+  See [monitors.yaml](examples/complete/monitors.yaml) for monitor configuration examples.
+
+  For more details, refer to:
+
+  - [Terraform Datadog monitor resource](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor)
+  - [Create a monitor](https://docs.datadoghq.com/api/v1/monitors/#create-a-monitor)
+
 
 # How to use this project
 usage: |-
   For a complete example, see [examples/complete](examples/complete).
 
-  For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest) (which tests and deploys the example on AWS), see [test](test).
+  ```hcl
+    module "datadog_monitors" {
+      source = "git::https://github.com/cloudposse/terraform-datadog-monitor.git?ref=master"
 
-  - [Load Average](modules/load_average)
-  - [CPU](modules/cpu)
-  - [Memory](modules/memory)
-  - [Swap](modules/swap)
+      monitors_config_file = "monitors.yaml"
+      alert_tags           = "\n@opsgenie"
+      monitor_tags         = ["ManagedBy:Terraform"]
+    }
+  ```
 
 examples: |-
   Review the [complete example](examples/complete) to see how to use this module.
