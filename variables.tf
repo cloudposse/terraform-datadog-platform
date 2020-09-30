@@ -1,6 +1,6 @@
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor
 variable "datadog_monitors" {
-  type = list(object({
+  type = map(object({
     name                = string
     type                = string
     message             = string

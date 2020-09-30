@@ -1,10 +1,6 @@
-locals {
-  datadog_monitors_map = module.this.enabled ? { for i in var.datadog_monitors : uuid() => i } : {}
-}
-
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor
 resource "datadog_monitor" "default" {
-  for_each = module.this.enabled ? local.datadog_monitors_map : {}
+  for_each = module.this.enabled ? var.datadog_monitors : {}
 
   name                = each.value.name
   type                = each.value.type

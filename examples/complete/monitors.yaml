@@ -1,7 +1,8 @@
 # The official Datadog API documentation with available query parameters & alert types:
 # https://docs.datadoghq.com/api/v1/monitors/#create-a-monitor
 
-- name: "(EKS) Unavailable Replica(s) Detected"
+eks-unavailable-replica-alert:
+  name: "(EKS) Unavailable Replica(s) Detected"
   type: metric alert
   query: |
     max(last_10m):max:kubernetes_state.deployment.replicas_unavailable{*} by {cluster_name} > 0
@@ -30,7 +31,8 @@
     #critical_recovery:
     #warning_recovery:
 
-- name: "(EKS) Detected Unschedulable Node(s)"
+eks-node-status-unschedulable:
+  name: "(EKS) Detected Unschedulable Node(s)"
   type: metric alert
   query: |
     sum(last_5m):sum:kubernetes_state.node.status{status:unschedulable} by {status} > 0
@@ -59,7 +61,8 @@
     #critical_recovery:
     #warning_recovery:
 
-- name: "(EKS) ImagePullBackOff Error Detected"
+eks-event-imagepullbackoff:
+  name: "(EKS) ImagePullBackOff Error Detected"
   type: event alert
   query: |
     events('ImagePullBackOff priority:all sources:kubernetes').rollup('count').last('5m') > 0
@@ -88,7 +91,8 @@
     #critical_recovery:
     #warning_recovery:
 
-- name: "(EKS) High CPU Usage Detected"
+eks-high-cpu-usage:
+  name: "(EKS) High CPU Usage Detected"
   type: metric alert
   query: |
     avg(last_10m):avg:system.cpu.system{*} by {host} > 90
@@ -117,7 +121,8 @@
     #critical_recovery:
     #warning_recovery:
 
-- name: "(EKS) High Disk Usage Detected"
+eks-high-disk-usage:
+  name: "(EKS) High Disk Usage Detected"
   type: metric alert
   query: |
     min(last_5m):min:system.disk.used{*} by {host,cluster_name} / avg:system.disk.total{*} by {host,cluster_name} * 100 > 90
@@ -146,7 +151,8 @@
     #critical_recovery:
     #warning_recovery:
 
-- name: "(EKS) High Memory Usage Detected"
+eks-high-memory-usage:
+  name: "(EKS) High Memory Usage Detected"
   type: metric alert
   query: |
     avg(last_10m):avg:kubernetes.memory.usage_pct{*} by {cluster_name} > 90
@@ -180,7 +186,8 @@
     #critical_recovery:
     #warning_recovery:
 
-- name: "(EKS) High Filesystem Usage Detected"
+eks-high-filesystem-usage:
+  name: "(EKS) High Filesystem Usage Detected"
   type: metric alert
   query: |
     avg(last_10m):avg:kubernetes.filesystem.usage_pct{*} by {cluster_name} > 90
@@ -214,7 +221,8 @@
     #critical_recovery:
     #warning_recovery:
 
-- name: "(EKS) High Network TX (send) Errors"
+eks-network-tx-errors:
+  name: "(EKS) High Network TX (send) Errors"
   type: metric alert
   query: |
     avg(last_10m):avg:kubernetes.network.tx_errors{*} by {cluster_name} > 100
@@ -248,7 +256,8 @@
     #critical_recovery:
     #warning_recovery:
 
-- name: "(EKS) High Network RX (receive) Errors"
+eks-network-rx-errors:
+  name: "(EKS) High Network RX (receive) Errors"
   type: metric alert
   query: |
     avg(last_10m):avg:kubernetes.network.rx_errors{*} by {cluster_name} > 100
@@ -282,7 +291,8 @@
     #critical_recovery:
     #warning_recovery:
 
-- name: "(EKS) Node Not Ready"
+eks-node-not-ready:
+  name: "(EKS) Node Not Ready"
   type: service check
   query: |
     "kubernetes_state.node.ready".by('host').last(5).count_by_status()
@@ -311,7 +321,8 @@
     #critical_recovery:
     #warning_recovery:
 
-- name: "(EC2) Failed Status Check"
+ec2-failed-status-check:
+  name: "(EC2) Failed Status Check"
   type: metric alert
   query: |
     avg(last_10m):avg:aws.ec2.status_check_failed{*} by {instance_id} > 0
@@ -340,7 +351,8 @@
     #critical_recovery:
     #warning_recovery:
 
-- name: "(RDS) Aurora Replica Lag Detected"
+aurora-replica-lag:
+  name: "(RDS) Aurora Replica Lag Detected"
   type: metric alert
   query: |
     min(last_15m):min:aws.rds.aurora_replica_lag{*} by {dbinstanceidentifier} > 1000
