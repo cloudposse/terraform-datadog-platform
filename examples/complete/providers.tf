@@ -1,7 +1,6 @@
+# For the example, we use ENV variables `DD_API_KEY ` and `DD_APP_KEY` to specify `api_key` and `app_key` to the provider
+# https://registry.terraform.io/providers/DataDog/datadog/latest/docs#argument-reference
 provider "datadog" {
-  api_key  = var.datadog_api_key
-  app_key  = var.datadog_app_key
-  validate = false
 }
 
 provider "aws" {

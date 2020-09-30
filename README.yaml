@@ -62,12 +62,17 @@ usage: |-
   For a complete example, see [examples/complete](examples/complete).
 
   ```hcl
+    locals {
+      datadog_monitors = yamldecode(file("monitors.yaml"))
+    }
+
     module "datadog_monitors" {
       source = "git::https://github.com/cloudposse/terraform-datadog-monitor.git?ref=master"
 
-      monitors_config_file = "monitors.yaml"
+      datadog_monitors     = local.datadog_monitors
       alert_tags           = "\n@opsgenie"
-      monitor_tags         = ["ManagedBy:Terraform"]
+
+      context = module.this.context
     }
   ```
 

@@ -1,39 +1,30 @@
 locals {
-  datadog_monitors = module.this.enabled ? merge([
-    for ruleset in yamldecode(file(var.monitors_config_file)).rulesets : {
-      for k, v in ruleset.monitors :
-      "${ruleset.name}-${k}" => merge(v, { "ruleset" : ruleset.name })
-    }
-  ]...) : {}
+  datadog_monitors_map = module.this.enabled ? { for i in var.datadog_monitors : uuid() => i } : {}
 }
 
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor
 resource "datadog_monitor" "default" {
-  for_each = module.this.enabled && var.monitors_enabled ? local.datadog_monitors : {}
+  for_each = module.this.enabled ? local.datadog_monitors_map : {}
 
-  name               = format("[%s] %s", each.value.ruleset, each.value.name)
-  type               = each.value.type
-  message            = "${each.value.message}${var.alert_tags != null && var.alert_tags != "" ? var.alert_tags : ""}"
-  escalation_message = lookup(each.value, "escalation_message", null)
+  name                = each.value.name
+  type                = each.value.type
+  query               = each.value.query
+  message             = format("%s%s", each.value.message, var.alert_tags != null && var.alert_tags != "" ? var.alert_tags : "")
+  escalation_message  = lookup(each.value, "escalation_message", null)
+  require_full_window = lookup(each.value, "require_full_window", null)
+  notify_no_data      = lookup(each.value, "notify_no_data", null)
+  new_host_delay      = lookup(each.value, "new_host_delay", null)
+  evaluation_delay    = lookup(each.value, "evaluation_delay", null)
+  no_data_timeframe   = lookup(each.value, "no_data_timeframe", null)
+  renotify_interval   = lookup(each.value, "renotify_interval", null)
+  notify_audit        = lookup(each.value, "notify_audit", null)
+  timeout_h           = lookup(each.value, "timeout_h", null)
+  include_tags        = lookup(each.value, "include_tags", null)
+  enable_logs_sample  = lookup(each.value, "enable_logs_sample", null)
+  locked              = lookup(each.value, "locked", null)
+  force_delete        = lookup(each.value, "force_delete", null)
+  threshold_windows   = lookup(each.value, "threshold_windows", null)
+  thresholds          = lookup(each.value, "thresholds", null)
 
-  query = each.value.query
-
-  thresholds = {
-    ok                = lookup(each.value.options.thresholds, "ok", null)
-    warning           = lookup(each.value.options.thresholds, "warning", null)
-    warning_recovery  = lookup(each.value.options.thresholds, "warning_recovery", null)
-    critical          = lookup(each.value.options.thresholds, "critical", null)
-    critical_recovery = lookup(each.value.options.thresholds, "critical_recovery", null)
-    unknown           = lookup(each.value.options.thresholds, "unknown", null)
-  }
-
-  require_full_window = lookup(each.value.options, "require_full_window", null)
-  notify_no_data      = lookup(each.value.options, "notify_no_data", null)
-  renotify_interval   = lookup(each.value.options, "renotify_interval", null)
-
-  notify_audit = lookup(each.value.options, "notify_audit", null)
-  timeout_h    = lookup(each.value.options, "timeout_h", null)
-  include_tags = lookup(each.value.options, "include_tags", null)
-
-  tags = var.monitor_tags
+  tags = lookup(each.value, "tags", null)
 }
