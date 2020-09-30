@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
+	"github.com/stretchr/testify/assert"
 )
 
 // Test the Terraform module in examples/complete using Terratest.
@@ -34,4 +35,9 @@ func TestExamplesComplete(t *testing.T) {
 
 	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors
 	terraform.InitAndApply(t, terraformOptions)
+
+	// Run `terraform output` to get the value of an output variable
+	datadogMonitorNames := terraform.OutputList(t, terraformOptions, "datadog_monitor_names")
+	// Verify we're getting back the outputs we expect
+	assert.Greater(t, len(datadogMonitorNames), 0)
 }
