@@ -70,7 +70,7 @@ usage: |-
       source = "git::https://github.com/cloudposse/terraform-datadog-monitor.git?ref=master"
 
       datadog_monitors     = local.datadog_monitors
-      alert_tags           = "\n@opsgenie"
+      alert_tags           = ["@opsgenie"]
 
       context = module.this.context
     }

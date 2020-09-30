@@ -8,4 +8,6 @@ stage = "test"
 
 name = "datadog-monitor"
 
-alert_tags = "\n@opsgenie"
+alert_tags = ["@opsgenie"]
+
+alert_tags_separator = "\n"

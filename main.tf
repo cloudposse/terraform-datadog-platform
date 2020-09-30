@@ -1,3 +1,7 @@
+locals {
+  alert_tags = module.this.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
+}
+
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor
 resource "datadog_monitor" "default" {
   for_each = module.this.enabled ? var.datadog_monitors : {}
@@ -5,7 +9,7 @@ resource "datadog_monitor" "default" {
   name                = each.value.name
   type                = each.value.type
   query               = each.value.query
-  message             = format("%s%s", each.value.message, var.alert_tags != null && var.alert_tags != "" ? var.alert_tags : "")
+  message             = format("%s%s", each.value.message, local.alert_tags)
   escalation_message  = lookup(each.value, "escalation_message", null)
   require_full_window = lookup(each.value, "require_full_window", null)
   notify_no_data      = lookup(each.value, "notify_no_data", null)
