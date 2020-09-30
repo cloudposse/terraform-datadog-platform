@@ -157,6 +157,7 @@
     {{#is_alert}}
     {{cluster_name}} memory usage greater than 90% for 10 minutes
     {{/is_alert}}
+  escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
   notify_no_data: false
   notify_audit: false
@@ -190,6 +191,7 @@
     {{#is_alert}}
     {{cluster_name}} filesystem usage greater than 90% for 10 minutes
     {{/is_alert}}
+  escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
   notify_no_data: false
   notify_audit: false
@@ -223,6 +225,7 @@
     {{#is_alert}}
     {{cluster_name}} network TX (send) errors occurring 100 times per second
     {{/is_alert}}
+  escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
   notify_no_data: false
   notify_audit: false
@@ -256,6 +259,7 @@
     {{#is_alert}}
     {{cluster_name}} network RX (receive) errors occurring 100 times per second
     {{/is_alert}}
+  escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
   notify_no_data: false
   notify_audit: false
