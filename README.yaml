@@ -30,9 +30,6 @@ github_repo: cloudposse/terraform-datadog-monitor
 
 # Badges to display
 badges:
-  - name: "Build Status"
-    image: "https://travis-ci.org/cloudposse/terraform-datadog-monitor.svg?branch=master"
-    url: "https://travis-ci.org/cloudposse/terraform-datadog-monitor"
   - name: "Latest Release"
     image: "https://img.shields.io/github/release/cloudposse/terraform-datadog-monitor.svg"
     url: "https://github.com/cloudposse/terraform-datadog-monitor/releases/latest"
@@ -42,27 +39,45 @@ badges:
 
 related:
   - name: "terraform-aws-datadog-integration"
-    description: "Terraform Module for integration DataDog with AWS"
+    description: "Terraform module to configure Datadog AWS integration"
     url: "https://github.com/cloudposse/terraform-aws-datadog-integration"
 
 # Short description of this project
 description: |-
-  Terraform module repository with a number of common configurations ("submodules") of Datadog monitors
+  Terraform module to configure [Datadog monitors](https://docs.datadoghq.com/api/v1/monitors/).
 
 introduction: |-
-  ## Datadog Monitors Catalog
+  Datadog monitors are configured in a YAML configuration file.
 
-  - [Load Average](modules/load_average) - Terraform module to provision Load Average monitors
-  - [CPU](modules/cpu) - Terraform module to provision CPU Usage monitors
-  - [Memory](modules/memory) - Terraform module to provision Memory Usage monitors
-  - [Swap](modules/swap) - Terraform module to provision Swap Space monitors
+  See [monitors.yaml](examples/complete/monitors.yaml) for monitor configuration examples.
+
+  For more details, refer to:
+
+  - [Terraform Datadog monitor resource](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor)
+  - [Create a monitor](https://docs.datadoghq.com/api/v1/monitors/#create-a-monitor)
+
 
 # How to use this project
 usage: |-
-  - [Load Average](modules/load_average)
-  - [CPU](modules/cpu)
-  - [Memory](modules/memory)
-  - [Swap](modules/swap)
+  For a complete example, see [examples/complete](examples/complete).
+
+  ```hcl
+    locals {
+      datadog_monitors = yamldecode(file("monitors.yaml"))
+    }
+
+    module "datadog_monitors" {
+      source = "git::https://github.com/cloudposse/terraform-datadog-monitor.git?ref=master"
+
+      datadog_monitors     = local.datadog_monitors
+      alert_tags           = ["@opsgenie"]
+
+      context = module.this.context
+    }
+  ```
+
+examples: |-
+  Review the [complete example](examples/complete) to see how to use this module.
 
 include:
   - "docs/targets.md"
@@ -70,6 +85,8 @@ include:
 
 # Contributors to this project
 contributors:
+  - name: "Erik Osterman"
+    github: "osterman"
   - name: "Andriy Knysh"
     github: "aknysh"
   - name: "Vladimir"
