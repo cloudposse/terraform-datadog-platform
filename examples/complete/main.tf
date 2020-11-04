@@ -1,5 +1,9 @@
 locals {
-  datadog_monitors = yamldecode(file("monitors.yaml"))
+  datadog_monitors = merge([
+    for monitors_file in fileset(path.module, "monitors/*.yaml") : {
+      for k, v in yamldecode(file(format("%s/%s", path.module, monitors_file))) : k => v
+    }
+  ]...)
 }
 
 module "datadog_monitors" {

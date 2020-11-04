@@ -60,9 +60,9 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 
 ## Introduction
 
-Datadog monitors are configured in a YAML configuration file.
+Datadog monitors are configured in YAML configuration files.
 
-See [monitors.yaml](examples/complete/monitors.yaml) for monitor configuration examples.
+See [monitors](examples/complete/monitors) for monitor configuration examples.
 
 For more details, refer to:
 
@@ -77,6 +77,9 @@ Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest re
 
 
 For a complete example, see [examples/complete](examples/complete).
+
+For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest)
+(which tests and deploys the example on Datadog), see [test](test).
 
 ```hcl
   locals {
