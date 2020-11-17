@@ -60,9 +60,11 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 
 ## Introduction
 
-Datadog monitors are configured in YAML configuration files.
+Datadog monitors are defined in YAML configuration files.
 
-See [monitors](examples/complete/monitors) for monitor configuration examples.
+We maintain a comprehensive [catalog](catalog) of Datadog monitors and welcome contributions via pull request!
+
+The [example](examples/complete) in this module uses the catalog to provision the monitors on Datadog.
 
 For more details, refer to:
 
@@ -82,18 +84,24 @@ For automated tests of the complete example using [bats](https://github.com/bats
 (which tests and deploys the example on Datadog), see [test](test).
 
 ```hcl
-  locals {
-    datadog_monitors = yamldecode(file("monitors.yaml"))
+  module "yaml_config" {
+    source = "git::https://github.com/cloudposse/terraform-yaml-config.git?ref=master"
+
+    map_config_local_base_path = path.module
+    map_config_paths           = ["catalog/*.yaml"]
+
+    context = module.this.context
   }
 
   module "datadog_monitors" {
     source = "git::https://github.com/cloudposse/terraform-datadog-monitor.git?ref=master"
 
-    datadog_monitors     = local.datadog_monitors
+    datadog_monitors     = module.yaml_config.map_configs
     alert_tags           = ["@opsgenie"]
+    alert_tags_separator = "\n"
 
     context = module.this.context
-  }
+}
 ```
 
 
@@ -176,6 +184,7 @@ Are you using this project or any of our other projects? Consider [leaving a tes
 Check out these related projects.
 
 - [terraform-aws-datadog-integration](https://github.com/cloudposse/terraform-aws-datadog-integration) - Terraform module to configure Datadog AWS integration
+- [terraform-yaml-config](https://github.com/cloudposse/terraform-yaml-config) - Terraform module to convert local and remote YAML configuration templates into Terraform lists and maps.
 
 
 

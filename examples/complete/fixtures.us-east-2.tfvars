@@ -11,3 +11,5 @@ name = "datadog-monitor"
 alert_tags = ["@opsgenie"]
 
 alert_tags_separator = "\n"
+
+monitor_paths = ["../../catalog/*.yaml"]
