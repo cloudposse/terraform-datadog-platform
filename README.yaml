@@ -87,7 +87,7 @@ usage: |-
       alert_tags_separator = "\n"
 
       context = module.this.context
-  }
+   }
   ```
 
 examples: |-

@@ -101,7 +101,7 @@ For automated tests of the complete example using [bats](https://github.com/bats
     alert_tags_separator = "\n"
 
     context = module.this.context
-}
+ }
 ```
 
 
