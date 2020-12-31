@@ -1,8 +1,8 @@
 # The official Datadog API documentation with available query parameters & alert types:
 # https://docs.datadoghq.com/api/v1/monitors/#create-a-monitor
 
-k8s-replica-pod-down:
-  name: "(k8s) Replica Pod is down"
+k8s-deployment-replica-pod-down:
+  name: "(k8s) Deployment Replica Pod is down"
   type: query alert
   query: |
     avg(last_15m):avg:kubernetes_state.deployment.replicas_desired{*} by {cluster_name,deployment} - avg:kubernetes_state.deployment.replicas_ready{*} by {cluster_name,deployment} >= 2
@@ -52,7 +52,7 @@ k8s-pod-restarting:
     critical: 5
     warning: 3
 
-k8s-statefulset-down:
+k8s-statefulset-replica-down:
   name: "(k8s) StatefulSet Replica Pod is down"
   type: query alert
   query: |
@@ -82,7 +82,7 @@ k8s-crashloopBackOff:
   name: "(k8s) CrashloopBackOff detected"
   type: query alert
   query: |
-    max(last_10m):max:kubernetes_state.container.waiting{reason:crashloopbackoff} by {cluster_name,kube_namespace,pod_name} >= 1
+    max(last_10m):max:kubernetes_state.container.status_report.count.waiting{reason:crashloopbackoff} by {kube_namespace,pod_name} >= 1
   message: |
     ({{cluster_name.name}}) pod {{pod_name.name}} is CrashloopBackOff on {{kube_namespace.name}}
   escalation_message: ""
@@ -101,7 +101,7 @@ k8s-crashloopBackOff:
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
-    critical: 1
+    critical: 1    
 
 k8s-multiple-pods-failing:
   name: "(k8s) Multiple Pods are failing"
@@ -129,13 +129,43 @@ k8s-multiple-pods-failing:
     warning: 5
     critical: 10
 
-k8s-unavailable-replica:
-  name: "(k8s) Unavailable Replica(s) detected"
+k8s-unavailable-deployment-replica:
+  name: "(k8s) Unavailable Deployment Replica(s) detected"
   type: metric alert
   query: |
     max(last_10m):max:kubernetes_state.deployment.replicas_unavailable{*} by {cluster_name} > 0
   message: |
-    ({{cluster_name.name}}) Detected unavailable replicas for longer than 10 minutes
+    ({{cluster_name.name}}) Detected unavailable Deployment replicas for longer than 10 minutes
+  escalation_message: ""
+  tags: [ "ManagedBy:Terraform" ]
+  notify_no_data: false
+  notify_audit: true
+  require_full_window: false
+  enable_logs_sample: false
+  force_delete: true
+  include_tags: true
+  locked: false
+  renotify_interval: 60
+  timeout_h: 60
+  evaluation_delay: 60
+  new_host_delay: 300
+  no_data_timeframe: 10
+  threshold_windows: { }
+  thresholds:
+    critical: 0
+    #warning:
+    #unknown:
+    #ok:
+    #critical_recovery:
+    #warning_recovery:
+
+k8s-unavailable-statefulset-replica:
+  name: "(k8s) Unavailable Statefulset Replica(s) detected"
+  type: metric alert
+  query: |
+    max(last_10m):max:kubernetes_state.statefulset.replicas_unavailable{*} by {cluster_name} > 0
+  message: |
+    ({{cluster_name.name}}) Detected unavailable Statefulset replicas for longer than 10 minutes
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
   notify_no_data: false
@@ -161,11 +191,11 @@ k8s-unavailable-replica:
 
 k8s-node-status-unschedulable:
   name: "(k8s) Detected Unschedulable Node(s)"
-  type: metric alert
+  type: query alert
   query: |
-    sum(last_5m):sum:kubernetes_state.node.status{status:unschedulable} by {status} > 0
+    max(last_15m):sum:kubernetes_state.node.status{status:schedulable} by {cluster_name} * 100 / sum:kubernetes_state.node.status{*} by {cluster_name} < 80
   message: |
-    Number of unscheduleable nodes is greater than 0
+    More than 20% of nodes are unschedulable on ({{cluster_name}} cluster). \n Keep in mind that this might be expected based on your infrastructure.
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
   notify_no_data: false
@@ -182,8 +212,8 @@ k8s-node-status-unschedulable:
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
-    critical: 0
-    #warning:
+    critical: 80
+    warning: 90
     #unknown:
     #ok:
     #critical_recovery:
@@ -255,7 +285,7 @@ k8s-high-disk-usage:
   query: |
     min(last_5m):min:system.disk.used{*} by {host,cluster_name} / avg:system.disk.total{*} by {host,cluster_name} * 100 > 90
   message: |
-    ({{cluster_name.name}} High disk usage detected on {{host.name}}
+    ({{cluster_name.name}}) High disk usage detected on {{host.name}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
   notify_no_data: false
@@ -417,7 +447,7 @@ k8s-network-rx-errors:
     #unknown:
     #ok:
     #critical_recovery:
-    #warning_recovery:
+    #warning_recovery:    
 
 k8s-node-not-ready:
   name: "(k8s) Node Not Ready"
@@ -443,6 +473,124 @@ k8s-node-not-ready:
   threshold_windows: { }
   thresholds:
     critical: 3
+    #warning:
+    #unknown:
+    #ok:
+    #critical_recovery:
+    #warning_recovery:
+
+k8s-kube-api-down:
+  name: "(k8s) KubeAPI Down"
+  type: service check
+  query: |
+    "kube_apiserver_controlplane.up".by('host').last(5).count_by_status()
+  message: |
+    ({{cluster_name.name}}) KubeAPI is down
+  escalation_message: ""
+  tags: [ "ManagedBy:Terraform" ]
+  notify_no_data: false
+  notify_audit: true
+  require_full_window: false
+  enable_logs_sample: false
+  force_delete: true
+  include_tags: true
+  locked: false
+  renotify_interval: 60
+  timeout_h: 60
+  evaluation_delay: 60
+  new_host_delay: 300
+  no_data_timeframe: 10
+  threshold_windows: { }
+  thresholds:
+    critical: 3
+    #warning:
+    #unknown:
+    #ok:
+    #critical_recovery:
+    #warning_recovery:
+
+k8s-increased-pod-crash:
+  name: "(k8s) Increased Pod Crashes"
+  type: query alert
+  query: "avg(last_5m):avg:kubernetes_state.container.restarts{*} by {pod} - hour_before(avg:kubernetes_state.container.restarts{*} by {pod}) > 3"
+  message: |-
+    ({{pod.name}}) has crashed repeatedly over the last hour
+  escalation_message: ""  
+  tags: [ "ManagedBy:Terraform" ]
+  notify_no_data: false
+  notify_audit: false
+  require_full_window: false
+  enable_logs_sample: false
+  force_delete: true
+  include_tags: true
+  locked: false
+  renotify_interval: 60
+  timeout_h: 60
+  evaluation_delay: 60
+  new_host_delay: 300
+  no_data_timeframe: 10
+  threshold_windows: { }
+  thresholds:
+    critical: 3
+    #warning:
+    #unknown:
+    #ok:
+    #critical_recovery:
+    #warning_recovery:
+
+k8s-hpa-errors:
+  name: "(k8s) HPA Errors"
+  type: event alert
+  query: "events('sources:kubernetes priority:all \"unable to fetch metrics from resource metrics API:\"').by('hpa').rollup('count').last('1h') > 200"
+  message: |-
+    A high number of hpa failures (> ({{threshold}}) are occurring.
+  escalation_message: ""  
+  tags: [ "ManagedBy:Terraform" ]
+  notify_no_data: false
+  notify_audit: false
+  require_full_window: true
+  enable_logs_sample: false
+  force_delete: true
+  include_tags: true
+  locked: false
+  renotify_interval: 60
+  timeout_h: 60
+  evaluation_delay: 60
+  new_host_delay: 300
+  no_data_timeframe: 10
+  threshold_windows: { }
+  thresholds:
+    critical: 200
+    #warning:
+    #unknown:
+    #ok:
+    #critical_recovery:
+    #warning_recovery:
+
+k8s-pending-pods:
+  name: "(k8s) Pending Pods"
+  type: metric alert
+  query: "min(last_30m):sum:kubernetes_state.pod.status_phase{phase:running} - sum:kubernetes_state.pod.status_phase{phase:running} + sum:kubernetes_state.pod.status_phase{phase:pending}.fill(zero) >= 1"
+  message: |-
+    There has been at least 1 pod Pending for 30 minutes.
+    There are currently ({{value}}) pods Pending.
+  escalation_message: ""  
+  tags: [ "ManagedBy:Terraform" ]
+  notify_no_data: false
+  notify_audit: false
+  require_full_window: true
+  enable_logs_sample: false
+  force_delete: true
+  include_tags: true
+  locked: false
+  renotify_interval: 60
+  timeout_h: 60
+  evaluation_delay: 60
+  new_host_delay: 300
+  no_data_timeframe: 10
+  threshold_windows: { }
+  thresholds:
+    critical: 1
     #warning:
     #unknown:
     #ok:
