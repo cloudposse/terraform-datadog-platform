@@ -1,5 +1,6 @@
 module "yaml_config" {
-  source = "git::https://github.com/cloudposse/terraform-yaml-config.git?ref=tags/0.1.0"
+  source  = "cloudposse/config/yaml"
+  version = "0.1.0"
 
   map_config_local_base_path = path.module
   map_config_paths           = var.monitor_paths
