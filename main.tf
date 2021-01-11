@@ -35,7 +35,7 @@ resource "datadog_synthetics_test" "default" {
   name      = each.value.name
   message   = format("%s%s", each.value.message, local.alert_tags)
   type      = each.value.type
-  subtype   = each.value.subtype
+  subtype   = lookup(each.value, "subtype", null)
   status    = each.value.status
   locations = each.value.locations
   tags      = lookup(each.value, "tags", null)
