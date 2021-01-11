@@ -42,7 +42,7 @@ variable "datadog_synthetics" {
       target   = any
     }))
   }))
-  description = "List of DataDog synthetic test configurations. See catalog for examples"
+  description = "List of Datadog synthetic test configurations. See catalog for examples"
 }
 
 variable "alert_tags" {
