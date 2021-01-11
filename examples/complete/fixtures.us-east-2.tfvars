@@ -12,4 +12,6 @@ alert_tags = ["@opsgenie"]
 
 alert_tags_separator = "\n"
 
-monitor_paths = ["../../catalog/*.yaml"]
+monitor_paths   = ["../../catalog/monitors/*.yaml"]
+
+synthetic_paths = ["../../catalog/synthetics/*.yaml"]
