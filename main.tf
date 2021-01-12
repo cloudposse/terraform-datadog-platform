@@ -74,7 +74,7 @@ resource "datadog_synthetics_test" "default" {
   }
 
   options_list {
-    tick_every           = lookup(each.value, "tick_every", null)
+    tick_every           = lookup(each.value, "tick_every", 900)
     follow_redirects     = lookup(each.value, "follow_redirects", null)
     min_failure_duration = lookup(each.value, "min_failure_duration", null)
     min_location_failed  = lookup(each.value, "min_location_failed", null)
