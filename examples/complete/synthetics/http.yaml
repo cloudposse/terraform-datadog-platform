@@ -34,8 +34,8 @@ complex:
   options:
     tick_every: 1800
     follow_redirects: true
-    retry_count: 10
-    retry_interval: 15
+    retry_count: 3
+    retry_interval: 5
     renotify_interval: 2400
   assertions:
     - type: statusCode
