@@ -14,4 +14,4 @@ alert_tags_separator = "\n"
 
 monitor_paths = ["../../catalog/monitors/*.yaml"]
 
-synthetic_paths = ["../../catalog/synthetics/*.yaml"]
+synthetic_paths = ["synthetics/*.yaml"]

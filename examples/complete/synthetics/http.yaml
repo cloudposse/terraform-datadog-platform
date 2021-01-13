@@ -1,0 +1,43 @@
+simple:
+  name: cloudposse.com simple test
+  message: CloudPosse simple is not reachable
+  type: api
+  subtype: http
+  tags: ["ManagedBy:Terraform"]
+  locations: ["aws:us-west-2"]
+  status: "live"
+  request:
+    url: https://cloudposse.com
+  options: {}
+  assertions:
+    - type: statusCode
+      operator: is
+      target: 200
+
+complex:
+  name: cloudposse.com complex test
+  message: CloudPosse complex is not reachable
+  type: api
+  subtype: http
+  tags: ["ManagedBy:Terraform"]
+  locations: ["aws:us-east-1"]
+  status: "live"
+  request:
+    url: https://cloudposse.com
+  options:
+    tick_every: 1800
+    follow_redirects: true
+    retry:
+      count: 10
+      interval: 15
+    renotify_interval: 2400
+  assertions:
+    - type: statusCode
+      operator: is
+      target: 200
+    - type: body
+      operator: validatesJSONPath
+      targetjsonpath:
+        operator: is
+        targetvalue: true
+        jsonpath: status
