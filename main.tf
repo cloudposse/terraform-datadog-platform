@@ -41,17 +41,17 @@ resource "datadog_synthetics_test" "default" {
   tags      = lookup(each.value, "tags", null)
 
   request = {
-    host       = lookup(each.value, "request_host", null)
-    port       = lookup(each.value, "request_port", null)
-    url        = lookup(each.value, "request_url", null)
-    method     = lookup(each.value, "request_method", "GET")
-    timeout    = lookup(each.value, "request_timeout", null)
-    body       = lookup(each.value, "request_body", null)
-    dns_server = lookup(each.value, "request_dns_server", null)
+    host       = lookup(each.value.request, "host", null)
+    port       = lookup(each.value.request, "port", null)
+    url        = lookup(each.value.request, "url", null)
+    method     = lookup(each.value.request, "method", "GET")
+    timeout    = lookup(each.value.request, "timeout", null)
+    body       = lookup(each.value.request, "body", null)
+    dns_server = lookup(each.value.request, "dns_server", null)
   }
 
-  request_headers = lookup(each.value, "request_headers", null)
-  request_query   = lookup(each.value, "request_query", null)
+  request_headers = lookup(each.value.request, "headers", {})
+  request_query   = lookup(each.value.request, "query", {})
 
   dynamic "assertion" {
     for_each = each.value.assertions
@@ -62,39 +62,39 @@ resource "datadog_synthetics_test" "default" {
       target   = lookup(assertion.value, "target", null)
       property = lookup(assertion.value, "target", null)
       dynamic "targetjsonpath" {
-        for_each = lookup(assertion.value, "targetjsonpath", {})
+        for_each = lookup(assertion.value, "targetjsonpath", null) != null ? [1] : []
 
         content {
-          operator    = lookup(targetjsonpath.value, "operator", null)
-          targetvalue = lookup(targetjsonpath.value, "targetvalue", null)
-          jsonpath    = lookup(targetjsonpath.value, "jsonpath", null)
+          operator    = lookup(assertion.value.targetjsonpath, "operator", null)
+          targetvalue = lookup(assertion.value.targetjsonpath, "targetvalue", null)
+          jsonpath    = lookup(assertion.value.targetjsonpath, "jsonpath", null)
         }
       }
     }
   }
 
   options_list {
-    tick_every           = lookup(each.value, "tick_every", 900)
-    follow_redirects     = lookup(each.value, "follow_redirects", null)
-    min_failure_duration = lookup(each.value, "min_failure_duration", null)
-    min_location_failed  = lookup(each.value, "min_location_failed", null)
-    accept_self_signed   = lookup(each.value, "accept_self_signed", null)
-    allow_insecure       = lookup(each.value, "allow_insecure", null)
+    tick_every           = lookup(each.value.options, "tick_every", 900)
+    follow_redirects     = lookup(each.value.options, "follow_redirects", false)
+    min_failure_duration = lookup(each.value.options, "min_failure_duration", null)
+    min_location_failed  = lookup(each.value.options, "min_location_failed", null)
+    accept_self_signed   = lookup(each.value.options, "accept_self_signed", false)
+    allow_insecure       = lookup(each.value.options, "allow_insecure", false)
 
     dynamic "retry" {
-      for_each = lookup(each.value, "retry", {})
+      for_each = lookup(each.value.options, "retry", null) != null ? [1] : []
 
       content {
-        count    = retry.value.count
-        interval = retry.value.interval
+        count    = each.value.options.retry.count
+        interval = each.value.options.retry.interval
       }
     }
 
     dynamic "monitor_options" {
-      for_each = lookup(each.value, "monitor_options", null) != null ? [1] : []
+      for_each = lookup(each.value.options, "renotify_interval", null) != null ? [1] : []
 
       content {
-        renotify_interval = each.value.monitor_options.renotify_interval
+        renotify_interval = each.value.options.renotify_interval
       }
     }
   }

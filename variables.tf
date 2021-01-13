@@ -27,20 +27,17 @@ variable "datadog_monitors" {
 
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/synthetics_test
 variable "datadog_synthetics" {
-  default = {}
   type = map(object({
-    name      = string
-    message   = string
-    type      = string
-    subtype   = string
-    status    = string
-    locations = list(string)
-    tags      = list(string)
-    assertions = list(object({
-      type     = string
-      operator = string
-      target   = any
-    }))
+    name       = string
+    message    = string
+    type       = string
+    subtype    = string
+    status     = string
+    locations  = list(string)
+    tags       = list(string)
+    request    = any
+    assertions = any
+    options    = any
   }))
   description = "List of Datadog synthetic test configurations. See catalog for examples"
 }
