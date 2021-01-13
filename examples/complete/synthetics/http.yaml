@@ -14,7 +14,7 @@ simple:
   assertions:
     - type: statusCode
       operator: is
-      target: 200
+      target: "200"
 
 complex:
   name: cloudposse.com complex test
@@ -22,7 +22,7 @@ complex:
   type: api
   subtype: http
   tags: ["ManagedBy:Terraform"]
-  locations: ["aws:us-east-1"]
+  locations: ["aws:us-east-2"]
   status: "live"
   request:
     url: https://cloudposse.com
@@ -40,7 +40,7 @@ complex:
   assertions:
     - type: statusCode
       operator: is
-      target: 200
+      target: "200"
     - type: body
       operator: validatesJSONPath
       targetjsonpath_operator: is
