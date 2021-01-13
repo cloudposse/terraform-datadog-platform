@@ -60,7 +60,7 @@ resource "datadog_synthetics_test" "default" {
       type     = lookup(assertion.value, "type", null)
       operator = lookup(assertion.value, "operator", null)
       target   = lookup(assertion.value, "target", null)
-      property = lookup(assertion.value, "target", null)
+      property = lookup(assertion.value, "property", null)
       dynamic "targetjsonpath" {
         for_each = lookup(assertion.value, "targetjsonpath_operator", null) != null ? [1] : []
 
