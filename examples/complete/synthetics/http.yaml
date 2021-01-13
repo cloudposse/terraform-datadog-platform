@@ -8,6 +8,8 @@ simple:
   status: "live"
   request:
     url: https://cloudposse.com
+  request_headers: {}
+  request_query: {}
   options: {}
   assertions:
     - type: statusCode
@@ -24,12 +26,16 @@ complex:
   status: "live"
   request:
     url: https://cloudposse.com
+  request_headers:
+    Accept-Charset: utf-8, iso-8859-1;q=0.5
+    Accept: text/html
+  request_query:
+    hello: world
   options:
     tick_every: 1800
     follow_redirects: true
-    retry:
-      count: 10
-      interval: 15
+    retry_count: 10
+    retry_interval: 15
     renotify_interval: 2400
   assertions:
     - type: statusCode
@@ -37,7 +43,6 @@ complex:
       target: 200
     - type: body
       operator: validatesJSONPath
-      targetjsonpath:
-        operator: is
-        targetvalue: true
-        jsonpath: status
+      targetjsonpath_operator: is
+      targetjsonpath_targetvalue: true
+      targetjsonpath_jsonpath: status

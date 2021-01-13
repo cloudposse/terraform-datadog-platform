@@ -50,8 +50,8 @@ resource "datadog_synthetics_test" "default" {
     dns_server = lookup(each.value.request, "dns_server", null)
   }
 
-  request_headers = lookup(each.value.request, "headers", {})
-  request_query   = lookup(each.value.request, "query", {})
+  request_headers = each.value.request_headers
+  request_query   = each.value.request_query
 
   dynamic "assertion" {
     for_each = each.value.assertions
@@ -62,12 +62,12 @@ resource "datadog_synthetics_test" "default" {
       target   = lookup(assertion.value, "target", null)
       property = lookup(assertion.value, "target", null)
       dynamic "targetjsonpath" {
-        for_each = lookup(assertion.value, "targetjsonpath", null) != null ? [1] : []
+        for_each = lookup(assertion.value, "targetjsonpath_operator", null) != null ? [1] : []
 
         content {
-          operator    = lookup(assertion.value.targetjsonpath, "operator", null)
-          targetvalue = lookup(assertion.value.targetjsonpath, "targetvalue", null)
-          jsonpath    = lookup(assertion.value.targetjsonpath, "jsonpath", null)
+          operator    = assertion.value.targetjsonpath_operator
+          targetvalue = assertion.value.targetjsonpath_targetvalue
+          jsonpath    = assertion.value.targetjsonpath_jsonpath
         }
       }
     }
@@ -82,11 +82,11 @@ resource "datadog_synthetics_test" "default" {
     allow_insecure       = lookup(each.value.options, "allow_insecure", false)
 
     dynamic "retry" {
-      for_each = lookup(each.value.options, "retry", null) != null ? [1] : []
+      for_each = lookup(each.value.options, "retry_count", null) != null ? [1] : []
 
       content {
-        count    = each.value.options.retry.count
-        interval = each.value.options.retry.interval
+        count    = each.value.options.retry_count
+        interval = each.value.options.retry_interval
       }
     }
 
