@@ -44,7 +44,7 @@ resource "datadog_synthetics_test" "default" {
     host       = lookup(each.value.request, "host", null)
     port       = lookup(each.value.request, "port", null)
     url        = lookup(each.value.request, "url", null)
-    method     = lookup(each.value.request, "method", "GET")
+    method     = lookup(each.value.request, "method", null)
     timeout    = lookup(each.value.request, "timeout", null)
     body       = lookup(each.value.request, "body", null)
     dns_server = lookup(each.value.request, "dns_server", null)
