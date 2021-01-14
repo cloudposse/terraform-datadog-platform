@@ -8,6 +8,7 @@ simple:
   status: "live"
   request:
     url: https://cloudposse.com
+    method: GET
   request_headers: {}
   request_query: {}
   options: {}
@@ -26,6 +27,7 @@ complex:
   status: "live"
   request:
     url: https://cloudposse.com
+    method: GET
   request_headers:
     Accept-Charset: utf-8, iso-8859-1;q=0.5
     Accept: text/html

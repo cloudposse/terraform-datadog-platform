@@ -9,6 +9,7 @@ ssl-test:
   status: "live"
   request:
     host: cloudposse.com
+    port: 443
   request_headers: {}
   request_query: {}
   options: {}
