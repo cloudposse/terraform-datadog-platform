@@ -177,6 +177,7 @@ Available targets:
 | Name | Description |
 |------|-------------|
 | datadog\_monitor\_names | Names of the created Datadog monitors |
+| datadog\_synthetic\_tests | The synthetic tests created in DataDog |
 | datadog\_synthetics\_test\_names | Names of the created Datadog Synthetic tests |
 
 <!-- markdownlint-restore -->
