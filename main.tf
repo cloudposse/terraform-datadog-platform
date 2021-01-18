@@ -27,6 +27,10 @@ resource "datadog_monitor" "default" {
   thresholds          = lookup(each.value, "thresholds", null)
 
   tags = lookup(each.value, "tags", null)
+
+  lifecycle {
+    ignore_changes = [silenced]
+  }
 }
 
 resource "datadog_synthetics_test" "default" {
