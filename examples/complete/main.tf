@@ -1,5 +1,6 @@
 module "monitor_configs" {
-  source = "git::https://github.com/cloudposse/terraform-yaml-config.git?ref=tags/0.1.0"
+  source  = "cloudposse/yaml/config"
+  version = "0.6.0"
 
   map_config_local_base_path = path.module
   map_config_paths           = var.monitor_paths
@@ -8,7 +9,8 @@ module "monitor_configs" {
 }
 
 module "synthetic_configs" {
-  source = "git::https://github.com/cloudposse/terraform-yaml-config.git?ref=tags/0.1.0"
+  source  = "cloudposse/yaml/config"
+  version = "0.6.0"
 
   map_config_local_base_path = path.module
   map_config_paths           = var.synthetic_paths
