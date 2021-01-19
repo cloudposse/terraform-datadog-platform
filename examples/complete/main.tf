@@ -1,5 +1,5 @@
 module "monitor_configs" {
-  source  = "cloudposse/yaml/config"
+  source  = "cloudposse/config/yaml"
   version = "0.6.0"
 
   map_config_local_base_path = path.module
@@ -9,7 +9,7 @@ module "monitor_configs" {
 }
 
 module "synthetic_configs" {
-  source  = "cloudposse/yaml/config"
+  source  = "cloudposse/config/yaml"
   version = "0.6.0"
 
   map_config_local_base_path = path.module
