@@ -143,7 +143,7 @@ Available targets:
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12.26 |
+| terraform | >= 0.13.0 |
 | aws | >= 2.0 |
 | datadog | >= 2.13 |
 | local | >= 1.3 |
@@ -163,7 +163,8 @@ Available targets:
 | alert\_tags\_separator | Separator for the alert tags. All strings from the `alert_tags` variable will be joined into one string using the separator and then added to the alert message | `string` | `"\n"` | no |
 | attributes | Additional attributes (e.g. `1`) | `list(string)` | `[]` | no |
 | context | Single object for setting entire context at once.<br>See description of individual variables for details.<br>Leave string and numeric variables as `null` to use default value.<br>Individual variable settings (non-null) override settings in context object,<br>except for attributes, tags, and additional\_tag\_map, which are merged. | <pre>object({<br>    enabled             = bool<br>    namespace           = string<br>    environment         = string<br>    stage               = string<br>    name                = string<br>    delimiter           = string<br>    attributes          = list(string)<br>    tags                = map(string)<br>    additional_tag_map  = map(string)<br>    regex_replace_chars = string<br>    label_order         = list(string)<br>    id_length_limit     = number<br>  })</pre> | <pre>{<br>  "additional_tag_map": {},<br>  "attributes": [],<br>  "delimiter": null,<br>  "enabled": true,<br>  "environment": null,<br>  "id_length_limit": null,<br>  "label_order": [],<br>  "name": null,<br>  "namespace": null,<br>  "regex_replace_chars": null,<br>  "stage": null,<br>  "tags": {}<br>}</pre> | no |
-| datadog\_monitors | List of Datadog monitor configurations | <pre>map(object({<br>    name                = string<br>    type                = string<br>    message             = string<br>    escalation_message  = string<br>    query               = string<br>    tags                = list(string)<br>    notify_no_data      = bool<br>    new_host_delay      = number<br>    evaluation_delay    = number<br>    no_data_timeframe   = number<br>    renotify_interval   = number<br>    notify_audit        = bool<br>    timeout_h           = number<br>    enable_logs_sample  = bool<br>    include_tags        = bool<br>    require_full_window = bool<br>    locked              = bool<br>    force_delete        = bool<br>    threshold_windows   = map(any)<br>    thresholds          = map(any)<br>  }))</pre> | n/a | yes |
+| datadog\_monitors | List of Datadog monitor configurations. See catalog for examples | <pre>map(object({<br>    name                = string<br>    type                = string<br>    message             = string<br>    escalation_message  = string<br>    query               = string<br>    tags                = list(string)<br>    notify_no_data      = bool<br>    new_host_delay      = number<br>    evaluation_delay    = number<br>    no_data_timeframe   = number<br>    renotify_interval   = number<br>    notify_audit        = bool<br>    timeout_h           = number<br>    enable_logs_sample  = bool<br>    include_tags        = bool<br>    require_full_window = bool<br>    locked              = bool<br>    force_delete        = bool<br>    threshold_windows   = map(any)<br>    thresholds          = map(any)<br>  }))</pre> | n/a | yes |
+| datadog\_synthetics | List of Datadog synthetic test configurations. See catalog for examples | <pre>map(object({<br>    name            = string<br>    message         = string<br>    type            = string<br>    subtype         = string<br>    status          = string<br>    locations       = list(string)<br>    tags            = list(string)<br>    request         = map(string)<br>    request_headers = map(string)<br>    request_query   = map(string)<br>    options         = map(string)<br>    assertions      = list(map(any))<br>  }))</pre> | n/a | yes |
 | delimiter | Delimiter to be used between `namespace`, `environment`, `stage`, `name` and `attributes`.<br>Defaults to `-` (hyphen). Set to `""` to use no delimiter at all. | `string` | `null` | no |
 | enabled | Set to false to prevent the module from creating any resources | `bool` | `null` | no |
 | environment | Environment, e.g. 'uw2', 'us-west-2', OR 'prod', 'staging', 'dev', 'UAT' | `string` | `null` | no |
@@ -180,6 +181,8 @@ Available targets:
 | Name | Description |
 |------|-------------|
 | datadog\_monitor\_names | Names of the created Datadog monitors |
+| datadog\_synthetic\_tests | The synthetic tests created in DataDog |
+| datadog\_synthetics\_test\_names | Names of the created Datadog Synthetic tests |
 
 <!-- markdownlint-restore -->
 
