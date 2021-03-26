@@ -4,7 +4,7 @@ output "datadog_monitor_names" {
 }
 
 output "datadog_monitor_ids" {
-  value       = values(datadog_monitor.default)[*].name
+  value       = values(datadog_monitor.default)[*].id
   description = "IDs of the created Datadog monitors"
 }
 
