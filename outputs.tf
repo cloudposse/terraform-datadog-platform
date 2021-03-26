@@ -10,7 +10,7 @@ output "datadog_monitor_ids" {
 
 output "datadog_monitors" {
   value       = datadog_monitor.default
-  description = "A list of the actual monitor objects."
+  description = "Datadog monitor outputs"
 }
 
 output "datadog_synthetics_test_names" {
