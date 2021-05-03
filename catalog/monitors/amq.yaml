@@ -1,6 +1,41 @@
 # The official Datadog API documentation with available query parameters & alert types:
 # https://docs.datadoghq.com/api/v1/monitors/#create-a-monitor
 
+amq-cpu-utilization:
+  name: "(AMQ) CPU Utilization above 90%"
+  type: metric alert
+  query: |
+    avg(last_15m):avg:aws.amazonmq.cpu_utilization{*} by {dbinstanceidentifier} > 90
+  message: |
+    {{#is_warning}}
+    ({dbinstanceidentifier}) CPU Utilization above 85%
+    {{/is_warning}}
+    {{#is_alert}}
+    ({dbinstanceidentifier}) CPU Utilization above 90%
+    {{/is_alert}}
+  escalation_message: ""
+  tags: [ "ManagedBy:Terraform" ]
+  notify_no_data: false
+  notify_audit: true
+  require_full_window: true
+  enable_logs_sample: false
+  force_delete: true
+  include_tags: true
+  locked: false
+  renotify_interval: 60
+  timeout_h: 60
+  evaluation_delay: 60
+  new_host_delay: 300
+  no_data_timeframe: 10
+  threshold_windows: { }
+  thresholds:
+    critical: 90
+    warning: 85
+    #unknown:
+    #ok:
+    #critical_recovery:
+    #warning_recovery:
+
 amq-network-in:
   name: "(AMQ) Anomaly of a large variance in network-in bytes"
   type: metric alert
@@ -43,12 +78,6 @@ amq-network-out:
   type: metric alert
   query: |
     aws.amazonmq.network_out
-
-amq-cpu-utilization:
-  name: "(AMQ) Anomaly of a large variance in "
-  type: metric alert
-  query: |
-    aws.amazonmq.cpu_utilization
 
 amq-current-connections-count:
   name: "(AMQ) Anomaly of a large variance in "
