@@ -1,3 +1,4 @@
+
 <!-- markdownlint-disable -->
 # terraform-datadog-monitor [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-datadog-monitor.svg)](https://github.com/cloudposse/terraform-datadog-monitor/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
 <!-- markdownlint-restore -->
@@ -29,7 +30,6 @@
 
 Terraform module to configure [Datadog monitors](https://docs.datadoghq.com/api/v1/monitors/).
 
-
 ---
 
 This project is part of our comprehensive ["SweetOps"](https://cpco.io/sweetops) approach towards DevOps.
@@ -59,7 +59,6 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 
 
 
-
 ## Introduction
 
 Datadog monitors are defined in YAML configuration files.
@@ -72,6 +71,7 @@ For more details, refer to:
 
 - [Terraform Datadog monitor resource](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor)
 - [Create a monitor](https://docs.datadoghq.com/api/v1/monitors/#create-a-monitor)
+
 
 ## Security & Compliance [<img src="https://cloudposse.com/wp-content/uploads/2020/11/bridgecrew.svg" width="250" align="right" />](https://bridgecrew.io/)
 
