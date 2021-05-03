@@ -5,13 +5,13 @@ amq-cpu-utilization:
   name: "(AMQ) CPU Utilization above 90%"
   type: metric alert
   query: |
-    avg(last_15m):avg:aws.amazonmq.cpu_utilization{*} by {dbinstanceidentifier} > 90
+    avg(last_15m):avg:aws.amazonmq.cpu_utilization{*} by {broker} > 90
   message: |
     {{#is_warning}}
-    ({dbinstanceidentifier}) CPU Utilization above 85%
+    ({broker}) CPU Utilization above 85%
     {{/is_warning}}
     {{#is_alert}}
-    ({dbinstanceidentifier}) CPU Utilization above 90%
+    ({broker}) CPU Utilization above 90%
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
