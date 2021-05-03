@@ -17,7 +17,7 @@ rds-cpuutilization:
   tags: [ "ManagedBy:Terraform" ]
   notify_no_data: false
   notify_audit: true
-  require_full_window: false
+  require_full_window: true
   enable_logs_sample: false
   force_delete: true
   include_tags: true
