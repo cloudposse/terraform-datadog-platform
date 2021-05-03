@@ -168,8 +168,8 @@ rds-database-connections:
   new_host_delay: 300
   no_data_timeframe: 10
   threshold_windows:
-  	trigger_window: "last_15m",
-		recovery_window: "last_15m"
+  	trigger_window: "last_15m"
+    recovery_window: "last_15m"
   #thresholds:
     #critical: 
     #warning: 
