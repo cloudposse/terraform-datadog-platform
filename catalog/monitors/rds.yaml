@@ -43,7 +43,7 @@ rds-disk-queue-depth:
     avg(last_15m):avg:aws.rds.disk_queue_depth{*} by {dbinstanceidentifier} > 64
   message: |
     {{#is_warning}}
-    ({dbinstanceidentifier}) Disk queue depth above 44
+    ({dbinstanceidentifier}) Disk queue depth above 48
     {{/is_warning}}
     {{#is_alert}}
     ({dbinstanceidentifier}) Disk queue depth above 64
@@ -65,7 +65,7 @@ rds-disk-queue-depth:
   threshold_windows: { }
   thresholds:
     critical: 64
-    warning: 44
+    warning: 48
     #unknown:
     #ok:
     #critical_recovery:
