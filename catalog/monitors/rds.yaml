@@ -142,16 +142,16 @@ rds-swap-usage:
     #warning_recovery:
 
 rds-database-connections:
-  name: "Anomalous connection count"
+  name: "Anomaly of a large variance in RDS connection count"
   type: metric alert
   query: |
-    avg(last_4h):anomalies(avg:aws.rds.database_connections{*}, 'basic', 2, direction='above', alert_window='last_15m', interval=60, count_default_zero='true') >= 1
+    avg(last_4h):anomalies(avg:aws.rds.database_connections{*}, 'basic', 2, direction='both', alert_window='last_15m', interval=60, count_default_zero='true') >= 1
   message: |
     {{#is_warning}}
-    ({dbinstanceidentifier}) Anomalous connection count
+    ({dbinstanceidentifier}) Anomaly of a large variance in RDS connection count
     {{/is_warning}}
     {{#is_alert}}
-    ({dbinstanceidentifier}) Anomalous connection count
+    ({dbinstanceidentifier}) Anomaly of a large variance in RDS connection count
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
@@ -170,10 +170,10 @@ rds-database-connections:
   threshold_windows:
     trigger_window: "last_15m"
     recovery_window: "last_15m"
-  #thresholds:
-    #critical: 
+  thresholds:
+    critical: 1
     #warning: 
     #unknown:
     #ok:
-    #critical_recovery:
+    critical_recovery: 0
     #warning_recovery:
