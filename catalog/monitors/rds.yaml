@@ -75,7 +75,7 @@ rds-freeable-memory:
   name: "Freeable memory below 256 MB"
   type: metric alert
   query: |
-    avg(last_15m):avg:aws.rds.freeable_memory{*} by {dbinstanceidentifier} < 256
+    avg(last_5m):avg:aws.rds.freeable_memory{*} < 256000000
   message: |
     {{#is_warning}}
     ({dbinstanceidentifier}) Freeable memory below 512 MB
@@ -99,8 +99,8 @@ rds-freeable-memory:
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
-    critical: 256
-    warning: 512
+    critical: 256000000
+    warning: 512000000
     #unknown:
     #ok:
     #critical_recovery:
@@ -110,7 +110,7 @@ rds-swap-usage:
   name: "Swap usage above 256 MB"
   type: metric alert
   query: |
-    avg(last_15m):avg:aws.rds.swap_usage{*} by {dbinstanceidentifier} > 256
+    avg(last_15m):avg:aws.rds.swap_usage{*} by {dbinstanceidentifier} > 256000000
   message: |
     {{#is_warning}}
     ({dbinstanceidentifier}) Swap usage above 128 MB
