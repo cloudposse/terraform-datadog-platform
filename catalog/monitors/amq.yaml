@@ -40,7 +40,7 @@ amq-heap-usage:
   name: "(AMQ) JVM heap usage above 95%"
   type: metric alert
   query: |
-    avg(last_15m):avg:aws.amazonmq.heap_usage{*} by {broker} > 90
+    avg(last_15m):avg:aws.amazonmq.heap_usage{*} by {broker} > 95
   message: |
     {{#is_warning}}
     ({broker}) - JVM heap usage above 90%
