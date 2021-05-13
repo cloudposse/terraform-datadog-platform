@@ -27,8 +27,8 @@ amq-cpu-utilization:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  threshold_windows: { }
-  thresholds:
+  monitor_threshold_windows: { }
+  monitor_thresholds:
     critical: 90
     warning: 85
     #unknown:
@@ -62,8 +62,8 @@ amq-heap-usage:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  threshold_windows: { }
-  thresholds:
+  monitor_threshold_windows: { }
+  monitor_thresholds:
     critical: 95
     warning: 90
     #unknown:
@@ -94,10 +94,10 @@ amq-network-in:
   evaluation_delay: 900
   new_host_delay: 300
   no_data_timeframe: 10
-  threshold_windows:
+  monitor_threshold_windows:
     trigger_window: "last_15m"
     recovery_window: "last_15m"
-  thresholds:
+  monitor_thresholds:
     critical: 1
     #warning: 
     #unknown:
@@ -128,10 +128,10 @@ amq-network-out:
   evaluation_delay: 900
   new_host_delay: 300
   no_data_timeframe: 10
-  threshold_windows:
+  monitor_threshold_windows:
     trigger_window: "last_15m"
     recovery_window: "last_15m"
-  thresholds:
+  monitor_thresholds:
     critical: 1
     #warning: 
     #unknown:
@@ -162,10 +162,10 @@ amq-current-connections-count:
   evaluation_delay: 900
   new_host_delay: 300
   no_data_timeframe: 10
-  threshold_windows:
+  monitor_threshold_windows:
     trigger_window: "last_15m"
     recovery_window: "last_15m"
-  thresholds:
+  monitor_thresholds:
     critical: 1
     #warning: 
     #unknown:

@@ -22,8 +22,8 @@ ec2-failed-status-check:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  threshold_windows: { }
-  thresholds:
+  monitor_threshold_windows: { }
+  monitor_thresholds:
     critical: 0
     #warning:
     #unknown:

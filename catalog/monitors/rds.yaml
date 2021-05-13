@@ -27,8 +27,8 @@ rds-cpuutilization:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  threshold_windows: { }
-  thresholds:
+  monitor_threshold_windows: { }
+  monitor_thresholds:
     critical: 90
     warning: 85
     #unknown:
@@ -62,8 +62,8 @@ rds-disk-queue-depth:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  threshold_windows: { }
-  thresholds:
+  monitor_threshold_windows: { }
+  monitor_thresholds:
     critical: 64
     warning: 48
     #unknown:
@@ -97,8 +97,8 @@ rds-freeable-memory:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  threshold_windows: { }
-  thresholds:
+  monitor_threshold_windows: { }
+  monitor_thresholds:
     critical: 256000000
     warning: 512000000
     #unknown:
@@ -132,8 +132,8 @@ rds-swap-usage:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  threshold_windows: { }
-  thresholds:
+  monitor_threshold_windows: { }
+  monitor_thresholds:
     critical: 256000000
     warning: 128000000
     #unknown:
@@ -167,10 +167,10 @@ rds-database-connections:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  threshold_windows:
+  monitor_threshold_windows:
     trigger_window: "last_15m"
     recovery_window: "last_15m"
-  thresholds:
+  monitor_thresholds:
     critical: 1
     #warning: 
     #unknown:
