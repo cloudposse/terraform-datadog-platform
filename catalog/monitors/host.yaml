@@ -21,8 +21,8 @@ host-io-wait-times:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 50
     warning: 30
     #unknown:
@@ -50,8 +50,8 @@ host-disk-use:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 90
     warning: 80
     #unknown:
@@ -79,8 +79,8 @@ host-high-mem-use:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 0.1
     warning: 0.15
     #unknown:
@@ -108,8 +108,8 @@ host-high-load-avg:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 2
     #warning:
     #unknown:

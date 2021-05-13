@@ -22,8 +22,8 @@ k8s-deployment-replica-pod-down:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 5
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 2
 
 k8s-pod-restarting:
@@ -47,8 +47,8 @@ k8s-pod-restarting:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 5
     warning: 3
 
@@ -73,8 +73,8 @@ k8s-statefulset-replica-down:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     warning: 1
     critical: 2
 
@@ -99,8 +99,8 @@ k8s-crashloopBackOff:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 1    
 
 k8s-multiple-pods-failing:
@@ -124,8 +124,8 @@ k8s-multiple-pods-failing:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     warning: 5
     critical: 10
 
@@ -150,8 +150,8 @@ k8s-unavailable-deployment-replica:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 0
     #warning:
     #unknown:
@@ -180,8 +180,8 @@ k8s-unavailable-statefulset-replica:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 0
     #warning:
     #unknown:
@@ -210,8 +210,8 @@ k8s-node-status-unschedulable:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 80
     warning: 90
     #unknown:
@@ -240,8 +240,8 @@ k8s-imagepullbackoff:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 0
     #warning:
     #unknown:
@@ -270,8 +270,8 @@ k8s-high-cpu-usage:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 90
     warning: 60
     #unknown:
@@ -300,8 +300,8 @@ k8s-high-disk-usage:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 90
     warning: 75
     #unknown:
@@ -335,8 +335,8 @@ k8s-high-memory-usage:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 90
     warning: 80
     #unknown:
@@ -370,8 +370,8 @@ k8s-high-filesystem-usage:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 90
     warning: 80
     #unknown:
@@ -405,8 +405,8 @@ k8s-network-tx-errors:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 100
     warning: 10
     #unknown:
@@ -440,8 +440,8 @@ k8s-network-rx-errors:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 100
     warning: 10
     #unknown:
@@ -470,8 +470,8 @@ k8s-node-not-ready:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 3
     #warning:
     #unknown:
@@ -500,8 +500,8 @@ k8s-kube-api-down:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 3
     #warning:
     #unknown:
@@ -529,8 +529,8 @@ k8s-increased-pod-crash:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 3
     #warning:
     #unknown:
@@ -558,8 +558,8 @@ k8s-hpa-errors:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 200
     #warning:
     #unknown:
@@ -588,8 +588,8 @@ k8s-pending-pods:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 1
     #warning:
     #unknown:

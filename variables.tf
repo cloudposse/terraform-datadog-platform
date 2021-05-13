@@ -19,8 +19,8 @@ variable "datadog_monitors" {
     require_full_window       = bool
     locked                    = bool
     force_delete              = bool
-    monitor_threshold_windows = map(any)
-    monitor_thresholds        = map(any)
+    threshold_windows         = map(any)
+    thresholds                = map(any)
   }))
   description = "List of Datadog monitor configurations. See catalog for examples"
 }

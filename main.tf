@@ -24,16 +24,16 @@ resource "datadog_monitor" "default" {
   locked              = lookup(each.value, "locked", null)
   force_delete        = lookup(each.value, "force_delete", null)
   monitor_thresholds {
-    warning           = lookup(each.value.monitor_thresholds, "warning", null)
-    warning_recovery  = lookup(each.value.monitor_thresholds, "warning_recovery", null)
-    critical          = lookup(each.value.monitor_thresholds, "critical", null)
-    critical_recovery = lookup(each.value.monitor_thresholds, "critical_recovery", null)
-    ok                = lookup(each.value.monitor_thresholds, "ok", null)
-    unknown           = lookup(each.value.monitor_thresholds, "unknown", null)
+    warning           = lookup(each.value.thresholds, "warning", null)
+    warning_recovery  = lookup(each.value.thresholds, "warning_recovery", null)
+    critical          = lookup(each.value.thresholds, "critical", null)
+    critical_recovery = lookup(each.value.thresholds, "critical_recovery", null)
+    ok                = lookup(each.value.thresholds, "ok", null)
+    unknown           = lookup(each.value.thresholds, "unknown", null)
   }
   monitor_threshold_windows {
-    recovery_window = lookup(each.value.monitor_threshold_windows, "recovery_window", null)
-    trigger_window  = lookup(each.value.monitor_threshold_windows, "trigger_window", null)
+    recovery_window = lookup(each.value.threshold_windows, "recovery_window", null)
+    trigger_window  = lookup(each.value.threshold_windows, "trigger_window", null)
   }
 
   tags = lookup(each.value, "tags", null)

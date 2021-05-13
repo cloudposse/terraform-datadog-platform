@@ -27,8 +27,8 @@ aurora-replica-lag:
   evaluation_delay: 60
   new_host_delay: 300
   no_data_timeframe: 10
-  monitor_threshold_windows: { }
-  monitor_thresholds:
+  threshold_windows: { }
+  thresholds:
     critical: 1000
     warning: 500
     #unknown:
