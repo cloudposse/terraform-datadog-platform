@@ -112,8 +112,10 @@ For automated tests of the complete example using [bats](https://github.com/bats
 (which tests and deploys the example on Datadog), see [test](test).
 
 ```hcl
-  module "yaml_config" {
-    source = "git::https://github.com/cloudposse/terraform-yaml-config.git?ref=master"
+  module "monitor_yaml_config" {
+    source  = "cloudposse/config/yaml"
+    # Cloud Posse recommends pinning every module to a specific version
+    # version     = "x.x.x"
 
     map_config_local_base_path = path.module
     map_config_paths           = ["catalog/*.yaml"]
@@ -121,10 +123,24 @@ For automated tests of the complete example using [bats](https://github.com/bats
     context = module.this.context
   }
 
-  module "datadog_monitors" {
-    source = "git::https://github.com/cloudposse/terraform-datadog-monitor.git?ref=master"
+  module "synthetics_yaml_config" {
+    source  = "cloudposse/config/yaml"
+    # Cloud Posse recommends pinning every module to a specific version
+    # version     = "x.x.x"
 
-    datadog_monitors     = module.yaml_config.map_configs
+    map_config_local_base_path = path.module
+    map_config_paths           = ["catalog/synthetics/*.yaml"]
+
+    context = module.this.context
+  }
+
+  module "datadog_monitors" {
+    source  = "cloudposse/monitor/datadog"
+    # Cloud Posse recommends pinning every module to a specific version
+    # version     = "x.x.x"
+
+    datadog_monitors     = module.monitor_yaml_config.map_configs
+    datadog_synthetics   = module.synthetics_yaml_config.map_configs
     alert_tags           = ["@opsgenie"]
     alert_tags_separator = "\n"
 
