@@ -12,7 +12,7 @@ terraform {
     }
     datadog = {
       source  = "datadog/datadog"
-      version = ">= 2.13"
+      version = ">= 3.0.0"
     }
   }
 }
