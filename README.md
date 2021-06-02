@@ -379,8 +379,8 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
 ### Contributors
 
 <!-- markdownlint-disable -->
-|  [![Erik Osterman][osterman_avatar]][osterman_homepage]<br/>[Erik Osterman][osterman_homepage] | [![Andriy Knysh][aknysh_avatar]][aknysh_homepage]<br/>[Andriy Knysh][aknysh_homepage] | [![Vladimir][SweetOps_avatar]][SweetOps_homepage]<br/>[Vladimir][SweetOps_homepage] |
-|---|---|---|
+|  [![Erik Osterman][osterman_avatar]][osterman_homepage]<br/>[Erik Osterman][osterman_homepage] | [![Andriy Knysh][aknysh_avatar]][aknysh_homepage]<br/>[Andriy Knysh][aknysh_homepage] | [![Vladimir][SweetOps_avatar]][SweetOps_homepage]<br/>[Vladimir][SweetOps_homepage] | [![Yonatan Koren][korenyoni_avatar]][korenyoni_homepage]<br/>[Yonatan Koren][korenyoni_homepage] |
+|---|---|---|---|
 <!-- markdownlint-restore -->
 
   [osterman_homepage]: https://github.com/osterman
@@ -389,6 +389,8 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
   [aknysh_avatar]: https://img.cloudposse.com/150x150/https://github.com/aknysh.png
   [SweetOps_homepage]: https://github.com/SweetOps
   [SweetOps_avatar]: https://img.cloudposse.com/150x150/https://github.com/SweetOps.png
+  [korenyoni_homepage]: https://github.com/korenyoni
+  [korenyoni_avatar]: https://img.cloudposse.com/150x150/https://github.com/korenyoni.png
 
 [![README Footer][readme_footer_img]][readme_footer_link]
 [![Beacon][beacon]][website]
