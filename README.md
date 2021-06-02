@@ -226,14 +226,13 @@ Like this project? Please give it a ★ on [our GitHub](https://github.com/cloud
 Are you using this project or any of our other projects? Consider [leaving a testimonial][testimonial]. =)
 
 
+
 ## Related Projects
 
 Check out these related projects.
 
 - [terraform-aws-datadog-integration](https://github.com/cloudposse/terraform-aws-datadog-integration) - Terraform module to configure Datadog AWS integration
 - [terraform-yaml-config](https://github.com/cloudposse/terraform-yaml-config) - Terraform module to convert local and remote YAML configuration templates into Terraform lists and maps.
-
-
 
 ## Help
 
