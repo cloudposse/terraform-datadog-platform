@@ -23,14 +23,21 @@ resource "datadog_monitor" "default" {
   enable_logs_sample  = lookup(each.value, "enable_logs_sample", null)
   locked              = lookup(each.value, "locked", null)
   force_delete        = lookup(each.value, "force_delete", null)
-  threshold_windows   = lookup(each.value, "threshold_windows", null)
-  thresholds          = lookup(each.value, "thresholds", null)
+
+  monitor_thresholds {
+    warning           = lookup(each.value.thresholds, "warning", null)
+    warning_recovery  = lookup(each.value.thresholds, "warning_recovery", null)
+    critical          = lookup(each.value.thresholds, "critical", null)
+    critical_recovery = lookup(each.value.thresholds, "critical_recovery", null)
+    ok                = lookup(each.value.thresholds, "ok", null)
+    unknown           = lookup(each.value.thresholds, "unknown", null)
+  }
+  monitor_threshold_windows {
+    recovery_window = lookup(each.value.threshold_windows, "recovery_window", null)
+    trigger_window  = lookup(each.value.threshold_windows, "trigger_window", null)
+  }
 
   tags = lookup(each.value, "tags", null)
-
-  lifecycle {
-    ignore_changes = [silenced]
-  }
 }
 
 resource "datadog_synthetics_test" "default" {
@@ -44,7 +51,7 @@ resource "datadog_synthetics_test" "default" {
   locations = each.value.locations
   tags      = lookup(each.value, "tags", null)
 
-  request = {
+  request_definition {
     host       = lookup(each.value.request, "host", null)
     port       = lookup(each.value.request, "port", null)
     url        = lookup(each.value.request, "url", null)
