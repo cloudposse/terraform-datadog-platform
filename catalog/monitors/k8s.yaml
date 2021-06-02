@@ -56,9 +56,9 @@ k8s-statefulset-replica-down:
   name: "(k8s) StatefulSet Replica Pod is down"
   type: query alert
   query: |
-    max(last_15m):sum:kubernetes_state.statefulset.replicas_desired{*} by {cluster_name,statefulset} - sum:kubernetes_state.statefulset.replicas_ready{*} by {cluster_name,statefulset} >= 2
+    max(last_15m):sum:kubernetes_state.statefulset.replicas_desired{*} by {cluster_name,kube_namespace,statefulset} - sum:kubernetes_state.statefulset.replicas_ready{*} by {cluster_name,kube_namespace,statefulset} >= 2
   message: |
-    ({{cluster_name.name}} {{statefulset.name}}) More than one StatefulSet Replica's pods are down
+    ({{cluster_name.name}} {{statefulset.name}}) More than one StatefulSet Replica's pods are down on {{kube_namespace.name}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
   notify_no_data: false
@@ -82,7 +82,7 @@ k8s-crashloopBackOff:
   name: "(k8s) CrashloopBackOff detected"
   type: query alert
   query: |
-    max(last_10m):max:kubernetes_state.container.status_report.count.waiting{reason:crashloopbackoff} by {kube_namespace,pod_name} >= 1
+    max(last_10m):max:kubernetes_state.container.status_report.count.waiting{reason:crashloopbackoff} by {cluster_name,kube_namespace,pod_name} >= 1
   message: |
     ({{cluster_name.name}}) pod {{pod_name.name}} is CrashloopBackOff on {{kube_namespace.name}}
   escalation_message: ""
@@ -101,7 +101,7 @@ k8s-crashloopBackOff:
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
-    critical: 1    
+    critical: 1
 
 k8s-multiple-pods-failing:
   name: "(k8s) Multiple Pods are failing"
@@ -133,9 +133,9 @@ k8s-unavailable-deployment-replica:
   name: "(k8s) Unavailable Deployment Replica(s) detected"
   type: metric alert
   query: |
-    max(last_10m):max:kubernetes_state.deployment.replicas_unavailable{*} by {cluster_name} > 0
+    max(last_10m):max:kubernetes_state.deployment.replicas_unavailable{*} by {cluster_name,kube_namespace} > 0
   message: |
-    ({{cluster_name.name}}) Detected unavailable Deployment replicas for longer than 10 minutes
+    ({{cluster_name.name}}) Detected unavailable Deployment replicas for longer than 10 minutes on {{kube_namespace.name}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
   notify_no_data: false
@@ -163,9 +163,9 @@ k8s-unavailable-statefulset-replica:
   name: "(k8s) Unavailable Statefulset Replica(s) detected"
   type: metric alert
   query: |
-    max(last_10m):max:kubernetes_state.statefulset.replicas_unavailable{*} by {cluster_name} > 0
+    max(last_10m):max:kubernetes_state.statefulset.replicas_unavailable{*} by {cluster_name,kube_namespace} > 0
   message: |
-    ({{cluster_name.name}}) Detected unavailable Statefulset replicas for longer than 10 minutes
+    ({{cluster_name.name}}) Detected unavailable Statefulset replicas for longer than 10 minutes on {{kube_namespace.name}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
   notify_no_data: false
@@ -447,7 +447,7 @@ k8s-network-rx-errors:
     #unknown:
     #ok:
     #critical_recovery:
-    #warning_recovery:    
+    #warning_recovery:
 
 k8s-node-not-ready:
   name: "(k8s) Node Not Ready"
@@ -455,7 +455,7 @@ k8s-node-not-ready:
   query: |
     "kubernetes_state.node.ready".by('host').last(5).count_by_status()
   message: |
-    ({{host.name}} {{host.region}}) Node is reporting 'Not Ready' status
+    ({{host.cluster_name}} {{host.name}} {{host.region}}) Node is reporting 'Not Ready' status
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
   notify_no_data: false
@@ -512,10 +512,11 @@ k8s-kube-api-down:
 k8s-increased-pod-crash:
   name: "(k8s) Increased Pod Crashes"
   type: query alert
-  query: "avg(last_5m):avg:kubernetes_state.container.restarts{*} by {pod} - hour_before(avg:kubernetes_state.container.restarts{*} by {pod}) > 3"
+  query: |
+    avg(last_5m):avg:kubernetes_state.container.restarts{*} by {cluster_name,kube_namespace,pod} - hour_before(avg:kubernetes_state.container.restarts{*} by {cluster_name,kube_namespace,pod}) > 3
   message: |-
-    ({{pod.name}}) has crashed repeatedly over the last hour
-  escalation_message: ""  
+    ({{cluster_name.name}} {{kube_namespace.name}} {{pod.name}}) has crashed repeatedly over the last hour
+  escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
   notify_no_data: false
   notify_audit: false
@@ -541,10 +542,11 @@ k8s-increased-pod-crash:
 k8s-hpa-errors:
   name: "(k8s) HPA Errors"
   type: event alert
-  query: "events('sources:kubernetes priority:all \"unable to fetch metrics from resource metrics API:\"').by('hpa').rollup('count').last('1h') > 200"
+  query: |
+    events('sources:kubernetes priority:all \"unable to fetch metrics from resource metrics API:\"').by('hpa').rollup('count').last('1h') > 200
   message: |-
-    A high number of hpa failures (> ({{threshold}}) are occurring.
-  escalation_message: ""  
+    ({{event.tags.cluster_name}}) A high number of hpa failures (> ({{threshold}}) are occurring.
+  escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
   notify_no_data: false
   notify_audit: false
@@ -570,11 +572,12 @@ k8s-hpa-errors:
 k8s-pending-pods:
   name: "(k8s) Pending Pods"
   type: metric alert
-  query: "min(last_30m):sum:kubernetes_state.pod.status_phase{phase:running} - sum:kubernetes_state.pod.status_phase{phase:running} + sum:kubernetes_state.pod.status_phase{phase:pending}.fill(zero) >= 1"
+  query: |
+    min(last_30m):sum:kubernetes_state.pod.status_phase{phase:running} by {cluster_name} - sum:kubernetes_state.pod.status_phase{phase:running} by {cluster_name} + sum:kubernetes_state.pod.status_phase{phase:pending} by {cluster_name}.fill(zero) >= 1
   message: |-
-    There has been at least 1 pod Pending for 30 minutes.
+    ({{cluster_name.name}}) There has been at least 1 pod Pending for 30 minutes.
     There are currently ({{value}}) pods Pending.
-  escalation_message: ""  
+  escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
   notify_no_data: false
   notify_audit: false
@@ -596,3 +599,4 @@ k8s-pending-pods:
     #ok:
     #critical_recovery:
     #warning_recovery:
+
