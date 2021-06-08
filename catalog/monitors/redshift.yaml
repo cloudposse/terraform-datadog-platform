@@ -35,7 +35,7 @@ redshift-health-status:
 
 redshift-database-connections:
   name: (Redshift) Anomaly of a large variance in Redshift connection count
-    type: metric alert
+  type: metric alert
   query: |
     avg(last_4h):anomalies(avg:aws.redshift.database_connections{*} by {clusteridentifier}, 'basic', 2, direction='both', alert_window='last_15m', interval=60, count_default_zero='true') >= 1
   message: |
@@ -138,7 +138,7 @@ redshift-write-latency:
     #warning_recovery:
 
 redshift-disk-space-used:
-  name: (Redshift) % Disk space used/cluster
+  name: (Redshift) Percent disk space used/cluster
   type: metric alert
   query: |
     avg(last_15m):avg:aws.redshift.percentage_disk_space_used{*} by {clusteridentifier} > 85
@@ -150,7 +150,8 @@ redshift-disk-space-used:
     ({clusteridentifier}) Redshift disk used is > 85%
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]notify_no_data: false
+  tags: [ "ManagedBy:Terraform" ]
+  notify_no_data: false
   notify_audit: true
   require_full_window: true
   enable_logs_sample: false
