@@ -1,0 +1,35 @@
+# The official Datadog API documentation with available query parameters & alert types:
+# https://docs.datadoghq.com/api/v1/monitors/#create-a-monitor
+
+s3-bucket-size:
+  name: (S3) Storage alert {{bucketname.name}}
+  type: metric alert
+  query: |
+    avg(last_5m):avg:aws.s3.bucket_size_bytes{*} by {bucketname} > 10737418240
+  message: |
+    {{bucketname.name}} bucket storage is above {{value}}
+  escalation_message: ""
+  tags:
+    - ManagedBy:Terraform
+  notify_no_data: false
+  notify_audit: true
+  require_full_window: true
+  enable_logs_sample: false
+  force_delete: true
+  include_tags: true
+  locked: false
+  renotify_interval: 60
+  timeout_h: 60
+  evaluation_delay: 60
+  new_host_delay: 300
+  no_data_timeframe: 10
+  threshold_windows: {}
+  thresholds:
+    # 10 GB
+    critical: 10737418240
+    # 5 GB
+    warning: 5368709120
+    # 7 GB
+    critical_recovery: 7516192768
+    # 3 GB
+    warning_recovery: 3221225472
