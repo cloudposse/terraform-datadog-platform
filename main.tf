@@ -37,7 +37,7 @@ resource "datadog_monitor" "default" {
     trigger_window  = lookup(each.value.threshold_windows, "trigger_window", null)
   }
 
-  tags = lookup(each.value, "tags", null)
+  tags = lookup(each.value, "tags", module.this.tags)
 }
 
 resource "datadog_synthetics_test" "default" {
@@ -49,7 +49,7 @@ resource "datadog_synthetics_test" "default" {
   subtype   = lookup(each.value, "subtype", null)
   status    = each.value.status
   locations = each.value.locations
-  tags      = lookup(each.value, "tags", null)
+  tags      = lookup(each.value, "tags", module.this.tags)
 
   request_definition {
     host       = lookup(each.value.request, "host", null)
