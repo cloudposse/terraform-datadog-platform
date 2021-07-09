@@ -1,7 +1,7 @@
 locals {
   alert_tags = module.this.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
 
-  tags = merge(module.this.tags, lookup(each.value, "tags", null))
+  tags = lookup(each.value, "tags", module.this.tags)
 }
 
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor
