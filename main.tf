@@ -1,7 +1,5 @@
 locals {
   alert_tags = module.this.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
-
-  tags = lookup(each.value, "tags", module.this.tags)
 }
 
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor
@@ -39,7 +37,7 @@ resource "datadog_monitor" "default" {
     trigger_window  = lookup(each.value.threshold_windows, "trigger_window", null)
   }
 
-  tags = local.tags
+  tags = lookup(each.value, "tags", module.this.tags)
 }
 
 resource "datadog_synthetics_test" "default" {
@@ -51,7 +49,7 @@ resource "datadog_synthetics_test" "default" {
   subtype   = lookup(each.value, "subtype", null)
   status    = each.value.status
   locations = each.value.locations
-  tags      = local.tags
+  tags      = lookup(each.value, "tags", module.this.tags)
 
   request_definition {
     host       = lookup(each.value.request, "host", null)
