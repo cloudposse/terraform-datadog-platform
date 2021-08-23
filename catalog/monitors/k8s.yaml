@@ -638,7 +638,7 @@ k8s-metrics-server-low-proc-count:
   tags: [ "ManagedBy:Terraform" ]
   notify_no_data: true
   notify_audit: false
-  require_full_window: true
+  require_full_window: false
   enable_logs_sample: false
   force_delete: true
   include_tags: true
@@ -649,7 +649,6 @@ k8s-metrics-server-low-proc-count:
   thresholds:
     critical: 4
     warning: 8
-    priority: 1
     #unknown:
     #ok:
     #critical_recovery:
