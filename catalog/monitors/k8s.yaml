@@ -626,3 +626,31 @@ k8s-pending-pods:
     #critical_recovery:
     #warning_recovery:
 
+k8s-metrics-server-low-proc-count:
+  name: '(k8s) Low metrics-server Process Count'
+  type: process alert
+  query: |
+    processes('').over('kube_deployment:metrics-server').rollup('count').last('5m') < 4
+  message: |-
+    {{#is_warning}}Process count less than {{warn_threshold}} for 5 minutes{{/is_warning}}
+    {{#is_alert}}Process count less than {{threshold}} for 5 minutes{{/is_alert}}
+  escalation_message: ""
+  tags: [ "ManagedBy:Terraform" ]
+  notify_no_data: true
+  notify_audit: false
+  require_full_window: true
+  enable_logs_sample: false
+  force_delete: true
+  include_tags: true
+  locked: false
+  renotify_interval: 10
+  timeout_h: 0
+  no_data_timeframe: 10
+  thresholds:
+    critical: 4
+    warning: 8
+    priority: 1
+    #unknown:
+    #ok:
+    #critical_recovery:
+    #warning_recovery:
