@@ -32,6 +32,7 @@ resource "datadog_monitor" "default" {
     ok                = lookup(each.value.thresholds, "ok", null)
     unknown           = lookup(each.value.thresholds, "unknown", null)
   }
+
   monitor_threshold_windows {
     recovery_window = lookup(each.value.threshold_windows, "recovery_window", null)
     trigger_window  = lookup(each.value.threshold_windows, "trigger_window", null)
@@ -72,6 +73,7 @@ resource "datadog_synthetics_test" "default" {
       operator = lookup(assertion.value, "operator", null)
       target   = lookup(assertion.value, "target", null)
       property = lookup(assertion.value, "property", null)
+
       dynamic "targetjsonpath" {
         for_each = lookup(assertion.value, "targetjsonpath_operator", null) != null ? [1] : []
 
