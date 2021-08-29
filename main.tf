@@ -38,6 +38,8 @@ resource "datadog_monitor" "default" {
     trigger_window  = lookup(each.value.threshold_windows, "trigger_window", null)
   }
 
+  # Assign restricted roles
+  # Only these roles will have access to the monitor
   restricted_roles = lookup(var.restricted_roles_map, each.key, null)
 
   # `restricted_roles` conflicts with `locked`

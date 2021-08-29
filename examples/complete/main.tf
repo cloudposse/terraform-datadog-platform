@@ -21,6 +21,7 @@ module "synthetic_configs" {
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/role
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/data-sources/permissions
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor
+# https://docs.datadoghq.com/api/latest/monitors/#create-a-monitor
 # https://docs.datadoghq.com/account_management/rbac/?tab=datadogapplication
 # https://docs.datadoghq.com/account_management/rbac/permissions/
 # https://docs.datadoghq.com/api/latest/monitors/
@@ -62,7 +63,9 @@ resource "datadog_role" "monitors_downtime" {
 
 # Assign roles to monitors
 locals {
-  # Example of assigning restricted roles to monitors (see `catalog/monitors` for the available monitor names)
+  # Example of assigning restricted roles with permissions to monitors (see `catalog/monitors` for the available monitor names)
+  # Only these roles will have access to the monitors
+  # The Datadog users that are associated with the roles will have the corresponding monitor permisisons
   restricted_roles_map = {
     aurora-replica-lag              = [datadog_role.monitors_write_and_downtime.name]
     ec2-failed-status-check         = [datadog_role.monitors_write.name]
