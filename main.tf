@@ -1,10 +1,11 @@
 locals {
-  alert_tags = module.this.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
+  enabled    = module.this.enabled
+  alert_tags = local.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
 }
 
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor
 resource "datadog_monitor" "default" {
-  for_each = module.this.enabled ? var.datadog_monitors : {}
+  for_each = local.enabled ? var.datadog_monitors : {}
 
   name                = each.value.name
   type                = each.value.type
@@ -38,11 +39,13 @@ resource "datadog_monitor" "default" {
     trigger_window  = lookup(each.value.threshold_windows, "trigger_window", null)
   }
 
+  restricted_roles = lookup(var.restricted_roles_map, each.key, null)
+
   tags = lookup(each.value, "tags", module.this.tags)
 }
 
 resource "datadog_synthetics_test" "default" {
-  for_each = module.this.enabled ? var.datadog_synthetics : {}
+  for_each = local.enabled ? var.datadog_synthetics : {}
 
   name      = each.value.name
   message   = format("%s%s", each.value.message, local.alert_tags)

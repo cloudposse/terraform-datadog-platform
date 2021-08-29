@@ -21,7 +21,6 @@ variable "datadog_monitors" {
     force_delete        = bool
     threshold_windows   = map(any)
     thresholds          = map(any)
-    restricted_roles    = set(string)
   }))
   description = "List of Datadog monitor configurations. See catalog for examples"
 }
@@ -55,4 +54,10 @@ variable "alert_tags_separator" {
   type        = string
   description = "Separator for the alert tags. All strings from the `alert_tags` variable will be joined into one string using the separator and then added to the alert message"
   default     = "\n"
+}
+
+variable "restricted_roles_map" {
+  type        = map(set(string))
+  description = "Map of monitors names to sets of Datadog roles to restrict access to each monitor"
+  default     = {}
 }
