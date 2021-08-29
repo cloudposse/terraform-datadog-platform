@@ -40,11 +40,11 @@ resource "datadog_monitor" "default" {
 
   # Assign restricted roles
   # Only these roles will have access to the monitor
-  restricted_roles = var.restricted_roles_map != null ? lookup(var.restricted_roles_map, each.key, null) : null
+  restricted_roles = try(var.restricted_roles_map[each.key], null)
 
   # `restricted_roles` conflicts with `locked`
   # Use `locked`` only if `restricted_roles` is not provided
-  locked = var.restricted_roles_map == null || lookup(var.restricted_roles_map, each.key, null) == null ? lookup(each.value, "locked", null) : null
+  locked = try(var.restricted_roles_map[each.key], null) == null ? lookup(each.value, "locked", null) : null
 
   tags = lookup(each.value, "tags", module.this.tags)
 }
