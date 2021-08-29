@@ -4,6 +4,6 @@ output "datadog_monitor_names" {
 }
 
 output "datadog_permissions" {
-  value       = data.datadog_permissions.permissions
-  description = "Available Datadog permissions"
+  value       = data.datadog_permissions.permissions.permissions
+  description = "Map of available permission names to permission IDs"
 }
