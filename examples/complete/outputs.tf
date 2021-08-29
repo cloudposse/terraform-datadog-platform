@@ -4,7 +4,7 @@ output "datadog_monitor_names" {
 }
 
 output "datadog_monitors" {
-  value       = module.datadog_monitors
+  value       = module.datadog_monitors.datadog_monitors
   description = "The created Datadog monitors"
 }
 
