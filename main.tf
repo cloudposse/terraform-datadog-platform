@@ -22,7 +22,6 @@ resource "datadog_monitor" "default" {
   timeout_h           = lookup(each.value, "timeout_h", null)
   include_tags        = lookup(each.value, "include_tags", null)
   enable_logs_sample  = lookup(each.value, "enable_logs_sample", null)
-  locked              = lookup(each.value, "locked", null)
   force_delete        = lookup(each.value, "force_delete", null)
 
   monitor_thresholds {
@@ -40,6 +39,10 @@ resource "datadog_monitor" "default" {
   }
 
   restricted_roles = lookup(var.restricted_roles_map, each.key, null)
+
+  # `restricted_roles` conflicts with `locked`
+  # Use `locked`` only if `restricted_roles` is not provided
+  locked = lookup(var.restricted_roles_map, each.key, null) == null ? lookup(each.value, "locked", null) : null
 
   tags = lookup(each.value, "tags", module.this.tags)
 }
