@@ -27,9 +27,49 @@ module "synthetic_configs" {
 # https://github.com/hashicorp/cdktf-provider-datadog/blob/main/API.md
 
 # Get all available Datadog permissions
-data "datadog_permissions" "permissions" {}
+data "datadog_permissions" "available_permissions" {}
 
-# Create separate roles for each monitor and assign permissions to the roles
+locals {
+  available_permissions = data.datadog_permissions.available_permissions.permissions
+}
+
+# Create Datadog roles with different permission sets
+# These roles must be assigned to Datadog users in order for the user to be assigned the corresponding monitor permissions
+resource "datadog_role" "monitors_write_and_downtime" {
+  name = "allow_monitors_write_and_downtime"
+  permission {
+    id = local.available_permissions.monitors_downtime
+  }
+  permission {
+    id = local.available_permissions.monitors_write
+  }
+}
+
+# Create roles with different permission sets
+resource "datadog_role" "monitors_write" {
+  name = "allow_monitors_write"
+  permission {
+    id = local.available_permissions.monitors_write
+  }
+}
+
+resource "datadog_role" "monitors_downtime" {
+  name = "allow_monitors_downtime"
+  permission {
+    id = local.available_permissions.monitors_downtime
+  }
+}
+
+# Assign roles to monitors
+locals {
+  # Example of assigning restricted roles to monitors (see `catalog/monitors` for the available monitor names)
+  restricted_roles_map = {
+    aurora-replica-lag              = [datadog_role.monitors_write_and_downtime.name]
+    ec2-failed-status-check         = [datadog_role.monitors_write.name]
+    redshift-health-status          = [datadog_role.monitors_write.name, datadog_role.monitors_downtime.name]
+    k8s-deployment-replica-pod-down = [datadog_role.monitors_downtime.name]
+  }
+}
 
 module "datadog_monitors" {
   source = "../../"
@@ -38,6 +78,7 @@ module "datadog_monitors" {
   datadog_synthetics   = module.synthetic_configs.map_configs
   alert_tags           = var.alert_tags
   alert_tags_separator = var.alert_tags_separator
+  restricted_roles_map = local.restricted_roles_map
 
   context = module.this.context
 }
