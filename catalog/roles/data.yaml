@@ -1,0 +1,9 @@
+data_scanner_read:
+  name: "Data scanner read"
+  permissions:
+    - "data_scanner_read"
+
+data_scanner_write:
+  name: "Data scanner write"
+  permissions:
+    - "data_scanner_write"

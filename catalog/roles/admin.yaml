@@ -1,0 +1,4 @@
+admin:
+  name: "Admin"
+  permissions:
+    - "admin"

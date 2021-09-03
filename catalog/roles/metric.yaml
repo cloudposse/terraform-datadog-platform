@@ -1,0 +1,4 @@
+metric_tags_write:
+  name: "Metric tags write"
+  permissions:
+    - "metric_tags_write"

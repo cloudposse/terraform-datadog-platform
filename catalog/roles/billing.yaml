@@ -1,0 +1,9 @@
+billing_edit:
+  name: "Billing edit"
+  permissions:
+    - "billing_edit"
+
+billing_read:
+  name: "Billing read"
+  permissions:
+    - "billing_read"

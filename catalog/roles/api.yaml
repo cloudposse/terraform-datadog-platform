@@ -1,0 +1,9 @@
+api_keys_read:
+  name: "API keys read"
+  permissions:
+    - "api_keys_read"
+
+api_keys_write:
+  name: "API keys write"
+  permissions:
+    - "api_keys_write"
