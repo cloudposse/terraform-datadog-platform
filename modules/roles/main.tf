@@ -1,5 +1,11 @@
 locals {
-  enabled = module.this.enabled
+  enabled     = module.this.enabled
+  permissions = module.permissions.permissions
+}
+
+module "permissions" {
+  source  = "../permissions"
+  context = module.this.context
 }
 
 resource "datadog_role" "default" {
@@ -10,7 +16,7 @@ resource "datadog_role" "default" {
   dynamic "permission" {
     for_each = each.value.permissions
     content {
-      id = permission.value
+      id = local.permissions != null ? lookup(local.permissions, permission.value, null) : null
     }
   }
 }
