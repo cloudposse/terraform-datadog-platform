@@ -1,14 +1,14 @@
-user_access_invite:
+user-access-invite:
   name: "User access invite"
   permissions:
     - "user_access_invite"
 
-user_access_manage:
+user-access-manage:
   name: "User access manage"
   permissions:
     - "user_access_manage"
 
-user_app_keys:
+user-app-keys:
   name: "User app keys"
   permissions:
     - "user_app_keys"

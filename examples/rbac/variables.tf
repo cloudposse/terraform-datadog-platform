@@ -18,14 +18,7 @@ variable "monitor_paths" {
   description = "List of paths to Datadog monitor configurations"
 }
 
-variable "synthetic_paths" {
+variable "role_paths" {
   type        = list(string)
-  description = "List of paths to Datadog synthetic configurations"
-}
-
-# https://docs.datadoghq.com/account_management/rbac/?tab=datadogapplication
-variable "custom_rbac_enabled" {
-  type        = bool
-  description = "Flag to enable/disable custom RBAC. Note that creating and modifying custom roles is an opt-in Enterprise feature. Contact Datadog support to get it enabled for your account"
-  default     = false
+  description = "List of paths to Datadog role configurations"
 }

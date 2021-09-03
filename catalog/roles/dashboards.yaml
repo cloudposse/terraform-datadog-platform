@@ -1,9 +1,9 @@
-dashboards_public_share:
+dashboards-public-share:
   name: "Dashboards public share"
   permissions:
     - "dashboards_public_share"
 
-dashboards_write:
+dashboards-write:
   name: "Dashboards write"
   permissions:
     - "dashboards_write"

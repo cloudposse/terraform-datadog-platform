@@ -1,64 +1,64 @@
-logs_generate_metrics:
+logs-generate-metrics:
   name: "Logs generate metrics"
   permissions:
     - "logs_generate_metrics"
 
-logs_live_tail:
+logs-live-tail:
   name: "Logs live tail"
   permissions:
     - "logs_live_tail"
 
-logs_modify_indexes:
+logs-modify-indexes:
   name: "Logs modify indexes"
   permissions:
     - "logs_modify_indexes"
 
-logs_public_config_api:
+logs-public-config-api:
   name: "Logs public config api"
   permissions:
     - "logs_public_config_api"
 
-logs_read_archives:
+logs-read-archives:
   name: "Logs read archives"
   permissions:
     - "logs_read_archives"
 
-logs_read_data:
+logs-read-data:
   name: "Logs read data"
   permissions:
     - "logs_read_data"
 
-logs_read_index_data:
+logs-read-index-data:
   name: "Logs read index data"
   permissions:
     - "logs_read_index_data"
 
-logs_write_archives:
+logs-write-archives:
   name: "Logs write archives"
   permissions:
     - "logs_write_archives"
 
-logs_write_exclusion_filters:
+logs-write-exclusion-filters:
   name: "Logs write exclusion filters"
   permissions:
     - "logs_write_exclusion_filters"
 
-logs_write_facets:
+logs-write-facets:
   name: "Logs write facets"
   permissions:
     - "logs_write_facets"
 
-logs_write_historical_view:
+logs-write-historical-view:
   name: "Logs write historical view"
   permissions:
     - "logs_write_historical_view"
 
-logs_write_pipelines:
+logs-write-pipelines:
   name: "Logs write pipelines"
   permissions:
     - "logs_write_pipelines"
 
-logs_write_processors:
+logs-write-processors:
   name: "Logs write processors"
   permissions:
     - "logs_write_processors"

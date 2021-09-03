@@ -8,89 +8,49 @@ module "monitor_configs" {
   context = module.this.context
 }
 
-module "synthetic_configs" {
+module "role_configs" {
   source  = "cloudposse/config/yaml"
   version = "0.8.1"
 
   map_config_local_base_path = path.module
-  map_config_paths           = var.synthetic_paths
+  map_config_paths           = var.role_paths
 
   context = module.this.context
 }
 
-# https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/role
-# https://registry.terraform.io/providers/DataDog/datadog/latest/docs/data-sources/permissions
-# https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor
-# https://docs.datadoghq.com/api/latest/monitors/#create-a-monitor
-# https://docs.datadoghq.com/account_management/rbac/?tab=datadogapplication
-# https://docs.datadoghq.com/account_management/rbac/permissions/
-# https://docs.datadoghq.com/api/latest/monitors/
-# https://github.com/hashicorp/cdktf-provider-datadog/blob/main/API.md
-
-# Get all available Datadog permissions
-data "datadog_permissions" "available_permissions" {}
-
 locals {
-  available_permissions = data.datadog_permissions.available_permissions.permissions
-}
+  # Example of assigning restricted roles with permissions to monitors.
+  # See `catalog/monitors` for the available monitors.
+  # See `catalog/roles` for the available roles.
+  # Only these roles will have access to the monitors.
+  # The Datadog users that are associated with the roles will have the corresponding monitor permissions
 
-# Create Datadog roles with different permission sets
-# These roles must be assigned to Datadog users in order for the user to be assigned the corresponding monitor permissions
-# Note that creating and modifying custom roles is an opt-in Enterprise feature
-# Contact Datadog support to get it enabled for your account
-# https://docs.datadoghq.com/account_management/rbac/?tab=datadogapplication
-resource "datadog_role" "monitors_write_and_downtime" {
-  count = var.custom_rbac_enabled ? 1 : 0
+  monitors_write_role_name    = module.datadog_roles.datadog_roles["monitors-write"].name
+  monitors_downtime_role_name = module.datadog_roles.datadog_roles["monitors-downtime"].name
 
-  name = "allow_monitors_write_and_downtime"
-  permission {
-    id = local.available_permissions.monitors_downtime
-  }
-  permission {
-    id = local.available_permissions.monitors_write
+  monitors_roles_map = {
+    aurora-replica-lag              = [local.monitors_write_role_name, local.monitors_downtime_role_name]
+    ec2-failed-status-check         = [local.monitors_write_role_name, local.monitors_downtime_role_name]
+    redshift-health-status          = [local.monitors_downtime_role_name]
+    k8s-deployment-replica-pod-down = [local.monitors_write_role_name]
   }
 }
 
-# Create roles with different permission sets
-resource "datadog_role" "monitors_write" {
-  count = var.custom_rbac_enabled ? 1 : 0
+module "datadog_roles" {
+  source = "../../modules/roles"
 
-  name = "allow_monitors_write"
-  permission {
-    id = local.available_permissions.monitors_write
-  }
-}
+  datadog_roles = module.role_configs.map_configs
 
-resource "datadog_role" "monitors_downtime" {
-  count = var.custom_rbac_enabled ? 1 : 0
-
-  name = "allow_monitors_downtime"
-  permission {
-    id = local.available_permissions.monitors_downtime
-  }
-}
-
-# Assign roles to monitors
-locals {
-  # Example of assigning restricted roles with permissions to monitors (see `catalog/monitors` for the available monitor names)
-  # Only these roles will have access to the monitors
-  # The Datadog users that are associated with the roles will have the corresponding monitor permisisons
-  restricted_roles_map = var.custom_rbac_enabled ? {
-    aurora-replica-lag              = [join("", datadog_role.monitors_write_and_downtime.*.name)]
-    ec2-failed-status-check         = [join("", datadog_role.monitors_write.*.name)]
-    redshift-health-status          = [join("", datadog_role.monitors_write.*.name), join("", datadog_role.monitors_downtime.*.name)]
-    k8s-deployment-replica-pod-down = [join("", datadog_role.monitors_downtime.*.name)]
-  } : null
+  context = module.this.context
 }
 
 module "datadog_monitors" {
-  source = "../../"
+  source = "../../modules/monitors"
 
   datadog_monitors     = module.monitor_configs.map_configs
-  datadog_synthetics   = module.synthetic_configs.map_configs
   alert_tags           = var.alert_tags
   alert_tags_separator = var.alert_tags_separator
-  restricted_roles_map = local.restricted_roles_map
+  restricted_roles_map = local.monitors_roles_map
 
   context = module.this.context
 }

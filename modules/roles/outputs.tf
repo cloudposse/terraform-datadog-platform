@@ -9,6 +9,6 @@ output "datadog_role_ids" {
 }
 
 output "datadog_roles" {
-  value       = values(datadog_role.default)[*].id
+  value       = datadog_role.default
   description = "Created Datadog roles"
 }

@@ -1,4 +1,4 @@
-integrations_api:
+integrations-api:
   name: "Integrations API"
   permissions:
     - "integrations_api"

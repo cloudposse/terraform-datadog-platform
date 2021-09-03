@@ -1,14 +1,14 @@
-incident_settings_read:
+incident-settings-read:
   name: "Incident settings read"
   permissions:
     - "incident_settings_read"
 
-incident_settings_write:
+incident-settings-write:
   name: "Incident settings write"
   permissions:
     - "incident_settings_write"
 
-incident_write:
+incident-write:
   name: "Incident write"
   permissions:
     - "incident_write"
