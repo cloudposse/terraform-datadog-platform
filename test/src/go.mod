@@ -1,4 +1,4 @@
-module github.com/cloudposse/terraform-opsgenie-incident-management
+module github.com/cloudposse/terraform-datadog-platform
 
 go 1.17
 

@@ -5,5 +5,10 @@ output "datadog_monitor_names" {
 
 output "datadog_monitors" {
   value       = module.datadog_monitors.datadog_monitors
-  description = "Datadog monitor outputs"
+  description = "The created Datadog monitors"
+}
+
+output "datadog_available_permissions" {
+  value       = local.available_permissions
+  description = "Map of available permission names to permission IDs"
 }

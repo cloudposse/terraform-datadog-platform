@@ -6,10 +6,10 @@ namespace = "eg"
 
 stage = "test"
 
-name = "datadog-monitor"
+name = "datadog-synthetics"
 
 alert_tags = ["@opsgenie"]
 
 alert_tags_separator = "\n"
 
-monitor_paths = ["../../catalog/monitors/*.yaml"]
+synthetic_paths = ["synthetics/*.yaml"]
