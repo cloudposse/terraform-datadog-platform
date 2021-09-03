@@ -1,6 +1,6 @@
 
 <!-- markdownlint-disable -->
-# terraform-datadog-platform [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-datadog-platform .svg)](https://github.com/cloudposse/terraform-datadog-platform /releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
+# terraform-datadog-platform [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-datadog-platform.svg)](https://github.com/cloudposse/terraform-datadog-platform/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
 <!-- markdownlint-restore -->
 
 [![README Header][readme_header_img]][readme_header_link]
