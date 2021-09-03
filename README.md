@@ -28,7 +28,9 @@
 
 -->
 
-Terraform module to configure [Datadog monitors](https://docs.datadoghq.com/api/v1/monitors/).
+Terraform module to provision Datadog resources, including [monitors](https://docs.datadoghq.com/api/v1/monitors/),
+[synthetics](https://docs.datadoghq.com/synthetics/),
+and custom [RBAC](https://docs.datadoghq.com/account_management/rbac) with roles with permissions.
 
 ---
 
@@ -58,11 +60,13 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 ## Introduction
 
-Datadog monitors are defined in YAML configuration files.
+Datadog resources (monitors, roles) are defined in YAML configuration files.
 
-We maintain a comprehensive [catalog](catalog) of Datadog monitors and welcome contributions via pull request!
+We maintain a comprehensive [catalog](catalog) of Datadog monitors and roles and welcome contributions via pull request!
 
-The [example](examples/complete) in this module uses the catalog to provision the monitors on Datadog.
+The [examples/complete](examples/complete) in this module uses the catalog to provision the monitors on Datadog.
+
+The [examples/synthetics](examples/synthetics) shows how to provision synthetics on Datadog for synthetic monitoring.
 
 For more details, refer to:
 
@@ -181,7 +185,7 @@ Are you using this project or any of our other projects? Consider [leaving a tes
 Check out these related projects.
 
 - [terraform-aws-datadog-integration](https://github.com/cloudposse/terraform-aws-datadog-integration) - Terraform module to configure Datadog AWS integration
-- [terraform-yaml-config](https://github.com/cloudposse/terraform-yaml-config) - Terraform module to convert local and remote YAML configuration templates into Terraform lists and maps.
+- [terraform-yaml-config](https://github.com/cloudposse/terraform-yaml-config) - Terraform module to convert local and remote YAML configuration templates into Terraform lists and maps
 
 ## Help
 
