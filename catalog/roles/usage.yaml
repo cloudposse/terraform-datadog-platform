@@ -1,0 +1,9 @@
+usage_edit:
+  name: "Usage edit"
+  permissions:
+    - "usage_edit"
+
+usage_read:
+  name: "Usage read"
+  permissions:
+    - "usage_read"

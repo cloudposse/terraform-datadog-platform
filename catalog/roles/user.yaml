@@ -1,0 +1,14 @@
+user_access_invite:
+  name: "User access invite"
+  permissions:
+    - "user_access_invite"
+
+user_access_manage:
+  name: "User access manage"
+  permissions:
+    - "user_access_manage"
+
+user_app_keys:
+  name: "User app keys"
+  permissions:
+    - "user_app_keys"
