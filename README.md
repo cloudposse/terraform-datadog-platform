@@ -87,109 +87,108 @@ The [examples/rbac](examples/rbac) shows how to use custom RBAC to provision Dat
 Provision Datadog monitors from the catalog of YAML definitions:
 
 ```hcl
-    module "monitor_configs" {
-      source  = "cloudposse/config/yaml"
-      version = "0.8.1"
+  module "monitor_configs" {
+    source  = "cloudposse/config/yaml"
+    version = "0.8.1"
 
-      map_config_local_base_path = path.module
-      map_config_paths           = var.monitor_paths
+    map_config_local_base_path = path.module
+    map_config_paths           = var.monitor_paths
 
-      context = module.this.context
-    }
+    context = module.this.context
+  }
 
-    module "datadog_monitors" {
-      source = "cloudposse/platform/datadog//modules/monitors"
-      # version = "x.x.x"
+  module "datadog_monitors" {
+    source = "cloudposse/platform/datadog//modules/monitors"
+    # version = "x.x.x"
 
-      datadog_monitors     = module.monitor_configs.map_configs
-      alert_tags           = var.alert_tags
-      alert_tags_separator = var.alert_tags_separator
+    datadog_monitors     = module.monitor_configs.map_configs
+    alert_tags           = var.alert_tags
+    alert_tags_separator = var.alert_tags_separator
 
-      context = module.this.context
-    }
+    context = module.this.context
  }
 ```
 
 Provision Datadog synthetics:
 
 ```hcl
-    module "synthetic_configs" {
-      source  = "cloudposse/config/yaml"
-      version = "0.8.1"
+  module "synthetic_configs" {
+    source  = "cloudposse/config/yaml"
+    version = "0.8.1"
 
-      map_config_local_base_path = path.module
-      map_config_paths           = var.synthetic_paths
+    map_config_local_base_path = path.module
+    map_config_paths           = var.synthetic_paths
 
-      context = module.this.context
-    }
+    context = module.this.context
+  }
 
-    module "datadog_synthetics" {
-      source = "cloudposse/platform/datadog//modules/synthetics"
-      # version = "x.x.x"
+  module "datadog_synthetics" {
+    source = "cloudposse/platform/datadog//modules/synthetics"
+    # version = "x.x.x"
 
-      datadog_synthetics   = module.synthetic_configs.map_configs
-      alert_tags           = var.alert_tags
-      alert_tags_separator = var.alert_tags_separator
+    datadog_synthetics   = module.synthetic_configs.map_configs
+    alert_tags           = var.alert_tags
+    alert_tags_separator = var.alert_tags_separator
 
-      context = module.this.context
-    }
+    context = module.this.context
+  }
 ```
 
 Provision Datadog monitors, Datadog roles with defined permissions, and assign roles to monitors:
 
 ```hcl
-    module "monitor_configs" {
-      source  = "cloudposse/config/yaml"
-      version = "0.8.1"
+  module "monitor_configs" {
+    source  = "cloudposse/config/yaml"
+    version = "0.8.1"
 
-      map_config_local_base_path = path.module
-      map_config_paths           = var.monitor_paths
+    map_config_local_base_path = path.module
+    map_config_paths           = var.monitor_paths
 
-      context = module.this.context
+    context = module.this.context
+  }
+
+  module "role_configs" {
+    source  = "cloudposse/config/yaml"
+    version = "0.8.1"
+
+    map_config_local_base_path = path.module
+    map_config_paths           = var.role_paths
+
+    context = module.this.context
+  }
+
+  locals {
+    monitors_write_role_name    = module.datadog_roles.datadog_roles["monitors-write"].name
+    monitors_downtime_role_name = module.datadog_roles.datadog_roles["monitors-downtime"].name
+
+    monitors_roles_map = {
+      aurora-replica-lag              = [local.monitors_write_role_name, local.monitors_downtime_role_name]
+      ec2-failed-status-check         = [local.monitors_write_role_name, local.monitors_downtime_role_name]
+      redshift-health-status          = [local.monitors_downtime_role_name]
+      k8s-deployment-replica-pod-down = [local.monitors_write_role_name]
     }
+  }
 
-    module "role_configs" {
-      source  = "cloudposse/config/yaml"
-      version = "0.8.1"
+  module "datadog_roles" {
+    source = "cloudposse/platform/datadog//modules/roles"
+    # version = "x.x.x"
 
-      map_config_local_base_path = path.module
-      map_config_paths           = var.role_paths
+    datadog_roles = module.role_configs.map_configs
 
-      context = module.this.context
-    }
+    context = module.this.context
+  }
 
-    locals {
-      monitors_write_role_name    = module.datadog_roles.datadog_roles["monitors-write"].name
-      monitors_downtime_role_name = module.datadog_roles.datadog_roles["monitors-downtime"].name
+  module "datadog_monitors" {
+    source = "cloudposse/platform/datadog//modules/monitors"
+    # version = "x.x.x"
 
-      monitors_roles_map = {
-        aurora-replica-lag              = [local.monitors_write_role_name, local.monitors_downtime_role_name]
-        ec2-failed-status-check         = [local.monitors_write_role_name, local.monitors_downtime_role_name]
-        redshift-health-status          = [local.monitors_downtime_role_name]
-        k8s-deployment-replica-pod-down = [local.monitors_write_role_name]
-      }
-    }
+    datadog_monitors     = module.monitor_configs.map_configs
+    alert_tags           = var.alert_tags
+    alert_tags_separator = var.alert_tags_separator
+    restricted_roles_map = local.monitors_roles_map
 
-    module "datadog_roles" {
-      source = "cloudposse/platform/datadog//modules/roles"
-      # version = "x.x.x"
-
-      datadog_roles = module.role_configs.map_configs
-
-      context = module.this.context
-    }
-
-    module "datadog_monitors" {
-      source = "cloudposse/platform/datadog//modules/monitors"
-      # version = "x.x.x"
-
-      datadog_monitors     = module.monitor_configs.map_configs
-      alert_tags           = var.alert_tags
-      alert_tags_separator = var.alert_tags_separator
-      restricted_roles_map = local.monitors_roles_map
-
-      context = module.this.context
-    }
+    context = module.this.context
+  }
 ```
 
 
