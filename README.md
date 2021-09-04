@@ -28,7 +28,14 @@
 
 -->
 
-Terraform module to configure [Datadog monitors](https://docs.datadoghq.com/api/v1/monitors/).
+Terraform module to provision Datadog resources.
+
+The module consists of the following submodules:
+
+  - [monitors](modules/monitors) - to provision Datadog [monitors](https://docs.datadoghq.com/api/v1/monitors/)
+  - [synthetics](modules/synthetics) - to provision Datadog [synthetics](https://docs.datadoghq.com/synthetics/)
+  - [permissions](modules/permissions) - to look up all available Datadog [permissions](https://docs.datadoghq.com/account_management/rbac/permissions/)
+  - [roles](modules/roles) - to provision Datadog [roles](https://docs.datadoghq.com/account_management/rbac)
 
 ---
 
@@ -58,16 +65,15 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 ## Introduction
 
-Datadog monitors are defined in YAML configuration files.
+Datadog resources (monitors, roles, etc.) are defined as [catalog](catalog) of YAML configuration files.
 
-We maintain a comprehensive [catalog](catalog) of Datadog monitors and welcome contributions via pull request!
+We maintain a comprehensive [catalog](catalog) of Datadog resources and welcome contributions via pull request!
 
-The [example](examples/complete) in this module uses the catalog to provision the monitors on Datadog.
+The [examples/complete](examples/complete) in this module uses the catalog to provision the monitors on Datadog.
 
-For more details, refer to:
+The [examples/synthetics](examples/synthetics) shows how to provision synthetics on Datadog for synthetic monitoring.
 
-- [Terraform Datadog monitor resource](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor)
-- [Create a monitor](https://docs.datadoghq.com/api/v1/monitors/#create-a-monitor)
+The [examples/rbac](examples/rbac) shows how to use custom RBAC to provision Datadog roles with permissions and assign roles to monitors.
 
 
 
@@ -77,46 +83,109 @@ For more details, refer to:
 
 
 
-For a complete example, see [examples/complete](examples/complete).
 
-For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest)
-(which tests and deploys the example on Datadog), see [test](test).
+Provision Datadog monitors from the catalog of YAML definitions:
 
 ```hcl
-  module "monitor_yaml_config" {
+    module "monitor_configs" {
+      source  = "cloudposse/config/yaml"
+      version = "0.8.1"
+
+      map_config_local_base_path = path.module
+      map_config_paths           = var.monitor_paths
+
+      context = module.this.context
+    }
+
+    module "datadog_monitors" {
+      source = "../../modules/monitors"
+
+      datadog_monitors     = module.monitor_configs.map_configs
+      alert_tags           = var.alert_tags
+      alert_tags_separator = var.alert_tags_separator
+
+      context = module.this.context
+    }
+ }
+```
+
+Provision Datadog synthetics:
+
+```hcl
+  module "synthetic_configs" {
     source  = "cloudposse/config/yaml"
-    # Cloud Posse recommends pinning every module to a specific version
-    # version     = "x.x.x"
+    version = "0.8.1"
 
     map_config_local_base_path = path.module
-    map_config_paths           = ["catalog/*.yaml"]
+    map_config_paths           = var.synthetic_paths
 
     context = module.this.context
   }
 
-  module "synthetics_yaml_config" {
+  module "datadog_synthetics" {
+    source = "../../modules/synthetics"
+
+    datadog_synthetics   = module.synthetic_configs.map_configs
+    alert_tags           = var.alert_tags
+    alert_tags_separator = var.alert_tags_separator
+
+    context = module.this.context
+  }
+```
+
+Provision Datadog monitors, Datadog roles with defined permissions, and assign roles to monitors:
+
+```hcl
+  module "monitor_configs" {
     source  = "cloudposse/config/yaml"
-    # Cloud Posse recommends pinning every module to a specific version
-    # version     = "x.x.x"
+    version = "0.8.1"
 
     map_config_local_base_path = path.module
-    map_config_paths           = ["catalog/synthetics/*.yaml"]
+    map_config_paths           = var.monitor_paths
+
+    context = module.this.context
+  }
+
+  module "role_configs" {
+    source  = "cloudposse/config/yaml"
+    version = "0.8.1"
+
+    map_config_local_base_path = path.module
+    map_config_paths           = var.role_paths
+
+    context = module.this.context
+  }
+
+  locals {
+    monitors_write_role_name    = module.datadog_roles.datadog_roles["monitors-write"].name
+    monitors_downtime_role_name = module.datadog_roles.datadog_roles["monitors-downtime"].name
+
+    monitors_roles_map = {
+      aurora-replica-lag              = [local.monitors_write_role_name, local.monitors_downtime_role_name]
+      ec2-failed-status-check         = [local.monitors_write_role_name, local.monitors_downtime_role_name]
+      redshift-health-status          = [local.monitors_downtime_role_name]
+      k8s-deployment-replica-pod-down = [local.monitors_write_role_name]
+    }
+  }
+
+  module "datadog_roles" {
+    source = "../../modules/roles"
+
+    datadog_roles = module.role_configs.map_configs
 
     context = module.this.context
   }
 
   module "datadog_monitors" {
-    source  = "cloudposse/monitor/datadog"
-    # Cloud Posse recommends pinning every module to a specific version
-    # version     = "x.x.x"
+    source = "../../modules/monitors"
 
-    datadog_monitors     = module.monitor_yaml_config.map_configs
-    datadog_synthetics   = module.synthetics_yaml_config.map_configs
-    alert_tags           = ["@opsgenie"]
-    alert_tags_separator = "\n"
+    datadog_monitors     = module.monitor_configs.map_configs
+    alert_tags           = var.alert_tags
+    alert_tags_separator = var.alert_tags_separator
+    restricted_roles_map = local.monitors_roles_map
 
     context = module.this.context
- }
+  }
 ```
 
 
@@ -124,7 +193,7 @@ For automated tests of the complete example using [bats](https://github.com/bats
 
 ## Examples
 
-Review the [complete example](examples/complete) to see how to use this module.
+Review the [examples](examples) folder to see how to use the Datadog modules.
 
 
 
@@ -181,7 +250,19 @@ Are you using this project or any of our other projects? Consider [leaving a tes
 Check out these related projects.
 
 - [terraform-aws-datadog-integration](https://github.com/cloudposse/terraform-aws-datadog-integration) - Terraform module to configure Datadog AWS integration
-- [terraform-yaml-config](https://github.com/cloudposse/terraform-yaml-config) - Terraform module to convert local and remote YAML configuration templates into Terraform lists and maps.
+- [terraform-yaml-config](https://github.com/cloudposse/terraform-yaml-config) - Terraform module to convert local and remote YAML configuration templates into Terraform lists and maps
+
+
+## References
+
+For additional context, refer to some of these links.
+
+- [Terraform Datadog monitor resources](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor) - Provides a Datadog monitor resource. Used to create and manage Datadog monitors
+- [Create a monitor](https://docs.datadoghq.com/api/v1/monitors/#create-a-monitor) - Create datadog monitors
+- [Terraform Datadog role resources](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/role) - Provides a Datadog role resource. Used to create and manage Datadog roles
+- [Datadog permissions](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/data-sources/permissions) - Use this data source to retrieve the list of Datadog permissions by name and their corresponding ID, for use in the role resource
+- [Role Based Access Control](https://docs.datadoghq.com/account_management/rbac) - Roles categorize users and define what account permissions those users have, such as what data they can read or what account assets they can modify
+
 
 ## Help
 
