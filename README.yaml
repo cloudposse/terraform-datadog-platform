@@ -5,7 +5,7 @@
 #
 
 # Name of this project
-name: terraform-datadog-monitor
+name: terraform-datadog-platform
 
 # Tags of this project
 tags:
@@ -14,6 +14,10 @@ tags:
   - monitor
   - datadog
   - monitoring
+  - synthetics
+  - rbac
+  - role
+  - permission
 
 # Categories of this project
 categories:
@@ -26,13 +30,13 @@ categories:
 license: "APACHE2"
 
 # Canonical GitHub repo
-github_repo: cloudposse/terraform-datadog-monitor
+github_repo: cloudposse/terraform-datadog-platform
 
 # Badges to display
 badges:
   - name: "Latest Release"
-    image: "https://img.shields.io/github/release/cloudposse/terraform-datadog-monitor.svg"
-    url: "https://github.com/cloudposse/terraform-datadog-monitor/releases/latest"
+    image: "https://img.shields.io/github/release/cloudposse/terraform-datadog-platform.svg"
+    url: "https://github.com/cloudposse/terraform-datadog-platform/releases/latest"
   - name: "Slack Community"
     image: "https://slack.cloudposse.com/badge.svg"
     url: "https://slack.cloudposse.com"
@@ -42,72 +46,165 @@ related:
     description: "Terraform module to configure Datadog AWS integration"
     url: "https://github.com/cloudposse/terraform-aws-datadog-integration"
   - name: "terraform-yaml-config"
-    description: "Terraform module to convert local and remote YAML configuration templates into Terraform lists and maps."
+    description: "Terraform module to convert local and remote YAML configuration templates into Terraform lists and maps"
     url: "https://github.com/cloudposse/terraform-yaml-config"
 
 # Short description of this project
 description: |-
-  Terraform module to configure [Datadog monitors](https://docs.datadoghq.com/api/v1/monitors/).
+  Terraform module to provision Datadog resources.
+
+  The module consists of the following submodules:
+
+    - [monitors](modules/monitors) - to provision Datadog [monitors](https://docs.datadoghq.com/api/v1/monitors/)
+    - [synthetics](modules/synthetics) - to provision Datadog [synthetics](https://docs.datadoghq.com/synthetics/)
+    - [permissions](modules/permissions) - to look up all available Datadog [permissions](https://docs.datadoghq.com/account_management/rbac/permissions/)
+    - [roles](modules/roles) - to provision Datadog [roles](https://docs.datadoghq.com/account_management/rbac)
 
 introduction: |-
-  Datadog monitors are defined in YAML configuration files.
+  Datadog resources (monitors, roles, etc.) are defined as [catalog](catalog) of YAML configuration files.
 
-  We maintain a comprehensive [catalog](catalog) of Datadog monitors and welcome contributions via pull request!
+  We maintain a comprehensive [catalog](catalog) of Datadog resources and welcome contributions via pull request!
 
-  The [example](examples/complete) in this module uses the catalog to provision the monitors on Datadog.
+  The [examples/complete](examples/complete) in this module uses the catalog to provision the monitors on Datadog.
 
-  For more details, refer to:
+  The [examples/synthetics](examples/synthetics) shows how to provision synthetics on Datadog for synthetic monitoring.
 
-  - [Terraform Datadog monitor resource](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor)
-  - [Create a monitor](https://docs.datadoghq.com/api/v1/monitors/#create-a-monitor)
+  The [examples/rbac](examples/rbac) shows how to use custom RBAC to provision Datadog roles with permissions and assign roles to monitors.
 
+
+references:
+  - name: "Terraform Datadog monitor resources"
+    description: "Provides a Datadog monitor resource. Used to create and manage Datadog monitors"
+    url: "https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor"
+
+  - name: "Create a monitor"
+    description: "Create datadog monitors"
+    url: "https://docs.datadoghq.com/api/v1/monitors/#create-a-monitor"
+
+  - name: "Terraform Datadog role resources"
+    description: "Provides a Datadog role resource. Used to create and manage Datadog roles"
+    url: "https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/role"
+
+  - name: "Datadog permissions"
+    description: "Use this data source to retrieve the list of Datadog permissions by name and their corresponding ID, for use in the role resource"
+    url: "https://registry.terraform.io/providers/DataDog/datadog/latest/docs/data-sources/permissions"
+
+  - name: "Role Based Access Control"
+    description: "Roles categorize users and define what account permissions those users have, such as what data they can read or what account assets they can modify"
+    url: "https://docs.datadoghq.com/account_management/rbac"
 
 # How to use this project
 usage: |-
-  For a complete example, see [examples/complete](examples/complete).
 
-  For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest)
-  (which tests and deploys the example on Datadog), see [test](test).
+  Provision Datadog monitors from the catalog of YAML definitions:
 
   ```hcl
-    module "monitor_yaml_config" {
+    module "monitor_configs" {
       source  = "cloudposse/config/yaml"
-      # Cloud Posse recommends pinning every module to a specific version
-      # version     = "x.x.x"
+      version = "0.8.1"
 
       map_config_local_base_path = path.module
-      map_config_paths           = ["catalog/*.yaml"]
-
-      context = module.this.context
-    }
-
-    module "synthetics_yaml_config" {
-      source  = "cloudposse/config/yaml"
-      # Cloud Posse recommends pinning every module to a specific version
-      # version     = "x.x.x"
-
-      map_config_local_base_path = path.module
-      map_config_paths           = ["catalog/synthetics/*.yaml"]
+      map_config_paths           = var.monitor_paths
 
       context = module.this.context
     }
 
     module "datadog_monitors" {
-      source  = "cloudposse/monitor/datadog"
-      # Cloud Posse recommends pinning every module to a specific version
-      # version     = "x.x.x"
+      source = "cloudposse/platform/datadog//modules/monitors"
+      # version = "x.x.x"
 
-      datadog_monitors     = module.monitor_yaml_config.map_configs
-      datadog_synthetics   = module.synthetics_yaml_config.map_configs
-      alert_tags           = ["@opsgenie"]
-      alert_tags_separator = "\n"
+      datadog_monitors     = module.monitor_configs.map_configs
+      alert_tags           = var.alert_tags
+      alert_tags_separator = var.alert_tags_separator
 
       context = module.this.context
    }
   ```
 
+  Provision Datadog synthetics:
+
+  ```hcl
+    module "synthetic_configs" {
+      source  = "cloudposse/config/yaml"
+      version = "0.8.1"
+
+      map_config_local_base_path = path.module
+      map_config_paths           = var.synthetic_paths
+
+      context = module.this.context
+    }
+
+    module "datadog_synthetics" {
+      source = "cloudposse/platform/datadog//modules/synthetics"
+      # version = "x.x.x"
+
+      datadog_synthetics   = module.synthetic_configs.map_configs
+      alert_tags           = var.alert_tags
+      alert_tags_separator = var.alert_tags_separator
+
+      context = module.this.context
+    }
+  ```
+
+  Provision Datadog monitors, Datadog roles with defined permissions, and assign roles to monitors:
+
+  ```hcl
+    module "monitor_configs" {
+      source  = "cloudposse/config/yaml"
+      version = "0.8.1"
+
+      map_config_local_base_path = path.module
+      map_config_paths           = var.monitor_paths
+
+      context = module.this.context
+    }
+
+    module "role_configs" {
+      source  = "cloudposse/config/yaml"
+      version = "0.8.1"
+
+      map_config_local_base_path = path.module
+      map_config_paths           = var.role_paths
+
+      context = module.this.context
+    }
+
+    locals {
+      monitors_write_role_name    = module.datadog_roles.datadog_roles["monitors-write"].name
+      monitors_downtime_role_name = module.datadog_roles.datadog_roles["monitors-downtime"].name
+
+      monitors_roles_map = {
+        aurora-replica-lag              = [local.monitors_write_role_name, local.monitors_downtime_role_name]
+        ec2-failed-status-check         = [local.monitors_write_role_name, local.monitors_downtime_role_name]
+        redshift-health-status          = [local.monitors_downtime_role_name]
+        k8s-deployment-replica-pod-down = [local.monitors_write_role_name]
+      }
+    }
+
+    module "datadog_roles" {
+      source = "cloudposse/platform/datadog//modules/roles"
+      # version = "x.x.x"
+
+      datadog_roles = module.role_configs.map_configs
+
+      context = module.this.context
+    }
+
+    module "datadog_monitors" {
+      source = "cloudposse/platform/datadog//modules/monitors"
+      # version = "x.x.x"
+
+      datadog_monitors     = module.monitor_configs.map_configs
+      alert_tags           = var.alert_tags
+      alert_tags_separator = var.alert_tags_separator
+      restricted_roles_map = local.monitors_roles_map
+
+      context = module.this.context
+    }
+  ```
+
 examples: |-
-  Review the [complete example](examples/complete) to see how to use this module.
+  Review the [examples](examples) folder to see how to use the Datadog modules.
 
 include:
   - "docs/targets.md"

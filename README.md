@@ -1,6 +1,6 @@
 
 <!-- markdownlint-disable -->
-# terraform-datadog-monitor [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-datadog-monitor.svg)](https://github.com/cloudposse/terraform-datadog-monitor/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
+# terraform-datadog-platform [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-datadog-platform.svg)](https://github.com/cloudposse/terraform-datadog-platform/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
 <!-- markdownlint-restore -->
 
 [![README Header][readme_header_img]][readme_header_link]
@@ -28,7 +28,14 @@
 
 -->
 
-Terraform module to configure [Datadog monitors](https://docs.datadoghq.com/api/v1/monitors/).
+Terraform module to provision Datadog resources.
+
+The module consists of the following submodules:
+
+  - [monitors](modules/monitors) - to provision Datadog [monitors](https://docs.datadoghq.com/api/v1/monitors/)
+  - [synthetics](modules/synthetics) - to provision Datadog [synthetics](https://docs.datadoghq.com/synthetics/)
+  - [permissions](modules/permissions) - to look up all available Datadog [permissions](https://docs.datadoghq.com/account_management/rbac/permissions/)
+  - [roles](modules/roles) - to provision Datadog [roles](https://docs.datadoghq.com/account_management/rbac)
 
 ---
 
@@ -61,16 +68,15 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 
 ## Introduction
 
-Datadog monitors are defined in YAML configuration files.
+Datadog resources (monitors, roles, etc.) are defined as [catalog](catalog) of YAML configuration files.
 
-We maintain a comprehensive [catalog](catalog) of Datadog monitors and welcome contributions via pull request!
+We maintain a comprehensive [catalog](catalog) of Datadog resources and welcome contributions via pull request!
 
-The [example](examples/complete) in this module uses the catalog to provision the monitors on Datadog.
+The [examples/complete](examples/complete) in this module uses the catalog to provision the monitors on Datadog.
 
-For more details, refer to:
+The [examples/synthetics](examples/synthetics) shows how to provision synthetics on Datadog for synthetic monitoring.
 
-- [Terraform Datadog monitor resource](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor)
-- [Create a monitor](https://docs.datadoghq.com/api/v1/monitors/#create-a-monitor)
+The [examples/rbac](examples/rbac) shows how to use custom RBAC to provision Datadog roles with permissions and assign roles to monitors.
 
 
 ## Security & Compliance [<img src="https://cloudposse.com/wp-content/uploads/2020/11/bridgecrew.svg" width="250" align="right" />](https://bridgecrew.io/)
@@ -79,16 +85,16 @@ Security scanning is graciously provided by Bridgecrew. Bridgecrew is the leadin
 
 | Benchmark | Description |
 |--------|---------------|
-| [![Infrastructure Security](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-monitor/general)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-monitor&benchmark=INFRASTRUCTURE+SECURITY) | Infrastructure Security Compliance |
-| [![CIS KUBERNETES](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-monitor/cis_kubernetes)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-monitor&benchmark=CIS+KUBERNETES+V1.5) | Center for Internet Security, KUBERNETES Compliance |
-| [![CIS AWS](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-monitor/cis_aws)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-monitor&benchmark=CIS+AWS+V1.2) | Center for Internet Security, AWS Compliance |
-| [![CIS AZURE](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-monitor/cis_azure)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-monitor&benchmark=CIS+AZURE+V1.1) | Center for Internet Security, AZURE Compliance |
-| [![PCI-DSS](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-monitor/pci)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-monitor&benchmark=PCI-DSS+V3.2) | Payment Card Industry Data Security Standards Compliance |
-| [![NIST-800-53](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-monitor/nist)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-monitor&benchmark=NIST-800-53) | National Institute of Standards and Technology Compliance |
-| [![ISO27001](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-monitor/iso)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-monitor&benchmark=ISO27001) | Information Security Management System, ISO/IEC 27001 Compliance |
-| [![SOC2](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-monitor/soc2)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-monitor&benchmark=SOC2)| Service Organization Control 2 Compliance |
-| [![CIS GCP](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-monitor/cis_gcp)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-monitor&benchmark=CIS+GCP+V1.1) | Center for Internet Security, GCP Compliance |
-| [![HIPAA](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-monitor/hipaa)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-monitor&benchmark=HIPAA) | Health Insurance Portability and Accountability Compliance |
+| [![Infrastructure Security](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-platform/general)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-platform&benchmark=INFRASTRUCTURE+SECURITY) | Infrastructure Security Compliance |
+| [![CIS KUBERNETES](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-platform/cis_kubernetes)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-platform&benchmark=CIS+KUBERNETES+V1.5) | Center for Internet Security, KUBERNETES Compliance |
+| [![CIS AWS](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-platform/cis_aws)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-platform&benchmark=CIS+AWS+V1.2) | Center for Internet Security, AWS Compliance |
+| [![CIS AZURE](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-platform/cis_azure)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-platform&benchmark=CIS+AZURE+V1.1) | Center for Internet Security, AZURE Compliance |
+| [![PCI-DSS](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-platform/pci)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-platform&benchmark=PCI-DSS+V3.2) | Payment Card Industry Data Security Standards Compliance |
+| [![NIST-800-53](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-platform/nist)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-platform&benchmark=NIST-800-53) | National Institute of Standards and Technology Compliance |
+| [![ISO27001](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-platform/iso)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-platform&benchmark=ISO27001) | Information Security Management System, ISO/IEC 27001 Compliance |
+| [![SOC2](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-platform/soc2)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-platform&benchmark=SOC2)| Service Organization Control 2 Compliance |
+| [![CIS GCP](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-platform/cis_gcp)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-platform&benchmark=CIS+GCP+V1.1) | Center for Internet Security, GCP Compliance |
+| [![HIPAA](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-datadog-platform/hipaa)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-datadog-platform&benchmark=HIPAA) | Health Insurance Portability and Accountability Compliance |
 
 
 
@@ -106,46 +112,112 @@ the registry shows many of our inputs as required when in fact they are optional
 The table below correctly indicates which inputs are required.
 
 
-For a complete example, see [examples/complete](examples/complete).
 
-For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest)
-(which tests and deploys the example on Datadog), see [test](test).
+Provision Datadog monitors from the catalog of YAML definitions:
 
 ```hcl
-  module "monitor_yaml_config" {
+  module "monitor_configs" {
     source  = "cloudposse/config/yaml"
-    # Cloud Posse recommends pinning every module to a specific version
-    # version     = "x.x.x"
+    version = "0.8.1"
 
     map_config_local_base_path = path.module
-    map_config_paths           = ["catalog/*.yaml"]
-
-    context = module.this.context
-  }
-
-  module "synthetics_yaml_config" {
-    source  = "cloudposse/config/yaml"
-    # Cloud Posse recommends pinning every module to a specific version
-    # version     = "x.x.x"
-
-    map_config_local_base_path = path.module
-    map_config_paths           = ["catalog/synthetics/*.yaml"]
+    map_config_paths           = var.monitor_paths
 
     context = module.this.context
   }
 
   module "datadog_monitors" {
-    source  = "cloudposse/monitor/datadog"
-    # Cloud Posse recommends pinning every module to a specific version
-    # version     = "x.x.x"
+    source = "cloudposse/platform/datadog//modules/monitors"
+    # version = "x.x.x"
 
-    datadog_monitors     = module.monitor_yaml_config.map_configs
-    datadog_synthetics   = module.synthetics_yaml_config.map_configs
-    alert_tags           = ["@opsgenie"]
-    alert_tags_separator = "\n"
+    datadog_monitors     = module.monitor_configs.map_configs
+    alert_tags           = var.alert_tags
+    alert_tags_separator = var.alert_tags_separator
 
     context = module.this.context
  }
+```
+
+Provision Datadog synthetics:
+
+```hcl
+  module "synthetic_configs" {
+    source  = "cloudposse/config/yaml"
+    version = "0.8.1"
+
+    map_config_local_base_path = path.module
+    map_config_paths           = var.synthetic_paths
+
+    context = module.this.context
+  }
+
+  module "datadog_synthetics" {
+    source = "cloudposse/platform/datadog//modules/synthetics"
+    # version = "x.x.x"
+
+    datadog_synthetics   = module.synthetic_configs.map_configs
+    alert_tags           = var.alert_tags
+    alert_tags_separator = var.alert_tags_separator
+
+    context = module.this.context
+  }
+```
+
+Provision Datadog monitors, Datadog roles with defined permissions, and assign roles to monitors:
+
+```hcl
+  module "monitor_configs" {
+    source  = "cloudposse/config/yaml"
+    version = "0.8.1"
+
+    map_config_local_base_path = path.module
+    map_config_paths           = var.monitor_paths
+
+    context = module.this.context
+  }
+
+  module "role_configs" {
+    source  = "cloudposse/config/yaml"
+    version = "0.8.1"
+
+    map_config_local_base_path = path.module
+    map_config_paths           = var.role_paths
+
+    context = module.this.context
+  }
+
+  locals {
+    monitors_write_role_name    = module.datadog_roles.datadog_roles["monitors-write"].name
+    monitors_downtime_role_name = module.datadog_roles.datadog_roles["monitors-downtime"].name
+
+    monitors_roles_map = {
+      aurora-replica-lag              = [local.monitors_write_role_name, local.monitors_downtime_role_name]
+      ec2-failed-status-check         = [local.monitors_write_role_name, local.monitors_downtime_role_name]
+      redshift-health-status          = [local.monitors_downtime_role_name]
+      k8s-deployment-replica-pod-down = [local.monitors_write_role_name]
+    }
+  }
+
+  module "datadog_roles" {
+    source = "cloudposse/platform/datadog//modules/roles"
+    # version = "x.x.x"
+
+    datadog_roles = module.role_configs.map_configs
+
+    context = module.this.context
+  }
+
+  module "datadog_monitors" {
+    source = "cloudposse/platform/datadog//modules/monitors"
+    # version = "x.x.x"
+
+    datadog_monitors     = module.monitor_configs.map_configs
+    alert_tags           = var.alert_tags
+    alert_tags_separator = var.alert_tags_separator
+    restricted_roles_map = local.monitors_roles_map
+
+    context = module.this.context
+  }
 ```
 
 
@@ -153,7 +225,7 @@ For automated tests of the complete example using [bats](https://github.com/bats
 
 ## Examples
 
-Review the [complete example](examples/complete) to see how to use this module.
+Review the [examples](examples) folder to see how to use the Datadog modules.
 
 
 
@@ -176,14 +248,14 @@ Available targets:
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 2.0 |
-| <a name="requirement_datadog"></a> [datadog](#requirement\_datadog) | >= 2.13 |
+| <a name="requirement_datadog"></a> [datadog](#requirement\_datadog) | >= 3.0.0 |
 | <a name="requirement_local"></a> [local](#requirement\_local) | >= 1.3 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_datadog"></a> [datadog](#provider\_datadog) | >= 2.13 |
+| <a name="provider_datadog"></a> [datadog](#provider\_datadog) | >= 3.0.0 |
 
 ## Modules
 
@@ -196,7 +268,6 @@ Available targets:
 | Name | Type |
 |------|------|
 | [datadog_monitor.default](https://registry.terraform.io/providers/datadog/datadog/latest/docs/resources/monitor) | resource |
-| [datadog_synthetics_test.default](https://registry.terraform.io/providers/datadog/datadog/latest/docs/resources/synthetics_test) | resource |
 
 ## Inputs
 
@@ -207,8 +278,7 @@ Available targets:
 | <a name="input_alert_tags_separator"></a> [alert\_tags\_separator](#input\_alert\_tags\_separator) | Separator for the alert tags. All strings from the `alert_tags` variable will be joined into one string using the separator and then added to the alert message | `string` | `"\n"` | no |
 | <a name="input_attributes"></a> [attributes](#input\_attributes) | ID element. Additional attributes (e.g. `workers` or `cluster`) to add to `id`,<br>in the order they appear in the list. New attributes are appended to the<br>end of the list. The elements of the list are joined by the `delimiter`<br>and treated as a single ID element. | `list(string)` | `[]` | no |
 | <a name="input_context"></a> [context](#input\_context) | Single object for setting entire context at once.<br>See description of individual variables for details.<br>Leave string and numeric variables as `null` to use default value.<br>Individual variable settings (non-null) override settings in context object,<br>except for attributes, tags, and additional\_tag\_map, which are merged. | `any` | <pre>{<br>  "additional_tag_map": {},<br>  "attributes": [],<br>  "delimiter": null,<br>  "descriptor_formats": {},<br>  "enabled": true,<br>  "environment": null,<br>  "id_length_limit": null,<br>  "label_key_case": null,<br>  "label_order": [],<br>  "label_value_case": null,<br>  "labels_as_tags": [<br>    "unset"<br>  ],<br>  "name": null,<br>  "namespace": null,<br>  "regex_replace_chars": null,<br>  "stage": null,<br>  "tags": {},<br>  "tenant": null<br>}</pre> | no |
-| <a name="input_datadog_monitors"></a> [datadog\_monitors](#input\_datadog\_monitors) | List of Datadog monitor configurations. See catalog for examples | <pre>map(object({<br>    name                = string<br>    type                = string<br>    message             = string<br>    escalation_message  = string<br>    query               = string<br>    tags                = list(string)<br>    notify_no_data      = bool<br>    new_host_delay      = number<br>    evaluation_delay    = number<br>    no_data_timeframe   = number<br>    renotify_interval   = number<br>    notify_audit        = bool<br>    timeout_h           = number<br>    enable_logs_sample  = bool<br>    include_tags        = bool<br>    require_full_window = bool<br>    locked              = bool<br>    force_delete        = bool<br>    threshold_windows   = map(any)<br>    thresholds          = map(any)<br>  }))</pre> | n/a | yes |
-| <a name="input_datadog_synthetics"></a> [datadog\_synthetics](#input\_datadog\_synthetics) | List of Datadog synthetic test configurations. See catalog for examples | <pre>map(object({<br>    name            = string<br>    message         = string<br>    type            = string<br>    subtype         = string<br>    status          = string<br>    locations       = list(string)<br>    tags            = list(string)<br>    request         = map(string)<br>    request_headers = map(string)<br>    request_query   = map(string)<br>    options         = map(string)<br>    assertions      = list(map(any))<br>  }))</pre> | n/a | yes |
+| <a name="input_datadog_monitors"></a> [datadog\_monitors](#input\_datadog\_monitors) | Map of Datadog monitor configurations. See catalog for examples | <pre>map(object({<br>    name                = string<br>    type                = string<br>    message             = string<br>    escalation_message  = string<br>    query               = string<br>    tags                = list(string)<br>    notify_no_data      = bool<br>    new_host_delay      = number<br>    evaluation_delay    = number<br>    no_data_timeframe   = number<br>    renotify_interval   = number<br>    notify_audit        = bool<br>    timeout_h           = number<br>    enable_logs_sample  = bool<br>    include_tags        = bool<br>    require_full_window = bool<br>    locked              = bool<br>    force_delete        = bool<br>    threshold_windows   = map(any)<br>    thresholds          = map(any)<br>  }))</pre> | n/a | yes |
 | <a name="input_delimiter"></a> [delimiter](#input\_delimiter) | Delimiter to be used between ID elements.<br>Defaults to `-` (hyphen). Set to `""` to use no delimiter at all. | `string` | `null` | no |
 | <a name="input_descriptor_formats"></a> [descriptor\_formats](#input\_descriptor\_formats) | Describe additional descriptors to be output in the `descriptors` output map.<br>Map of maps. Keys are names of descriptors. Values are maps of the form<br>`{<br>   format = string<br>   labels = list(string)<br>}`<br>(Type is `any` so the map values can later be enhanced to provide additional options.)<br>`format` is a Terraform format string to be passed to the `format()` function.<br>`labels` is a list of labels, in order, to pass to `format()` function.<br>Label values will be normalized before being passed to `format()` so they will be<br>identical to how they appear in `id`.<br>Default is `{}` (`descriptors` output will be empty). | `any` | `{}` | no |
 | <a name="input_enabled"></a> [enabled](#input\_enabled) | Set to false to prevent the module from creating any resources | `bool` | `null` | no |
@@ -221,6 +291,7 @@ Available targets:
 | <a name="input_name"></a> [name](#input\_name) | ID element. Usually the component or solution name, e.g. 'app' or 'jenkins'.<br>This is the only ID element not also included as a `tag`.<br>The "name" tag is set to the full `id` string. There is no tag with the value of the `name` input. | `string` | `null` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | ID element. Usually an abbreviation of your organization name, e.g. 'eg' or 'cp', to help ensure generated IDs are globally unique | `string` | `null` | no |
 | <a name="input_regex_replace_chars"></a> [regex\_replace\_chars](#input\_regex\_replace\_chars) | Terraform regular expression (regex) string.<br>Characters matching the regex will be removed from the ID elements.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
+| <a name="input_restricted_roles_map"></a> [restricted\_roles\_map](#input\_restricted\_roles\_map) | Map of monitors names to sets of Datadog roles to restrict access to each monitor | `map(set(string))` | `{}` | no |
 | <a name="input_stage"></a> [stage](#input\_stage) | ID element. Usually used to indicate role, e.g. 'prod', 'staging', 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Additional tags (e.g. `{'BusinessUnit': 'XYZ'}`).<br>Neither the tag keys nor the tag values will be modified by this module. | `map(string)` | `{}` | no |
 | <a name="input_tenant"></a> [tenant](#input\_tenant) | ID element \_(Rarely used, not included by default)\_. A customer identifier, indicating who this instance of a resource is for | `string` | `null` | no |
@@ -232,15 +303,13 @@ Available targets:
 | <a name="output_datadog_monitor_ids"></a> [datadog\_monitor\_ids](#output\_datadog\_monitor\_ids) | IDs of the created Datadog monitors |
 | <a name="output_datadog_monitor_names"></a> [datadog\_monitor\_names](#output\_datadog\_monitor\_names) | Names of the created Datadog monitors |
 | <a name="output_datadog_monitors"></a> [datadog\_monitors](#output\_datadog\_monitors) | Datadog monitor outputs |
-| <a name="output_datadog_synthetic_tests"></a> [datadog\_synthetic\_tests](#output\_datadog\_synthetic\_tests) | The synthetic tests created in DataDog |
-| <a name="output_datadog_synthetics_test_names"></a> [datadog\_synthetics\_test\_names](#output\_datadog\_synthetics\_test\_names) | Names of the created Datadog Synthetic tests |
 <!-- markdownlint-restore -->
 
 
 
 ## Share the Love
 
-Like this project? Please give it a ★ on [our GitHub](https://github.com/cloudposse/terraform-datadog-monitor)! (it helps us **a lot**)
+Like this project? Please give it a ★ on [our GitHub](https://github.com/cloudposse/terraform-datadog-platform)! (it helps us **a lot**)
 
 Are you using this project or any of our other projects? Consider [leaving a testimonial][testimonial]. =)
 
@@ -251,13 +320,25 @@ Are you using this project or any of our other projects? Consider [leaving a tes
 Check out these related projects.
 
 - [terraform-aws-datadog-integration](https://github.com/cloudposse/terraform-aws-datadog-integration) - Terraform module to configure Datadog AWS integration
-- [terraform-yaml-config](https://github.com/cloudposse/terraform-yaml-config) - Terraform module to convert local and remote YAML configuration templates into Terraform lists and maps.
+- [terraform-yaml-config](https://github.com/cloudposse/terraform-yaml-config) - Terraform module to convert local and remote YAML configuration templates into Terraform lists and maps
+
+
+## References
+
+For additional context, refer to some of these links.
+
+- [Terraform Datadog monitor resources](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor) - Provides a Datadog monitor resource. Used to create and manage Datadog monitors
+- [Create a monitor](https://docs.datadoghq.com/api/v1/monitors/#create-a-monitor) - Create datadog monitors
+- [Terraform Datadog role resources](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/role) - Provides a Datadog role resource. Used to create and manage Datadog roles
+- [Datadog permissions](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/data-sources/permissions) - Use this data source to retrieve the list of Datadog permissions by name and their corresponding ID, for use in the role resource
+- [Role Based Access Control](https://docs.datadoghq.com/account_management/rbac) - Roles categorize users and define what account permissions those users have, such as what data they can read or what account assets they can modify
+
 
 ## Help
 
 **Got a question?** We got answers.
 
-File a GitHub [issue](https://github.com/cloudposse/terraform-datadog-monitor/issues), send us an [email][email] or join our [Slack Community][slack].
+File a GitHub [issue](https://github.com/cloudposse/terraform-datadog-platform/issues), send us an [email][email] or join our [Slack Community][slack].
 
 [![README Commercial Support][readme_commercial_support_img]][readme_commercial_support_link]
 
@@ -305,7 +386,7 @@ Sign up for [our newsletter][newsletter] that covers everything on our technolog
 
 ### Bug Reports & Feature Requests
 
-Please use the [issue tracker](https://github.com/cloudposse/terraform-datadog-monitor/issues) to report any bugs or file feature requests.
+Please use the [issue tracker](https://github.com/cloudposse/terraform-datadog-platform/issues) to report any bugs or file feature requests.
 
 ### Developing
 
@@ -399,32 +480,32 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
 [![Beacon][beacon]][website]
 
   [logo]: https://cloudposse.com/logo-300x69.svg
-  [docs]: https://cpco.io/docs?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=docs
-  [website]: https://cpco.io/homepage?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=website
-  [github]: https://cpco.io/github?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=github
-  [jobs]: https://cpco.io/jobs?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=jobs
-  [hire]: https://cpco.io/hire?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=hire
-  [slack]: https://cpco.io/slack?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=slack
-  [linkedin]: https://cpco.io/linkedin?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=linkedin
-  [twitter]: https://cpco.io/twitter?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=twitter
-  [testimonial]: https://cpco.io/leave-testimonial?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=testimonial
-  [office_hours]: https://cloudposse.com/office-hours?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=office_hours
-  [newsletter]: https://cpco.io/newsletter?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=newsletter
-  [discourse]: https://ask.sweetops.com/?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=discourse
-  [email]: https://cpco.io/email?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=email
-  [commercial_support]: https://cpco.io/commercial-support?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=commercial_support
-  [we_love_open_source]: https://cpco.io/we-love-open-source?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=we_love_open_source
-  [terraform_modules]: https://cpco.io/terraform-modules?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=terraform_modules
+  [docs]: https://cpco.io/docs?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=docs
+  [website]: https://cpco.io/homepage?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=website
+  [github]: https://cpco.io/github?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=github
+  [jobs]: https://cpco.io/jobs?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=jobs
+  [hire]: https://cpco.io/hire?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=hire
+  [slack]: https://cpco.io/slack?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=slack
+  [linkedin]: https://cpco.io/linkedin?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=linkedin
+  [twitter]: https://cpco.io/twitter?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=twitter
+  [testimonial]: https://cpco.io/leave-testimonial?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=testimonial
+  [office_hours]: https://cloudposse.com/office-hours?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=office_hours
+  [newsletter]: https://cpco.io/newsletter?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=newsletter
+  [discourse]: https://ask.sweetops.com/?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=discourse
+  [email]: https://cpco.io/email?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=email
+  [commercial_support]: https://cpco.io/commercial-support?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=commercial_support
+  [we_love_open_source]: https://cpco.io/we-love-open-source?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=we_love_open_source
+  [terraform_modules]: https://cpco.io/terraform-modules?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=terraform_modules
   [readme_header_img]: https://cloudposse.com/readme/header/img
-  [readme_header_link]: https://cloudposse.com/readme/header/link?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=readme_header_link
+  [readme_header_link]: https://cloudposse.com/readme/header/link?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=readme_header_link
   [readme_footer_img]: https://cloudposse.com/readme/footer/img
-  [readme_footer_link]: https://cloudposse.com/readme/footer/link?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=readme_footer_link
+  [readme_footer_link]: https://cloudposse.com/readme/footer/link?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=readme_footer_link
   [readme_commercial_support_img]: https://cloudposse.com/readme/commercial-support/img
-  [readme_commercial_support_link]: https://cloudposse.com/readme/commercial-support/link?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-monitor&utm_content=readme_commercial_support_link
-  [share_twitter]: https://twitter.com/intent/tweet/?text=terraform-datadog-monitor&url=https://github.com/cloudposse/terraform-datadog-monitor
-  [share_linkedin]: https://www.linkedin.com/shareArticle?mini=true&title=terraform-datadog-monitor&url=https://github.com/cloudposse/terraform-datadog-monitor
-  [share_reddit]: https://reddit.com/submit/?url=https://github.com/cloudposse/terraform-datadog-monitor
-  [share_facebook]: https://facebook.com/sharer/sharer.php?u=https://github.com/cloudposse/terraform-datadog-monitor
-  [share_googleplus]: https://plus.google.com/share?url=https://github.com/cloudposse/terraform-datadog-monitor
-  [share_email]: mailto:?subject=terraform-datadog-monitor&body=https://github.com/cloudposse/terraform-datadog-monitor
-  [beacon]: https://ga-beacon.cloudposse.com/UA-76589703-4/cloudposse/terraform-datadog-monitor?pixel&cs=github&cm=readme&an=terraform-datadog-monitor
+  [readme_commercial_support_link]: https://cloudposse.com/readme/commercial-support/link?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-datadog-platform&utm_content=readme_commercial_support_link
+  [share_twitter]: https://twitter.com/intent/tweet/?text=terraform-datadog-platform&url=https://github.com/cloudposse/terraform-datadog-platform
+  [share_linkedin]: https://www.linkedin.com/shareArticle?mini=true&title=terraform-datadog-platform&url=https://github.com/cloudposse/terraform-datadog-platform
+  [share_reddit]: https://reddit.com/submit/?url=https://github.com/cloudposse/terraform-datadog-platform
+  [share_facebook]: https://facebook.com/sharer/sharer.php?u=https://github.com/cloudposse/terraform-datadog-platform
+  [share_googleplus]: https://plus.google.com/share?url=https://github.com/cloudposse/terraform-datadog-platform
+  [share_email]: mailto:?subject=terraform-datadog-platform&body=https://github.com/cloudposse/terraform-datadog-platform
+  [beacon]: https://ga-beacon.cloudposse.com/UA-76589703-4/cloudposse/terraform-datadog-platform?pixel&cs=github&cm=readme&an=terraform-datadog-platform

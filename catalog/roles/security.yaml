@@ -1,0 +1,24 @@
+security-monitoring-filters-read:
+  name: "Security monitoring filters read"
+  permissions:
+    - "security_monitoring_filters_read"
+
+security-monitoring-filters-write:
+  name: "Security monitoring filters write"
+  permissions:
+    - "security_monitoring_filters_write"
+
+security-monitoring-rules-read:
+  name: "Security monitoring rules read"
+  permissions:
+    - "security_monitoring_rules_read"
+
+security-monitoring-rules-write:
+  name: "Security monitoring rules write"
+  permissions:
+    - "security_monitoring_rules_write"
+
+security-monitoring-signals-read:
+  name: "Security monitoring signals read"
+  permissions:
+    - "security_monitoring_signals_read"

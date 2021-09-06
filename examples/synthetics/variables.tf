@@ -13,7 +13,7 @@ variable "alert_tags_separator" {
   description = "Separator for the alert tags. All strings from the `alert_tags` variable will be joined into one string using the separator and then added to the alert message"
 }
 
-variable "monitor_paths" {
+variable "synthetic_paths" {
   type        = list(string)
-  description = "List of paths to Datadog monitor configurations"
+  description = "List of paths to Datadog synthetic configurations"
 }

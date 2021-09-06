@@ -1,0 +1,9 @@
+monitors-write:
+  name: "Monitors write"
+  permissions:
+    - "monitors_write"
+
+monitors-downtime:
+  name: "Monitors downtime"
+  permissions:
+    - "monitors_downtime"

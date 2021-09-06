@@ -1,0 +1,39 @@
+synthetics-default-settings-read:
+  name: "Synthetics default settings read"
+  permissions:
+    - "synthetics_default_settings_read"
+
+synthetics-default-settings-write:
+  name: "Synthetics default settings write"
+  permissions:
+    - "synthetics_default_settings_write"
+
+synthetics-global-variable-read:
+  name: "Synthetics global variable read"
+  permissions:
+    - "synthetics_global_variable_read"
+
+synthetics-global-variable-write:
+  name: "Synthetics global variable write"
+  permissions:
+    - "synthetics_global_variable_write"
+
+synthetics-private-location-read:
+  name: "Synthetics private location read"
+  permissions:
+    - "synthetics_private_location_read"
+
+synthetics-private-location-write:
+  name: "Synthetics private location write"
+  permissions:
+    - "synthetics_private_location_write"
+
+synthetics-read:
+  name: "Synthetics read"
+  permissions:
+    - "synthetics_read"
+
+synthetics-write:
+  name: "Synthetics write"
+  permissions:
+    - "synthetics_write"

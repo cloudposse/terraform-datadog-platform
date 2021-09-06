@@ -1,0 +1,9 @@
+org-app-keys-read:
+  name: "Org app keys read"
+  permissions:
+    - "org_app_keys_read"
+
+org-app-keys-write:
+  name: "Org app keys write"
+  permissions:
+    - "org_app_keys_write"

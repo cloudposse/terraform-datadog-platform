@@ -7,6 +7,6 @@
 .idea
 *.iml
 
-
 .build-harness
 build-harness
+**/.terraform.lock.hcl

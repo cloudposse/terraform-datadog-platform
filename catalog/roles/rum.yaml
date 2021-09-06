@@ -1,0 +1,4 @@
+rum-apps-write:
+  name: "Rum apps write"
+  permissions:
+    - "rum_apps_write"

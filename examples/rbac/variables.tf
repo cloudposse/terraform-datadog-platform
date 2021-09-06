@@ -17,3 +17,8 @@ variable "monitor_paths" {
   type        = list(string)
   description = "List of paths to Datadog monitor configurations"
 }
+
+variable "role_paths" {
+  type        = list(string)
+  description = "List of paths to Datadog role configurations"
+}

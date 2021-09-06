@@ -1,0 +1,34 @@
+apm-apdex-manage-write:
+  name: "APM apdex manage write"
+  permissions:
+    - "apm_apdex_manage_write"
+
+apm-primary-operation-write:
+  name: "APM primary operation write"
+  permissions:
+    - "apm_primary_operation_write"
+
+apm-retention-filter-read:
+  name: "APM retention filter read"
+  permissions:
+    - "apm_retention_filter_read"
+
+apm-retention-filter-write:
+  name: "APM retention filter write"
+  permissions:
+    - "apm_retention_filter_write"
+
+apm-service-ingest-read:
+  name: "APM service ingest read"
+  permissions:
+    - "apm_service_ingest_read"
+
+apm-service-ingest-write:
+  name: "APM service ingest write"
+  permissions:
+    - "apm_service_ingest_write"
+
+apm-tag-management-write:
+  name: "APM tag management write"
+  permissions:
+    - "apm_tag_management_write"
