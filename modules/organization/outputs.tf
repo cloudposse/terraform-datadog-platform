@@ -5,12 +5,12 @@ output "name" {
 
 output "application_key" {
   description = "Application key value"
-  value       = datadog_child_organization.default.application_key.hash
+  value       = join("", datadog_child_organization.default.*.application_key.hash)
   sensitive   = true
 }
 
 output "api_key" {
   description = "API key value"
-  value       = datadog_child_organization.default.api_key.key
+  value       = join("", datadog_child_organization.default.*.api_key.key)
   sensitive   = true
 }
