@@ -9,9 +9,3 @@ variable "settings" {
   description = ""
   default     = null
 }
-
-variable "user" {
-  type        = list(object)
-  description = ""
-  default     = null
-}
