@@ -1,19 +1,19 @@
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/synthetics_test
 variable "datadog_synthetics" {
   type = map(object({
-    name            = string
-    message         = string
-    type            = string
-    subtype         = string
-    status          = string
-    locations       = list(string)
-    tags            = list(string)
-    request         = map(string)
-    request_headers = map(string)
-    request_query   = map(string)
-    set_cookie      = string
-    options         = map(string)
-    assertions      = list(any)
+    name               = string
+    message            = string
+    type               = string
+    subtype            = string
+    status             = string
+    locations          = list(string)
+    tags               = list(string)
+    request_definition = map(string)
+    request_headers    = map(string)
+    request_query      = map(string)
+    set_cookie         = string
+    options_list       = map(any)
+    assertion          = list(any)
   }))
   description = "Map of Datadog synthetic test configurations. See catalog for examples"
 }

@@ -8,14 +8,14 @@ simple:
   locations:
     - "aws:us-west-2"
   status: "live"
-  request:
+  request_definition:
     url: "https://cloudposse.com"
     method: GET
   request_headers: {}
   request_query: {}
   set_cookie: ""
-  options: {}
-  assertions:
+  options_list: {}
+  assertion:
     - type: statusCode
       operator: is
       target: "200"
@@ -30,7 +30,7 @@ complex:
   locations:
     - "aws:us-east-2"
   status: "live"
-  request:
+  request_definition:
     url: "https://cloudposse.com"
     method: GET
   request_headers:
@@ -39,13 +39,15 @@ complex:
   request_query:
     hello: world
   set_cookie: ""
-  options:
+  options_list:
     tick_every: 1800
     follow_redirects: true
-    retry_count: 3
-    retry_interval: 5
-    renotify_interval: 2400
-  assertions:
+    retry:
+      count: 3
+      interval: 5
+    monitor_options:
+      renotify_interval: 2400
+  assertion:
     - type: statusCode
       operator: is
       target: "200"

@@ -9,14 +9,14 @@ ssl-test:
   locations:
     - "aws:us-west-2"
   status: "live"
-  request:
+  request_definition:
     host: cloudposse.com
     port: 443
   request_headers: {}
   request_query: {}
   set_cookie: ""
-  options: {}
-  assertions:
+  options_list: {}
+  assertion:
     - type: certificate
       operator: isInMoreThan
       target: 30

@@ -14,22 +14,12 @@ resource "datadog_synthetics_test" "default" {
   locations = each.value.locations
   tags      = lookup(each.value, "tags", module.this.tags)
 
-  request_definition {
-    host       = lookup(each.value.request, "host", null)
-    port       = lookup(each.value.request, "port", null)
-    url        = lookup(each.value.request, "url", null)
-    method     = lookup(each.value.request, "method", null)
-    timeout    = lookup(each.value.request, "timeout", null)
-    body       = lookup(each.value.request, "body", null)
-    dns_server = lookup(each.value.request, "dns_server", null)
-  }
-
   request_headers = try(each.value.request_headers, null)
   request_query   = try(each.value.request_query, null)
   set_cookie      = try(each.value.set_cookie, null)
 
   dynamic "assertion" {
-    for_each = each.value.assertions
+    for_each = each.value.assertion
 
     content {
       type     = lookup(assertion.value, "type", null)
@@ -49,28 +39,45 @@ resource "datadog_synthetics_test" "default" {
     }
   }
 
+  request_definition {
+    host                    = lookup(each.value.request_definition, "host", null)
+    port                    = lookup(each.value.request_definition, "port", null)
+    url                     = lookup(each.value.request_definition, "url", null)
+    method                  = lookup(each.value.request_definition, "method", null)
+    timeout                 = lookup(each.value.request_definition, "timeout", null)
+    body                    = lookup(each.value.request_definition, "body", null)
+    dns_server              = lookup(each.value.request_definition, "dns_server", null)
+    dns_server_port         = lookup(each.value.request_definition, "dns_server_port", null)
+    no_saving_response_body = lookup(each.value.request_definition, "no_saving_response_body", null)
+    number_of_packets       = lookup(each.value.request_definition, "number_of_packets", null)
+    should_track_hops       = lookup(each.value.request_definition, "should_track_hops", null)
+  }
+
   options_list {
-    tick_every           = lookup(each.value.options, "tick_every", 900)
-    follow_redirects     = lookup(each.value.options, "follow_redirects", false)
-    min_failure_duration = lookup(each.value.options, "min_failure_duration", null)
-    min_location_failed  = lookup(each.value.options, "min_location_failed", null)
-    accept_self_signed   = lookup(each.value.options, "accept_self_signed", false)
-    allow_insecure       = lookup(each.value.options, "allow_insecure", false)
+    tick_every           = lookup(each.value.options_list, "tick_every", 900)
+    follow_redirects     = lookup(each.value.options_list, "follow_redirects", false)
+    min_failure_duration = lookup(each.value.options_list, "min_failure_duration", null)
+    min_location_failed  = lookup(each.value.options_list, "min_location_failed", null)
+    accept_self_signed   = lookup(each.value.options_list, "accept_self_signed", false)
+    allow_insecure       = lookup(each.value.options_list, "allow_insecure", false)
+    monitor_name         = lookup(each.value.options_list, "monitor_name", null)
+    monitor_priority     = lookup(each.value.options_list, "monitor_priority", null)
+    no_screenshot        = lookup(each.value.options_list, "no_screenshot", true)
 
     dynamic "retry" {
-      for_each = lookup(each.value.options, "retry_count", null) != null ? [1] : []
+      for_each = lookup(each.value.options_list, "retry", null) != null ? [1] : []
 
       content {
-        count    = each.value.options.retry_count
-        interval = each.value.options.retry_interval
+        count    = retry.value.count
+        interval = retry.value.interval
       }
     }
 
     dynamic "monitor_options" {
-      for_each = lookup(each.value.options, "renotify_interval", null) != null ? [1] : []
+      for_each = lookup(each.value.options_list, "monitor_options", null) != null ? [1] : []
 
       content {
-        renotify_interval = each.value.options.renotify_interval
+        renotify_interval = monitor_options.value.renotify_interval
       }
     }
   }
