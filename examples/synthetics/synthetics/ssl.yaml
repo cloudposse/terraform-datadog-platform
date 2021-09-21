@@ -1,6 +1,6 @@
 ssl-test:
   name: "SSL Test"
-  message: "The Certificate expired!"
+  message: "The certificate has expired!"
   type: api
   subtype: ssl
   tags:

@@ -1,10 +1,11 @@
 locals {
-  enabled    = module.this.enabled
-  alert_tags = local.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
+  enabled            = module.this.enabled
+  alert_tags         = local.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
+  datadog_synthetics = { for k, v in var.datadog_synthetics : k => v if local.enabled }
 }
 
 resource "datadog_synthetics_test" "default" {
-  for_each = local.enabled ? var.datadog_synthetics : {}
+  for_each = local.datadog_synthetics
 
   name      = each.value.name
   message   = format("%s%s", each.value.message, local.alert_tags)
@@ -31,9 +32,9 @@ resource "datadog_synthetics_test" "default" {
         for_each = lookup(assertion.value, "targetjsonpath", null) != null ? [1] : []
 
         content {
-          operator    = targetjsonpath.value.operator
-          targetvalue = targetjsonpath.value.targetvalue
-          jsonpath    = targetjsonpath.value.jsonpath
+          operator    = assertion.value.targetjsonpath.operator
+          targetvalue = assertion.value.targetjsonpath.targetvalue
+          jsonpath    = assertion.value.targetjsonpath.jsonpath
         }
       }
     }
@@ -68,8 +69,8 @@ resource "datadog_synthetics_test" "default" {
       for_each = lookup(each.value.options_list, "retry", null) != null ? [1] : []
 
       content {
-        count    = retry.value.count
-        interval = retry.value.interval
+        count    = each.value.options_list.retry.count
+        interval = each.value.options_list.retry.interval
       }
     }
 
@@ -77,7 +78,7 @@ resource "datadog_synthetics_test" "default" {
       for_each = lookup(each.value.options_list, "monitor_options", null) != null ? [1] : []
 
       content {
-        renotify_interval = monitor_options.value.renotify_interval
+        renotify_interval = each.value.options_list.monitor_options.renotify_interval
       }
     }
   }
