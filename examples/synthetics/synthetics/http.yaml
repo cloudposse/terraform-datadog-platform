@@ -21,8 +21,8 @@ simple:
       target: "200"
 
 complex:
-  name: cloudposse.com complex test
-  message: CloudPosse complex is not reachable
+  name: "cloudposse.com complex test"
+  message: "CloudPosse complex is not reachable"
   type: api
   subtype: http
   tags:
