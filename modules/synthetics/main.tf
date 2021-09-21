@@ -24,8 +24,9 @@ resource "datadog_synthetics_test" "default" {
     dns_server = lookup(each.value.request, "dns_server", null)
   }
 
-  request_headers = each.value.request_headers
-  request_query   = each.value.request_query
+  request_headers = try(each.value.request_headers, null)
+  request_query   = try(each.value.request_query, null)
+  set_cookie      = try(each.value.set_cookie, null)
 
   dynamic "assertion" {
     for_each = each.value.assertions
@@ -37,12 +38,12 @@ resource "datadog_synthetics_test" "default" {
       property = lookup(assertion.value, "property", null)
 
       dynamic "targetjsonpath" {
-        for_each = lookup(assertion.value, "targetjsonpath_operator", null) != null ? [1] : []
+        for_each = lookup(assertion.value, "targetjsonpath", null) != null ? [1] : []
 
         content {
-          operator    = assertion.value.targetjsonpath_operator
-          targetvalue = assertion.value.targetjsonpath_targetvalue
-          jsonpath    = assertion.value.targetjsonpath_jsonpath
+          operator    = targetjsonpath.value.operator
+          targetvalue = targetjsonpath.value.targetvalue
+          jsonpath    = targetjsonpath.value.jsonpath
         }
       }
     }

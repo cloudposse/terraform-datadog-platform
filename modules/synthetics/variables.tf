@@ -11,8 +11,9 @@ variable "datadog_synthetics" {
     request         = map(string)
     request_headers = map(string)
     request_query   = map(string)
+    set_cookie      = string
     options         = map(string)
-    assertions      = list(map(any))
+    assertions      = list(any)
   }))
   description = "Map of Datadog synthetic test configurations. See catalog for examples"
 }

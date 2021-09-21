@@ -1,16 +1,19 @@
 simple:
-  name: cloudposse.com simple test
-  message: CloudPosse simple is not reachable
+  name: "cloudposse.com simple test"
+  message: "CloudPosse simple is not reachable"
   type: api
   subtype: http
-  tags: ["ManagedBy:Terraform"]
-  locations: ["aws:us-west-2"]
+  tags:
+    - "ManagedBy:Terraform"
+  locations:
+    - "aws:us-west-2"
   status: "live"
   request:
-    url: https://cloudposse.com
+    url: "https://cloudposse.com"
     method: GET
   request_headers: {}
   request_query: {}
+  set_cookie: ""
   options: {}
   assertions:
     - type: statusCode
@@ -22,17 +25,20 @@ complex:
   message: CloudPosse complex is not reachable
   type: api
   subtype: http
-  tags: ["ManagedBy:Terraform"]
-  locations: ["aws:us-east-2"]
+  tags:
+    - "ManagedBy:Terraform"
+  locations:
+    - "aws:us-east-2"
   status: "live"
   request:
-    url: https://cloudposse.com
+    url: "https://cloudposse.com"
     method: GET
   request_headers:
-    Accept-Charset: utf-8, iso-8859-1;q=0.5
-    Accept: text/html
+    Accept-Charset: "utf-8, iso-8859-1;q=0.5"
+    Accept: "text/html"
   request_query:
     hello: world
+  set_cookie: ""
   options:
     tick_every: 1800
     follow_redirects: true
@@ -45,6 +51,7 @@ complex:
       target: "200"
     - type: body
       operator: validatesJSONPath
-      targetjsonpath_operator: is
-      targetjsonpath_targetvalue: true
-      targetjsonpath_jsonpath: status
+      targetjsonpath:
+        operator: is
+        targetvalue: true
+        jsonpath: status

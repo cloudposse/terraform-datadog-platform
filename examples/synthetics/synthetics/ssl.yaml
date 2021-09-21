@@ -1,17 +1,20 @@
 ssl-test:
-  name: SSL Test
+  name: "SSL Test"
   message: |
     The Certificate expired!
   type: api
   subtype: ssl
-  tags: ["ManagedBy:Terraform"]
-  locations: ["aws:us-west-2"]
+  tags:
+    - "ManagedBy:Terraform"
+  locations:
+    - "aws:us-west-2"
   status: "live"
   request:
     host: cloudposse.com
     port: 443
   request_headers: {}
   request_query: {}
+  set_cookie: ""
   options: {}
   assertions:
     - type: certificate
