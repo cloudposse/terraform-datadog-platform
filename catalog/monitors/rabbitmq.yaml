@@ -1,0 +1,67 @@
+rabbitmq-messages-unacknowledged-rate-too-high:
+  name: "[RabbitMQ] - Messages unacknowledged rate is higher than usual on: {{host.name}}"
+  type: "query alert"
+  query: |
+    avg(last_4h):anomalies(avg:rabbitmq.queue.messages_unacknowledged.rate{*} by {rabbitmq_queue,host}, 'agile', 2, direction='above', alert_window='last_15m', interval=60, count_default_zero='true', seasonality='hourly') >= 1
+  message: |
+    The rate at which messages are being delivered without receiving acknowledgement is higher than usual.
+    There may be errors or performance issues downstream.\n
+    Host: {{host.name}}\n
+    RabbitMQ Queue: {{rabbitmq_queue.name}}
+  escalation_message: ""
+  tags:
+    - "managed-by:Terraform"
+    - "integration:rabbitmq"
+  notify_no_data: false
+  notify_audit: true
+  require_full_window: true
+  enable_logs_sample: false
+  force_delete: true
+  include_tags: true
+  locked: false
+  renotify_interval: 0
+  timeout_h: 0
+  evaluation_delay: 60
+  new_host_delay: 300
+  no_data_timeframe: null
+  threshold_windows: { }
+  thresholds:
+    critical: 1
+    critical_recovery: 0
+    #warning:
+    #unknown:
+    #ok:
+    #warning_recovery:
+
+rabbitmq-disk-usage-too-high:
+  name: "[RabbitMQ] Level of disk usage is too high for host: {{host.name}}"
+  type: "query alert"
+  query: |
+    avg(last_5m):avg:rabbitmq.node.mem_used{*} by {host} / avg:system.mem.total{*} by {host} * 100 > 35
+  message: |
+    RabbitMQ is using too many resources on host: {{host.name}}.
+    It may block connections and won't be able to perform many internal operations.
+  escalation_message: ""
+  tags:
+    - "managed-by:Terraform"
+    - "integration:rabbitmq"
+  notify_no_data: false
+  notify_audit: true
+  require_full_window: true
+  enable_logs_sample: false
+  force_delete: true
+  include_tags: true
+  locked: false
+  renotify_interval: 0
+  timeout_h: 0
+  evaluation_delay: 60
+  new_host_delay: 300
+  no_data_timeframe: null
+  threshold_windows: { }
+  thresholds:
+    critical: 35
+    warning: 30
+    #unknown:
+    #ok:
+    #critical_recovery:
+    #warning_recovery:
