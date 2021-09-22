@@ -145,6 +145,48 @@ resource "datadog_synthetics_test" "default" {
         }
       }
 
+      dynamic "request_client_certificate" {
+        for_each = lookup(api_step.value, "request_client_certificate", null) != null ? [1] : []
+
+        content {
+          dynamic "cert" {
+            for_each = lookup(api_step.value.request_client_certificate, "cert", null) != null ? [1] : []
+
+            content {
+              content  = api_step.value.request_client_certificate.cert.content
+              filename = try(api_step.value.request_client_certificate.cert.filename, null)
+            }
+          }
+          dynamic "key" {
+            for_each = lookup(api_step.value.request_client_certificate, "key", null) != null ? [1] : []
+
+            content {
+              content  = api_step.value.request_client_certificate.key.content
+              filename = try(api_step.value.request_client_certificate.key.filename, null)
+            }
+          }
+        }
+      }
+
+      dynamic "request_definition" {
+        for_each = lookup(api_step.value, "request_definition", null) != null ? [1] : []
+
+        content {
+          allow_insecure          = lookup(api_step.value.request_definition, "allow_insecure", null)
+          body                    = lookup(api_step.value.request_definition, "body", null)
+          dns_server              = lookup(api_step.value.request_definition, "dns_server", null)
+          dns_server_port         = lookup(api_step.value.request_definition, "dns_server_port", null)
+          host                    = lookup(api_step.value.request_definition, "host", null)
+          method                  = lookup(api_step.value.request_definition, "method", null)
+          no_saving_response_body = lookup(api_step.value.request_definition, "no_saving_response_body", null)
+          number_of_packets       = lookup(api_step.value.request_definition, "number_of_packets", null)
+          port                    = lookup(api_step.value.request_definition, "port", null)
+          should_track_hops       = lookup(api_step.value.request_definition, "should_track_hops", null)
+          timeout                 = lookup(api_step.value.request_definition, "timeout", null)
+          url                     = lookup(api_step.value.request_definition, "url", null)
+        }
+      }
+
     }
   }
 }
