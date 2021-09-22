@@ -89,12 +89,15 @@ resource "datadog_synthetics_test" "default" {
     for_each = try(each.value.api_step, [])
 
     content {
-      name          = api_step.value.name
-      allow_failure = lookup(api_step.value, "allow_failure", false)
-      is_critical   = lookup(api_step.value, "is_critical", false)
+      name            = api_step.value.name
+      subtype         = lookup(api_step.value, "subtype", false)
+      allow_failure   = lookup(api_step.value, "allow_failure", false)
+      is_critical     = lookup(api_step.value, "is_critical", false)
+      request_headers = lookup(api_step.value, "request_headers", false)
+      request_query   = lookup(api_step.value, "request_query", false)
 
       dynamic "assertion" {
-        for_each = try(each.value.assertion, [])
+        for_each = try(api_step.value.assertion, [])
 
         content {
           type     = lookup(assertion.value, "type", null)
@@ -113,6 +116,35 @@ resource "datadog_synthetics_test" "default" {
           }
         }
       }
+
+      dynamic "extracted_value" {
+        for_each = try(api_step.value.extracted_value, [])
+
+        content {
+          name  = lookup(extracted_value.value, "name", null)
+          type  = lookup(extracted_value.value, "type", null)
+          field = lookup(extracted_value.value, "field", null)
+
+          dynamic "parser" {
+            for_each = lookup(extracted_value.value, "parser", null) != null ? [1] : []
+
+            content {
+              type  = extracted_value.value.parser.type
+              value = extracted_value.value.parser.value
+            }
+          }
+        }
+      }
+
+      dynamic "request_basicauth" {
+        for_each = lookup(api_step.value, "request_basicauth", null) != null ? [1] : []
+
+        content {
+          password = request_basicauth.value.password
+          username = request_basicauth.value.username
+        }
+      }
+
     }
   }
 }
