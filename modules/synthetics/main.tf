@@ -7,21 +7,22 @@ locals {
 resource "datadog_synthetics_test" "default" {
   for_each = local.datadog_synthetics
 
-  name      = each.value.name
-  message   = format("%s%s", each.value.message, local.alert_tags)
-  type      = each.value.type
-  subtype   = lookup(each.value, "subtype", null)
-  status    = each.value.status
-  locations = each.value.locations
-  tags      = lookup(each.value, "tags", module.this.tags)
+  name    = each.value.name
+  message = format("%s%s", each.value.message, local.alert_tags)
+  type    = each.value.type
+  subtype = lookup(each.value, "subtype", null)
+  status  = each.value.status
+  tags    = lookup(each.value, "tags", module.this.tags)
 
   request_headers = try(each.value.request_headers, null)
   request_query   = try(each.value.request_query, null)
   set_cookie      = try(each.value.set_cookie, null)
   device_ids      = try(each.value.device_ids, null)
 
+  locations = try(each.value.locations, var.locations)
+
   dynamic "assertion" {
-    for_each = each.value.assertion
+    for_each = try(each.value.assertion, [])
 
     content {
       type     = lookup(assertion.value, "type", null)
@@ -80,6 +81,37 @@ resource "datadog_synthetics_test" "default" {
 
       content {
         renotify_interval = each.value.options_list.monitor_options.renotify_interval
+      }
+    }
+  }
+
+  dynamic "api_step" {
+    for_each = try(each.value.api_step, [])
+
+    content {
+      name          = api_step.value.name
+      allow_failure = lookup(api_step.value, "allow_failure", false)
+      is_critical   = lookup(api_step.value, "is_critical", false)
+
+      dynamic "assertion" {
+        for_each = try(each.value.assertion, [])
+
+        content {
+          type     = lookup(assertion.value, "type", null)
+          operator = lookup(assertion.value, "operator", null)
+          target   = lookup(assertion.value, "target", null)
+          property = lookup(assertion.value, "property", null)
+
+          dynamic "targetjsonpath" {
+            for_each = lookup(assertion.value, "targetjsonpath", null) != null ? [1] : []
+
+            content {
+              operator    = assertion.value.targetjsonpath.operator
+              targetvalue = assertion.value.targetjsonpath.targetvalue
+              jsonpath    = assertion.value.targetjsonpath.jsonpath
+            }
+          }
+        }
       }
     }
   }

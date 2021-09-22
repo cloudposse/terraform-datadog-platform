@@ -15,3 +15,9 @@ variable "alert_tags_separator" {
   description = "Separator for the alert tags. All strings from the `alert_tags` variable will be joined into one string using the separator and then added to the alert message"
   default     = "\n"
 }
+
+variable "locations" {
+  type        = list(string)
+  description = "Array of locations used to run synthetic tests"
+  default     = []
+}
