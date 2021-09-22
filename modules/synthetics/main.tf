@@ -18,6 +18,7 @@ resource "datadog_synthetics_test" "default" {
   request_headers = try(each.value.request_headers, null)
   request_query   = try(each.value.request_query, null)
   set_cookie      = try(each.value.set_cookie, null)
+  device_ids      = try(each.value.device_ids, null)
 
   dynamic "assertion" {
     for_each = each.value.assertion
@@ -55,7 +56,7 @@ resource "datadog_synthetics_test" "default" {
   }
 
   options_list {
-    tick_every           = lookup(each.value.options_list, "tick_every", 900)
+    tick_every           = lookup(each.value.options_list, "tick_every", 600)
     follow_redirects     = lookup(each.value.options_list, "follow_redirects", false)
     min_failure_duration = lookup(each.value.options_list, "min_failure_duration", null)
     min_location_failed  = lookup(each.value.options_list, "min_location_failed", null)
