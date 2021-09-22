@@ -1,3 +1,5 @@
+# https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/synthetics_test
+
 locals {
   enabled            = module.this.enabled
   alert_tags         = local.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
@@ -198,23 +200,23 @@ resource "datadog_synthetics_test" "default" {
       timeout              = lookup(browser_step.value, "timeout", null)
 
       params {
-        attribute         = try(browser_step.value.params.attribute, null)
-        check             = try(browser_step.value.params.check, null)
-        click_type        = try(browser_step.value.params.click_type, null)
-        code              = try(browser_step.value.params.code, null)
-        delay             = try(browser_step.value.params.delay, null)
-        element           = try(browser_step.value.params.element, null)
-        email             = try(browser_step.value.params.email, null)
-        file              = try(browser_step.value.params.file, null)
-        files             = try(browser_step.value.params.files, null)
-        modifiers         = try(browser_step.value.params.modifiers, null)
-        playing_tab_id    = try(browser_step.value.params.playing_tab_id, null)
-        request           = try(browser_step.value.params.request, null)
-        subtest_public_id = try(browser_step.value.params.subtest_public_id, null)
-        value             = try(browser_step.value.params.value, null)
-        with_click        = try(browser_step.value.params.with_click, null)
-        x                 = try(browser_step.value.params.x, null)
-        y                 = try(browser_step.value.params.y, null)
+        attribute         = lookup(browser_step.value.params, "attribute", null)
+        check             = lookup(browser_step.value.params, "check", null)
+        click_type        = lookup(browser_step.value.params, "click_type", null)
+        code              = lookup(browser_step.value.params, "code", null)
+        delay             = lookup(browser_step.value.params, "delay", null)
+        element           = lookup(browser_step.value.params, "element", null)
+        email             = lookup(browser_step.value.params, "email", null)
+        file              = lookup(browser_step.value.params, "file", null)
+        files             = lookup(browser_step.value.params, "files", null)
+        modifiers         = lookup(browser_step.value.params, "modifiers", null)
+        playing_tab_id    = lookup(browser_step.value.params, "playing_tab_id", null)
+        request           = lookup(browser_step.value.params, "request", null)
+        subtest_public_id = lookup(browser_step.value.params, "subtest_public_id", null)
+        value             = lookup(browser_step.value.params, "value", null)
+        with_click        = lookup(browser_step.value.params, "with_click", null)
+        x                 = lookup(browser_step.value.params, "x", null)
+        y                 = lookup(browser_step.value.params, "y", null)
 
         dynamic "variable" {
           for_each = lookup(browser_step.value.params, "variable", null) != null ? [1] : []
