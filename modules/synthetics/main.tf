@@ -42,45 +42,53 @@ resource "datadog_synthetics_test" "default" {
     }
   }
 
-  request_definition {
-    host                    = lookup(each.value.request_definition, "host", null)
-    port                    = lookup(each.value.request_definition, "port", null)
-    url                     = lookup(each.value.request_definition, "url", null)
-    method                  = lookup(each.value.request_definition, "method", null)
-    timeout                 = lookup(each.value.request_definition, "timeout", null)
-    body                    = lookup(each.value.request_definition, "body", null)
-    dns_server              = lookup(each.value.request_definition, "dns_server", null)
-    dns_server_port         = lookup(each.value.request_definition, "dns_server_port", null)
-    no_saving_response_body = lookup(each.value.request_definition, "no_saving_response_body", null)
-    number_of_packets       = lookup(each.value.request_definition, "number_of_packets", null)
-    should_track_hops       = lookup(each.value.request_definition, "should_track_hops", null)
+  dynamic "request_definition" {
+    for_each = lookup(each.value, "request_definition", null) != null ? [1] : []
+
+    content {
+      host                    = lookup(each.value.request_definition, "host", null)
+      port                    = lookup(each.value.request_definition, "port", null)
+      url                     = lookup(each.value.request_definition, "url", null)
+      method                  = lookup(each.value.request_definition, "method", null)
+      timeout                 = lookup(each.value.request_definition, "timeout", null)
+      body                    = lookup(each.value.request_definition, "body", null)
+      dns_server              = lookup(each.value.request_definition, "dns_server", null)
+      dns_server_port         = lookup(each.value.request_definition, "dns_server_port", null)
+      no_saving_response_body = lookup(each.value.request_definition, "no_saving_response_body", null)
+      number_of_packets       = lookup(each.value.request_definition, "number_of_packets", null)
+      should_track_hops       = lookup(each.value.request_definition, "should_track_hops", null)
+    }
   }
 
-  options_list {
-    tick_every           = lookup(each.value.options_list, "tick_every", 600)
-    follow_redirects     = lookup(each.value.options_list, "follow_redirects", false)
-    min_failure_duration = lookup(each.value.options_list, "min_failure_duration", null)
-    min_location_failed  = lookup(each.value.options_list, "min_location_failed", null)
-    accept_self_signed   = lookup(each.value.options_list, "accept_self_signed", false)
-    allow_insecure       = lookup(each.value.options_list, "allow_insecure", false)
-    monitor_name         = lookup(each.value.options_list, "monitor_name", null)
-    monitor_priority     = lookup(each.value.options_list, "monitor_priority", null)
-    no_screenshot        = lookup(each.value.options_list, "no_screenshot", true)
+  dynamic "options_list" {
+    for_each = lookup(each.value, "options_list", null) != null ? [1] : []
 
-    dynamic "retry" {
-      for_each = lookup(each.value.options_list, "retry", null) != null ? [1] : []
+    content {
+      tick_every           = lookup(each.value.options_list, "tick_every", 600)
+      follow_redirects     = lookup(each.value.options_list, "follow_redirects", false)
+      min_failure_duration = lookup(each.value.options_list, "min_failure_duration", null)
+      min_location_failed  = lookup(each.value.options_list, "min_location_failed", null)
+      accept_self_signed   = lookup(each.value.options_list, "accept_self_signed", false)
+      allow_insecure       = lookup(each.value.options_list, "allow_insecure", false)
+      monitor_name         = lookup(each.value.options_list, "monitor_name", null)
+      monitor_priority     = lookup(each.value.options_list, "monitor_priority", null)
+      no_screenshot        = lookup(each.value.options_list, "no_screenshot", true)
 
-      content {
-        count    = each.value.options_list.retry.count
-        interval = each.value.options_list.retry.interval
+      dynamic "retry" {
+        for_each = lookup(each.value.options_list, "retry", null) != null ? [1] : []
+
+        content {
+          count    = each.value.options_list.retry.count
+          interval = each.value.options_list.retry.interval
+        }
       }
-    }
 
-    dynamic "monitor_options" {
-      for_each = lookup(each.value.options_list, "monitor_options", null) != null ? [1] : []
+      dynamic "monitor_options" {
+        for_each = lookup(each.value.options_list, "monitor_options", null) != null ? [1] : []
 
-      content {
-        renotify_interval = each.value.options_list.monitor_options.renotify_interval
+        content {
+          renotify_interval = each.value.options_list.monitor_options.renotify_interval
+        }
       }
     }
   }
@@ -230,4 +238,29 @@ resource "datadog_synthetics_test" "default" {
       }
     }
   }
+
+  dynamic "browser_variable" {
+    for_each = try(each.value.browser_variable, [])
+
+    content {
+      name    = browser_variable.value.name
+      type    = browser_variable.value.type
+      example = lookup(browser_variable.value, "example", null)
+      id      = lookup(browser_variable.value, "id", null)
+      pattern = lookup(browser_variable.value, "pattern", null)
+    }
+  }
+
+  dynamic "config_variable" {
+    for_each = try(each.value.config_variable, [])
+
+    content {
+      name    = config_variable.value.name
+      type    = config_variable.value.type
+      example = lookup(config_variable.value, "example", null)
+      id      = lookup(config_variable.value, "id", null)
+      pattern = lookup(config_variable.value, "pattern", null)
+    }
+  }
+
 }
