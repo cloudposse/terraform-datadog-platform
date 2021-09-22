@@ -13,7 +13,7 @@ resource "datadog_synthetics_test" "default" {
   name      = each.value.name
   type      = each.value.type
   status    = each.value.status
-  locations = each.value.locations
+  locations = try(each.value.locations, var.locations)
 
   # Optional
   message         = lookup(each.value, "message", null) != null ? format("%s%s", each.value.message, local.alert_tags) : null
