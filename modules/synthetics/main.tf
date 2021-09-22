@@ -140,8 +140,8 @@ resource "datadog_synthetics_test" "default" {
         for_each = lookup(api_step.value, "request_basicauth", null) != null ? [1] : []
 
         content {
-          password = request_basicauth.value.password
-          username = request_basicauth.value.username
+          password = api_step.value.request_basicauth.password
+          username = api_step.value.request_basicauth.username
         }
       }
 
