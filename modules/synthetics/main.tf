@@ -7,19 +7,20 @@ locals {
 resource "datadog_synthetics_test" "default" {
   for_each = local.datadog_synthetics
 
-  name    = each.value.name
-  message = format("%s%s", each.value.message, local.alert_tags)
-  type    = each.value.type
-  subtype = lookup(each.value, "subtype", null)
-  status  = each.value.status
-  tags    = lookup(each.value, "tags", module.this.tags)
+  # Required
+  name      = each.value.name
+  type      = each.value.type
+  status    = each.value.status
+  locations = each.value.locations
 
-  request_headers = try(each.value.request_headers, null)
-  request_query   = try(each.value.request_query, null)
-  set_cookie      = try(each.value.set_cookie, null)
-  device_ids      = try(each.value.device_ids, null)
-
-  locations = try(each.value.locations, var.locations)
+  # Optional
+  message         = lookup(each.value, "message", null) != null ? format("%s%s", each.value.message, local.alert_tags) : null
+  subtype         = lookup(each.value, "subtype", null)
+  tags            = lookup(each.value, "tags", module.this.tags)
+  request_headers = lookup(each.value, "request_headers", null)
+  request_query   = lookup(each.value, "request_query", null)
+  set_cookie      = lookup(each.value, "set_cookie", null)
+  device_ids      = lookup(each.value, "device_ids", null)
 
   dynamic "assertion" {
     for_each = try(each.value.assertion, [])
