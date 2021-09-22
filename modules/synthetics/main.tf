@@ -26,8 +26,8 @@ resource "datadog_synthetics_test" "default" {
     for_each = try(each.value.assertion, [])
 
     content {
-      type     = lookup(assertion.value, "type", null)
-      operator = lookup(assertion.value, "operator", null)
+      type     = assertion.value.type
+      operator = assertion.value.operator
       target   = lookup(assertion.value, "target", null)
       property = lookup(assertion.value, "property", null)
 
@@ -65,7 +65,7 @@ resource "datadog_synthetics_test" "default" {
     for_each = lookup(each.value, "options_list", null) != null ? [1] : []
 
     content {
-      tick_every           = lookup(each.value.options_list, "tick_every", 600)
+      tick_every           = each.value.options_list.tick_every
       follow_redirects     = lookup(each.value.options_list, "follow_redirects", false)
       min_failure_duration = lookup(each.value.options_list, "min_failure_duration", null)
       min_location_failed  = lookup(each.value.options_list, "min_location_failed", null)
@@ -109,8 +109,8 @@ resource "datadog_synthetics_test" "default" {
         for_each = try(api_step.value.assertion, [])
 
         content {
-          type     = lookup(assertion.value, "type", null)
-          operator = lookup(assertion.value, "operator", null)
+          type     = assertion.value.type
+          operator = assertion.value.operator
           target   = lookup(assertion.value, "target", null)
           property = lookup(assertion.value, "property", null)
 
@@ -130,17 +130,13 @@ resource "datadog_synthetics_test" "default" {
         for_each = try(api_step.value.extracted_value, [])
 
         content {
-          name  = lookup(extracted_value.value, "name", null)
-          type  = lookup(extracted_value.value, "type", null)
+          name  = extracted_value.value.name
+          type  = extracted_value.value.type
           field = lookup(extracted_value.value, "field", null)
 
-          dynamic "parser" {
-            for_each = lookup(extracted_value.value, "parser", null) != null ? [1] : []
-
-            content {
-              type  = extracted_value.value.parser.type
-              value = extracted_value.value.parser.value
-            }
+          parser {
+            type  = extracted_value.value.parser.type
+            value = lookup(extracted_value.value.parser, "value", null)
           }
         }
       }
@@ -158,21 +154,14 @@ resource "datadog_synthetics_test" "default" {
         for_each = lookup(api_step.value, "request_client_certificate", null) != null ? [1] : []
 
         content {
-          dynamic "cert" {
-            for_each = lookup(api_step.value.request_client_certificate, "cert", null) != null ? [1] : []
-
-            content {
-              content  = api_step.value.request_client_certificate.cert.content
-              filename = try(api_step.value.request_client_certificate.cert.filename, null)
-            }
+          cert {
+            content  = api_step.value.request_client_certificate.cert.content
+            filename = lookup(api_step.value.request_client_certificate.cert, "filename", null)
           }
-          dynamic "key" {
-            for_each = lookup(api_step.value.request_client_certificate, "key", null) != null ? [1] : []
 
-            content {
-              content  = api_step.value.request_client_certificate.key.content
-              filename = try(api_step.value.request_client_certificate.key.filename, null)
-            }
+          key {
+            content  = api_step.value.request_client_certificate.key.content
+            filename = lookup(api_step.value.request_client_certificate.key, "filename", null)
           }
         }
       }
@@ -195,7 +184,6 @@ resource "datadog_synthetics_test" "default" {
           url                     = lookup(api_step.value.request_definition, "url", null)
         }
       }
-
     }
   }
 
@@ -232,8 +220,8 @@ resource "datadog_synthetics_test" "default" {
           for_each = lookup(browser_step.value.params, "variable", null) != null ? [1] : []
 
           content {
-            example = try(browser_step.value.params.variable.example, null)
-            name    = try(browser_step.value.params.variable.name, null)
+            example = lookup(browser_step.value.params.variable, "example", null)
+            name    = lookup(browser_step.value.params.variable, "name", null)
           }
         }
       }
@@ -264,4 +252,28 @@ resource "datadog_synthetics_test" "default" {
     }
   }
 
+  dynamic "request_basicauth" {
+    for_each = lookup(each.value, "request_basicauth", null) != null ? [1] : []
+
+    content {
+      password = each.value.request_basicauth.password
+      username = each.value.request_basicauth.username
+    }
+  }
+
+  dynamic "request_client_certificate" {
+    for_each = lookup(each.value, "request_client_certificate", null) != null ? [1] : []
+
+    content {
+      cert {
+        content  = each.value.request_client_certificate.cert.content
+        filename = lookup(each.value.request_client_certificate.cert, "filename", null)
+      }
+
+      key {
+        content  = each.value.request_client_certificate.key.content
+        filename = lookup(each.value.request_client_certificate.key, "filename", null)
+      }
+    }
+  }
 }

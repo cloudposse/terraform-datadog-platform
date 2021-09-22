@@ -14,7 +14,8 @@ ssl-test:
   request_headers: {}
   request_query: {}
   set_cookie: ""
-  options_list: {}
+  options_list:
+    tick_every: 1800
   assertion:
     - type: certificate
       operator: isInMoreThan
