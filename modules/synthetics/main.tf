@@ -189,4 +189,45 @@ resource "datadog_synthetics_test" "default" {
 
     }
   }
+
+  dynamic "browser_step" {
+    for_each = try(each.value.browser_step, [])
+
+    content {
+      name                 = browser_step.value.name
+      type                 = browser_step.value.type
+      allow_failure        = lookup(browser_step.value, "allow_failure", null)
+      force_element_update = lookup(browser_step.value, "force_element_update", null)
+      timeout              = lookup(browser_step.value, "timeout", null)
+
+      params {
+        attribute         = try(browser_step.value.params.attribute, null)
+        check             = try(browser_step.value.params.check, null)
+        click_type        = try(browser_step.value.params.click_type, null)
+        code              = try(browser_step.value.params.code, null)
+        delay             = try(browser_step.value.params.delay, null)
+        element           = try(browser_step.value.params.element, null)
+        email             = try(browser_step.value.params.email, null)
+        file              = try(browser_step.value.params.file, null)
+        files             = try(browser_step.value.params.files, null)
+        modifiers         = try(browser_step.value.params.modifiers, null)
+        playing_tab_id    = try(browser_step.value.params.playing_tab_id, null)
+        request           = try(browser_step.value.params.request, null)
+        subtest_public_id = try(browser_step.value.params.subtest_public_id, null)
+        value             = try(browser_step.value.params.value, null)
+        with_click        = try(browser_step.value.params.with_click, null)
+        x                 = try(browser_step.value.params.x, null)
+        y                 = try(browser_step.value.params.y, null)
+
+        dynamic "variable" {
+          for_each = lookup(browser_step.value.params, "variable", null) != null ? [1] : []
+
+          content {
+            example = try(browser_step.value.params.variable.example, null)
+            name    = try(browser_step.value.params.variable.name, null)
+          }
+        }
+      }
+    }
+  }
 }
