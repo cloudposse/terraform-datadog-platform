@@ -23,7 +23,7 @@ simple:
 
 complex:
   name: "cloudposse.com complex test"
-  message: "CloudPosse complex is not reachable"
+  message: "Cloud Posse website is not reachable (advanced test)"
   type: api
   subtype: http
   tags:
