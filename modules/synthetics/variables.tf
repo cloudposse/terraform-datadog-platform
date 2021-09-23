@@ -1,19 +1,6 @@
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/synthetics_test
 variable "datadog_synthetics" {
-  type = map(object({
-    name            = string
-    message         = string
-    type            = string
-    subtype         = string
-    status          = string
-    locations       = list(string)
-    tags            = list(string)
-    request         = map(string)
-    request_headers = map(string)
-    request_query   = map(string)
-    options         = map(string)
-    assertions      = list(map(any))
-  }))
+  type        = any
   description = "Map of Datadog synthetic test configurations. See catalog for examples"
 }
 
@@ -27,4 +14,10 @@ variable "alert_tags_separator" {
   type        = string
   description = "Separator for the alert tags. All strings from the `alert_tags` variable will be joined into one string using the separator and then added to the alert message"
   default     = "\n"
+}
+
+variable "locations" {
+  type        = list(string)
+  description = "Array of locations used to run synthetic tests"
+  default     = []
 }

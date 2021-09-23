@@ -1,50 +1,60 @@
 simple:
-  name: cloudposse.com simple test
-  message: CloudPosse simple is not reachable
+  name: "cloudposse.com website test"
+  message: "Cloud Posse website is not reachable"
   type: api
   subtype: http
-  tags: ["ManagedBy:Terraform"]
-  locations: ["aws:us-west-2"]
+  tags:
+    - "ManagedBy:Terraform"
+  locations:
+    - "aws:us-west-2"
   status: "live"
-  request:
-    url: https://cloudposse.com
+  request_definition:
+    url: "https://cloudposse.com"
     method: GET
   request_headers: {}
   request_query: {}
-  options: {}
-  assertions:
+  set_cookie: ""
+  options_list:
+    tick_every: 1800
+  assertion:
     - type: statusCode
       operator: is
       target: "200"
 
 complex:
-  name: cloudposse.com complex test
-  message: CloudPosse complex is not reachable
+  name: "cloudposse.com complex test"
+  message: "Cloud Posse website is not reachable (advanced test)"
   type: api
   subtype: http
-  tags: ["ManagedBy:Terraform"]
-  locations: ["aws:us-east-2"]
+  tags:
+    - "ManagedBy:Terraform"
+  locations:
+    - "aws:us-east-2"
   status: "live"
-  request:
-    url: https://cloudposse.com
+  request_definition:
+    url: "https://cloudposse.com"
     method: GET
   request_headers:
-    Accept-Charset: utf-8, iso-8859-1;q=0.5
-    Accept: text/html
+    Accept-Charset: "utf-8, iso-8859-1;q=0.5"
+    Accept: "text/html"
   request_query:
     hello: world
-  options:
+  set_cookie: ""
+  options_list:
     tick_every: 1800
     follow_redirects: true
-    retry_count: 3
-    retry_interval: 5
-    renotify_interval: 2400
-  assertions:
+    retry:
+      count: 3
+      interval: 5
+    monitor_options:
+      renotify_interval: 2400
+  assertion:
     - type: statusCode
       operator: is
       target: "200"
     - type: body
       operator: validatesJSONPath
-      targetjsonpath_operator: is
-      targetjsonpath_targetvalue: true
-      targetjsonpath_jsonpath: status
+      targetjsonpath:
+        operator: is
+        targetvalue: true
+        jsonpath: status

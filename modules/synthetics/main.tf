@@ -1,75 +1,280 @@
+# https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/synthetics_test
+
 locals {
-  enabled    = module.this.enabled
-  alert_tags = local.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
+  enabled            = module.this.enabled
+  alert_tags         = local.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
+  datadog_synthetics = { for k, v in var.datadog_synthetics : k => v if local.enabled }
 }
 
 resource "datadog_synthetics_test" "default" {
-  for_each = local.enabled ? var.datadog_synthetics : {}
+  for_each = local.datadog_synthetics
 
+  # Required
   name      = each.value.name
-  message   = format("%s%s", each.value.message, local.alert_tags)
   type      = each.value.type
-  subtype   = lookup(each.value, "subtype", null)
   status    = each.value.status
-  locations = each.value.locations
-  tags      = lookup(each.value, "tags", module.this.tags)
+  locations = try(each.value.locations, var.locations)
 
-  request_definition {
-    host       = lookup(each.value.request, "host", null)
-    port       = lookup(each.value.request, "port", null)
-    url        = lookup(each.value.request, "url", null)
-    method     = lookup(each.value.request, "method", null)
-    timeout    = lookup(each.value.request, "timeout", null)
-    body       = lookup(each.value.request, "body", null)
-    dns_server = lookup(each.value.request, "dns_server", null)
-  }
-
-  request_headers = each.value.request_headers
-  request_query   = each.value.request_query
+  # Optional
+  message         = lookup(each.value, "message", null) != null ? format("%s%s", each.value.message, local.alert_tags) : null
+  subtype         = lookup(each.value, "subtype", null)
+  tags            = lookup(each.value, "tags", module.this.tags)
+  request_headers = lookup(each.value, "request_headers", null)
+  request_query   = lookup(each.value, "request_query", null)
+  set_cookie      = lookup(each.value, "set_cookie", null)
+  device_ids      = lookup(each.value, "device_ids", null)
 
   dynamic "assertion" {
-    for_each = each.value.assertions
+    for_each = try(each.value.assertion, [])
 
     content {
-      type     = lookup(assertion.value, "type", null)
-      operator = lookup(assertion.value, "operator", null)
+      type     = assertion.value.type
+      operator = assertion.value.operator
       target   = lookup(assertion.value, "target", null)
       property = lookup(assertion.value, "property", null)
 
       dynamic "targetjsonpath" {
-        for_each = lookup(assertion.value, "targetjsonpath_operator", null) != null ? [1] : []
+        for_each = lookup(assertion.value, "targetjsonpath", null) != null ? [1] : []
 
         content {
-          operator    = assertion.value.targetjsonpath_operator
-          targetvalue = assertion.value.targetjsonpath_targetvalue
-          jsonpath    = assertion.value.targetjsonpath_jsonpath
+          operator    = assertion.value.targetjsonpath.operator
+          targetvalue = assertion.value.targetjsonpath.targetvalue
+          jsonpath    = assertion.value.targetjsonpath.jsonpath
         }
       }
     }
   }
 
-  options_list {
-    tick_every           = lookup(each.value.options, "tick_every", 900)
-    follow_redirects     = lookup(each.value.options, "follow_redirects", false)
-    min_failure_duration = lookup(each.value.options, "min_failure_duration", null)
-    min_location_failed  = lookup(each.value.options, "min_location_failed", null)
-    accept_self_signed   = lookup(each.value.options, "accept_self_signed", false)
-    allow_insecure       = lookup(each.value.options, "allow_insecure", false)
+  dynamic "request_definition" {
+    for_each = lookup(each.value, "request_definition", null) != null ? [1] : []
 
-    dynamic "retry" {
-      for_each = lookup(each.value.options, "retry_count", null) != null ? [1] : []
+    content {
+      host                    = lookup(each.value.request_definition, "host", null)
+      port                    = lookup(each.value.request_definition, "port", null)
+      url                     = lookup(each.value.request_definition, "url", null)
+      method                  = lookup(each.value.request_definition, "method", null)
+      timeout                 = lookup(each.value.request_definition, "timeout", null)
+      body                    = lookup(each.value.request_definition, "body", null)
+      dns_server              = lookup(each.value.request_definition, "dns_server", null)
+      dns_server_port         = lookup(each.value.request_definition, "dns_server_port", null)
+      no_saving_response_body = lookup(each.value.request_definition, "no_saving_response_body", null)
+      number_of_packets       = lookup(each.value.request_definition, "number_of_packets", null)
+      should_track_hops       = lookup(each.value.request_definition, "should_track_hops", null)
+    }
+  }
 
-      content {
-        count    = each.value.options.retry_count
-        interval = each.value.options.retry_interval
+  dynamic "options_list" {
+    for_each = lookup(each.value, "options_list", null) != null ? [1] : []
+
+    content {
+      tick_every           = each.value.options_list.tick_every
+      follow_redirects     = lookup(each.value.options_list, "follow_redirects", false)
+      min_failure_duration = lookup(each.value.options_list, "min_failure_duration", null)
+      min_location_failed  = lookup(each.value.options_list, "min_location_failed", null)
+      accept_self_signed   = lookup(each.value.options_list, "accept_self_signed", false)
+      allow_insecure       = lookup(each.value.options_list, "allow_insecure", false)
+      monitor_name         = lookup(each.value.options_list, "monitor_name", null)
+      monitor_priority     = lookup(each.value.options_list, "monitor_priority", null)
+      no_screenshot        = lookup(each.value.options_list, "no_screenshot", true)
+
+      dynamic "retry" {
+        for_each = lookup(each.value.options_list, "retry", null) != null ? [1] : []
+
+        content {
+          count    = each.value.options_list.retry.count
+          interval = each.value.options_list.retry.interval
+        }
+      }
+
+      dynamic "monitor_options" {
+        for_each = lookup(each.value.options_list, "monitor_options", null) != null ? [1] : []
+
+        content {
+          renotify_interval = each.value.options_list.monitor_options.renotify_interval
+        }
       }
     }
+  }
 
-    dynamic "monitor_options" {
-      for_each = lookup(each.value.options, "renotify_interval", null) != null ? [1] : []
+  dynamic "api_step" {
+    for_each = try(each.value.api_step, [])
 
-      content {
-        renotify_interval = each.value.options.renotify_interval
+    content {
+      name            = api_step.value.name
+      subtype         = lookup(api_step.value, "subtype", false)
+      allow_failure   = lookup(api_step.value, "allow_failure", false)
+      is_critical     = lookup(api_step.value, "is_critical", false)
+      request_headers = lookup(api_step.value, "request_headers", false)
+      request_query   = lookup(api_step.value, "request_query", false)
+
+      dynamic "assertion" {
+        for_each = try(api_step.value.assertion, [])
+
+        content {
+          type     = assertion.value.type
+          operator = assertion.value.operator
+          target   = lookup(assertion.value, "target", null)
+          property = lookup(assertion.value, "property", null)
+
+          dynamic "targetjsonpath" {
+            for_each = lookup(assertion.value, "targetjsonpath", null) != null ? [1] : []
+
+            content {
+              operator    = assertion.value.targetjsonpath.operator
+              targetvalue = assertion.value.targetjsonpath.targetvalue
+              jsonpath    = assertion.value.targetjsonpath.jsonpath
+            }
+          }
+        }
+      }
+
+      dynamic "extracted_value" {
+        for_each = try(api_step.value.extracted_value, [])
+
+        content {
+          name  = extracted_value.value.name
+          type  = extracted_value.value.type
+          field = lookup(extracted_value.value, "field", null)
+
+          parser {
+            type  = extracted_value.value.parser.type
+            value = lookup(extracted_value.value.parser, "value", null)
+          }
+        }
+      }
+
+      dynamic "request_basicauth" {
+        for_each = lookup(api_step.value, "request_basicauth", null) != null ? [1] : []
+
+        content {
+          password = api_step.value.request_basicauth.password
+          username = api_step.value.request_basicauth.username
+        }
+      }
+
+      dynamic "request_client_certificate" {
+        for_each = lookup(api_step.value, "request_client_certificate", null) != null ? [1] : []
+
+        content {
+          cert {
+            content  = api_step.value.request_client_certificate.cert.content
+            filename = lookup(api_step.value.request_client_certificate.cert, "filename", null)
+          }
+
+          key {
+            content  = api_step.value.request_client_certificate.key.content
+            filename = lookup(api_step.value.request_client_certificate.key, "filename", null)
+          }
+        }
+      }
+
+      dynamic "request_definition" {
+        for_each = lookup(api_step.value, "request_definition", null) != null ? [1] : []
+
+        content {
+          allow_insecure          = lookup(api_step.value.request_definition, "allow_insecure", null)
+          body                    = lookup(api_step.value.request_definition, "body", null)
+          dns_server              = lookup(api_step.value.request_definition, "dns_server", null)
+          dns_server_port         = lookup(api_step.value.request_definition, "dns_server_port", null)
+          host                    = lookup(api_step.value.request_definition, "host", null)
+          method                  = lookup(api_step.value.request_definition, "method", null)
+          no_saving_response_body = lookup(api_step.value.request_definition, "no_saving_response_body", null)
+          number_of_packets       = lookup(api_step.value.request_definition, "number_of_packets", null)
+          port                    = lookup(api_step.value.request_definition, "port", null)
+          should_track_hops       = lookup(api_step.value.request_definition, "should_track_hops", null)
+          timeout                 = lookup(api_step.value.request_definition, "timeout", null)
+          url                     = lookup(api_step.value.request_definition, "url", null)
+        }
+      }
+    }
+  }
+
+  dynamic "browser_step" {
+    for_each = try(each.value.browser_step, [])
+
+    content {
+      name                 = browser_step.value.name
+      type                 = browser_step.value.type
+      allow_failure        = lookup(browser_step.value, "allow_failure", null)
+      force_element_update = lookup(browser_step.value, "force_element_update", null)
+      timeout              = lookup(browser_step.value, "timeout", null)
+
+      params {
+        attribute         = lookup(browser_step.value.params, "attribute", null)
+        check             = lookup(browser_step.value.params, "check", null)
+        click_type        = lookup(browser_step.value.params, "click_type", null)
+        code              = lookup(browser_step.value.params, "code", null)
+        delay             = lookup(browser_step.value.params, "delay", null)
+        element           = lookup(browser_step.value.params, "element", null)
+        email             = lookup(browser_step.value.params, "email", null)
+        file              = lookup(browser_step.value.params, "file", null)
+        files             = lookup(browser_step.value.params, "files", null)
+        modifiers         = lookup(browser_step.value.params, "modifiers", null)
+        playing_tab_id    = lookup(browser_step.value.params, "playing_tab_id", null)
+        request           = lookup(browser_step.value.params, "request", null)
+        subtest_public_id = lookup(browser_step.value.params, "subtest_public_id", null)
+        value             = lookup(browser_step.value.params, "value", null)
+        with_click        = lookup(browser_step.value.params, "with_click", null)
+        x                 = lookup(browser_step.value.params, "x", null)
+        y                 = lookup(browser_step.value.params, "y", null)
+
+        dynamic "variable" {
+          for_each = lookup(browser_step.value.params, "variable", null) != null ? [1] : []
+
+          content {
+            example = lookup(browser_step.value.params.variable, "example", null)
+            name    = lookup(browser_step.value.params.variable, "name", null)
+          }
+        }
+      }
+    }
+  }
+
+  dynamic "browser_variable" {
+    for_each = try(each.value.browser_variable, [])
+
+    content {
+      name    = browser_variable.value.name
+      type    = browser_variable.value.type
+      example = lookup(browser_variable.value, "example", null)
+      id      = lookup(browser_variable.value, "id", null)
+      pattern = lookup(browser_variable.value, "pattern", null)
+    }
+  }
+
+  dynamic "config_variable" {
+    for_each = try(each.value.config_variable, [])
+
+    content {
+      name    = config_variable.value.name
+      type    = config_variable.value.type
+      example = lookup(config_variable.value, "example", null)
+      id      = lookup(config_variable.value, "id", null)
+      pattern = lookup(config_variable.value, "pattern", null)
+    }
+  }
+
+  dynamic "request_basicauth" {
+    for_each = lookup(each.value, "request_basicauth", null) != null ? [1] : []
+
+    content {
+      password = each.value.request_basicauth.password
+      username = each.value.request_basicauth.username
+    }
+  }
+
+  dynamic "request_client_certificate" {
+    for_each = lookup(each.value, "request_client_certificate", null) != null ? [1] : []
+
+    content {
+      cert {
+        content  = each.value.request_client_certificate.cert.content
+        filename = lookup(each.value.request_client_certificate.cert, "filename", null)
+      }
+
+      key {
+        content  = each.value.request_client_certificate.key.content
+        filename = lookup(each.value.request_client_certificate.key, "filename", null)
       }
     }
   }
