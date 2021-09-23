@@ -246,14 +246,14 @@ k8s-node-status-unschedulable:
     #warning_recovery:
 
 k8s-imagepullbackoff:
-  name: "(k8s) dev - ImagePullBackOff detected"
+  name: "(k8s) ImagePullBackOff detected"
   type: "query alert"
   query: |
-    max(last_10m):max:kubernetes_state.container.status_report.count.waiting{reason:imagepullbackoff,stage:dev} by {kube_cluster_name,kube_namespace,pod_name} >= 1
+    max(last_10m):max:kubernetes_state.container.status_report.count.waiting{reason:imagepullbackoff} by {kube_cluster_name,kube_namespace,pod_name} >= 1
   message: |
     Pod {{pod_name.name}} is ImagePullBackOff on namespace {{kube_namespace.name}}
   escalation_message: ""
-  tags: [ "managed-by:Terraform" ]
+  tags: [ "ManagedBy:Terraform" ]
   notify_no_data: false
   notify_audit: true
   require_full_window: false
