@@ -1,6 +1,6 @@
 simple:
-  name: "cloudposse.com simple test"
-  message: "CloudPosse simple is not reachable"
+  name: "cloudposse.com website test"
+  message: "Cloud Posse website is not reachable"
   type: api
   subtype: http
   tags:
