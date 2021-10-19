@@ -1,0 +1,97 @@
+ECS-Agent-Status:
+  name: "(ECS) Agent Status"
+  type: service check
+  query: |
+    aws.ecs.agent_connected{*} by {cluster,instance_id} .last(6).count_by_status()
+  message: |
+    Overview: ECS Agent Disconnected
+    Priority Level: P2
+    ECS Agent disconnected {{#is_alert}}{{{comparator}}} {{threshold}}% ({{value}}%){{/is_alert}}{{#is_warning}}{{{comparator}}} {{warn_threshold}}% ({{value}}%){{/is_warning}}
+  escalation_message: ""
+  tags: [ "ManagedBy:Terraform" ]
+  notify_no_data: false
+  notify_audit: true
+  require_full_window: true
+  enable_logs_sample: false
+  force_delete: true
+  include_tags: true
+  locked: false
+  renotify_interval: 60
+  timeout_h: 60
+  evaluation_delay: 60
+  new_host_delay: 300
+  no_data_timeframe: 10
+  threshold_windows: { }
+  thresholds:
+    critical: 60
+    critical_recovery: 80
+    warning: 80
+    warning_recovery: 90
+#  priority: 0
+
+ECS-Cluster-Cpu-Utilization:
+  name: "(ECS) ECS Cluster Cpu Utilization"
+  type: metric alert
+  query: |
+    min(last_5m):
+    avg:aws.ecs.cluster.cpuutilization{*} by {region,servicename,clustername} > 90
+  message: |
+    Overview: ECS Cluster CPU Utilization High
+    Priority Level: P2
+    {{#is_alert}}{{{comparator}}} {{threshold}}% ({{value}}%){{/is_alert}}
+    {{#is_warning}}{{{comparator}}} {{warn_threshold}}% ({{value}}%){{/is_warning}}
+  escalation_message: ""
+  tags: [ "ManagedBy:Terraform" ]
+  notify_no_data: false
+  notify_audit: true
+  require_full_window: true
+  enable_logs_sample: false
+  force_delete: true
+  include_tags: true
+  locked: false
+  renotify_interval: 60
+  timeout_h: 60
+  evaluation_delay: 60
+  new_host_delay: 300
+  no_data_timeframe: 10
+  threshold_windows: { }
+  thresholds:
+    critical: 90
+    critical_recovery: 50
+    warning: 50
+    warning_recovery: 30
+#  priority: 0
+
+
+ECS-Cluster-Memory-Reservation:
+  name: "(ECS) ECS Cluster Memory Reservation"
+  type: metric alert
+  query: |
+    min(last_5m):
+    avg:aws.ecs.cluster.memory_reservation{*} by {region,servicename,clustername} > 90
+  message: |
+    Overview: ECS Cluster Memory Reservation
+    Priority Level: P2
+    {{#is_alert}}{{{comparator}}} {{threshold}}% ({{value}}%){{/is_alert}}
+    {{#is_warning}}{{{comparator}}} {{warn_threshold}}% ({{value}}%){{/is_warning}}
+  escalation_message: ""
+  tags: [ "ManagedBy:Terraform" ]
+  notify_no_data: false
+  notify_audit: true
+  require_full_window: true
+  enable_logs_sample: false
+  force_delete: true
+  include_tags: true
+  locked: false
+  renotify_interval: 60
+  timeout_h: 60
+  evaluation_delay: 60
+  new_host_delay: 300
+  no_data_timeframe: 10
+  threshold_windows: { }
+  thresholds:
+    critical: 90
+    critical_recovery: 50
+    warning: 50
+    warning_recovery: 30
+#  priority: 0
