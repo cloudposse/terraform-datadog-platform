@@ -7,8 +7,8 @@ variable "datadog_slos" {
 
     query = map(any)
 
-    groups         = list(string)
-    monitor_ids    = list(number)
+    groups      = list(string)
+    monitor_ids = list(number)
 
     description  = string
     force_delete = bool

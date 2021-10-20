@@ -45,7 +45,7 @@ resource "datadog_service_level_objective" "metric_slo" {
 
   query {
     denominator = lookup(each.value.query, "denominator")
-    numerator = lookup(each.value.query, "numerator")
+    numerator   = lookup(each.value.query, "numerator")
   }
 
   #  Optional
