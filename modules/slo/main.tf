@@ -1,0 +1,70 @@
+locals {
+  enabled = module.this.enabled
+  #  alert_tags = local.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
+  datadog_monitor_slos = { for slo in var.datadog_slos : slo.name => slo if slo.type == "monitor" }
+  datadog_metric_slos  = { for slo in var.datadog_slos : slo.name => slo if slo.type == "metric" }
+}
+
+
+resource "datadog_service_level_objective" "monitor_slo" {
+  for_each = local.enabled ? local.datadog_monitor_slos : {}
+
+  #  Required
+  name = each.value.name
+  type = each.value.type
+  dynamic "thresholds" {
+    for_each = each.value.thresholds
+    content {
+      target    = lookup(thresholds, "target", "99.00")
+      timeframe = lookup(thresholds, "timeframe", "7d")
+
+      target_display  = lookup(thresholds, "target_display", "98.00")
+      warning         = lookup(thresholds, "warning", "99.95")
+      warning_display = lookup(thresholds, "warning_display", "98.00")
+    }
+  }
+
+  groups      = lookup(each.value, "groups", [])
+  monitor_ids = each.value.monitor_ids
+  #  monitor_search = each.value.monitor_search
+
+  #  Optional
+  description  = lookup(each.value, "description", null)
+  force_delete = lookup(each.value, "force_delete", true)
+  validate     = lookup(each.value, "validate", false)
+
+
+  tags = lookup(each.value, "tags", module.this.tags)
+}
+
+resource "datadog_service_level_objective" "metric_slo" {
+  for_each = local.enabled ? local.datadog_metric_slos : {}
+
+  #  Required
+  name = each.value.name
+  type = each.value.type
+
+  query {
+    denominator = lookup(each.value.query, "denominator")
+    numerator = lookup(each.value.query, "numerator")
+  }
+
+  #  Optional
+  description  = lookup(each.value, "description", null)
+  force_delete = lookup(each.value, "force_delete", true)
+  validate     = lookup(each.value, "validate", false)
+
+  dynamic "thresholds" {
+    for_each = each.value.thresholds
+    content {
+      target    = lookup(thresholds, "target", "99.00")
+      timeframe = lookup(thresholds, "timeframe", "7d")
+
+      target_display  = lookup(thresholds, "target_display", "98.00")
+      warning         = lookup(thresholds, "warning", "99.95")
+      warning_display = lookup(thresholds, "warning_display", "98.00")
+    }
+  }
+
+  tags = lookup(each.value, "tags", module.this.tags)
+}
