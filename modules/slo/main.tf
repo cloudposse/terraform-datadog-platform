@@ -26,7 +26,6 @@ resource "datadog_service_level_objective" "monitor_slo" {
 
   groups      = lookup(each.value, "groups", [])
   monitor_ids = each.value.monitor_ids
-  #  monitor_search = each.value.monitor_search
 
   #  Optional
   description  = lookup(each.value, "description", null)
