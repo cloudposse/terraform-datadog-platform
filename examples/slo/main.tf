@@ -7,7 +7,7 @@ locals {
 module "datadog_slo" {
   source = "../../modules/slo"
 
-  datadog_slos         = local.slo_map
+  datadog_slos = local.slo_map
 
   context = module.this.context
 }
