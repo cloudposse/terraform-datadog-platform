@@ -16,5 +16,5 @@ variable "datadog_slos" {
 
     tags = list(string)
   }))
-  description = "Map of Datadog monitor configurations. See catalog for examples"
+  description = "Map of Datadog SLO configurations. See catalog for examples"
 }

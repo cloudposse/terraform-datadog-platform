@@ -1,0 +1,20 @@
+metric-slo:
+  name: "(SLO) - a Metric Based SLO"
+  type: metric
+  query:
+    numerator: kubernetes_state.pod.count{*} - kubernetes_state.pod.status_phase{pod_phase:pending}
+    denominator: kubernetes_state.pod.count{*}
+  description: |
+    Number of Kubernetes Pods Pending is too high.
+  force_delete: true
+  validate: true
+  thresholds:
+    - target: 99.5
+      target_display: 99.50
+      timeframe: 7d
+      warning: 99.9
+      warning_display: 99.90
+  groups: []
+  monitor_ids: []
+  tags:
+    - ManagedBy:Terraform

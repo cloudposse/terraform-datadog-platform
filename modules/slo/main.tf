@@ -12,6 +12,7 @@ resource "datadog_service_level_objective" "monitor_slo" {
   #  Required
   name = each.value.name
   type = each.value.type
+
   dynamic "thresholds" {
     for_each = each.value.thresholds
     content {
@@ -44,8 +45,8 @@ resource "datadog_service_level_objective" "metric_slo" {
   type = each.value.type
 
   query {
-    denominator = lookup(each.value.query, "denominator")
-    numerator   = lookup(each.value.query, "numerator")
+    denominator = each.value.query.denominator
+    numerator = each.value.query.numerator
   }
 
   #  Optional
