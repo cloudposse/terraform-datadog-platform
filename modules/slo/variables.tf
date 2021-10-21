@@ -3,7 +3,7 @@ variable "datadog_slos" {
     name = string
     type = string
 
-    thresholds = list(any)
+    thresholds = list(map(any))
 
     query = map(any)
 

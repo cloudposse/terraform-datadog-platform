@@ -1,13 +1,13 @@
 locals {
   enabled = module.this.enabled
   #  alert_tags = local.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
-  datadog_monitor_slos = { for slo in var.datadog_slos : slo.name => slo if slo.type == "monitor" }
-  datadog_metric_slos  = { for slo in var.datadog_slos : slo.name => slo if slo.type == "metric" }
+  datadog_monitor_slos = { for slo in var.datadog_slos : slo.name => slo if slo.type == "monitor" && local.enabled }
+  datadog_metric_slos  = { for slo in var.datadog_slos : slo.name => slo if slo.type == "metric" && local.enabled }
 }
 
 
 resource "datadog_service_level_objective" "monitor_slo" {
-  for_each = local.enabled ? local.datadog_monitor_slos : {}
+  for_each = local.datadog_monitor_slos
 
   #  Required
   name = each.value.name
@@ -38,7 +38,7 @@ resource "datadog_service_level_objective" "monitor_slo" {
 }
 
 resource "datadog_service_level_objective" "metric_slo" {
-  for_each = local.enabled ? local.datadog_metric_slos : {}
+  for_each = local.datadog_metric_slos
 
   #  Required
   name = each.value.name
@@ -60,7 +60,7 @@ resource "datadog_service_level_objective" "metric_slo" {
       target    = lookup(thresholds, "target", "99.00")
       timeframe = lookup(thresholds, "timeframe", "7d")
 
-      target_display  = lookup(thresholds, "target_display", "98.00")
+      target_display  = lookup(thresholds, "target_display", "97.00")
       warning         = lookup(thresholds, "warning", "99.95")
       warning_display = lookup(thresholds, "warning_display", "98.00")
     }
