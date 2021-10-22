@@ -1,4 +1,4 @@
-# https://docs.datadoghq.com/account_management/rbac/?tab=datadogapplication
+# https://docs.datadoghq.com/account_management/org_settings/#overview
 variable "saml_enabled" {
   type        = bool
   default     = true
