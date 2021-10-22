@@ -18,10 +18,6 @@ resource "datadog_organization_settings" "default" {
       enabled = length(var.saml_autocreate_users_domains) > 0
     }
 
-    saml_idp_initiated_login {
-      enabled = var.saml_idp_initiated_login_enabled
-    }
-
     saml_strict_mode {
       enabled = var.saml_strict_mode_enabled
     }
