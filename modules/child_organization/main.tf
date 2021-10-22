@@ -3,11 +3,11 @@
 
 # Create a new Datadog Child Organization
 resource "datadog_child_organization" "default" {
-  name                          = module.this.id
+  name = module.this.id
 }
 
 resource "datadog_organization_settings" "default" {
-  name                          = module.this.id
+  name = module.this.id
   settings {
     saml {
       enabled = var.saml_enabled
