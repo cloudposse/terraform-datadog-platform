@@ -31,5 +31,5 @@ resource "datadog_organization_settings" {
 }
 
 locals {
-  enabled     = module.this.enabled
+  enabled = module.this.enabled
 }
