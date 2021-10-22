@@ -14,7 +14,7 @@ resource "datadog_organization_settings" {
 
   saml_autocreate_users_domains = [{
     domains = var.saml_autocreate_users_domains
-    enabled = len(var.saml_autocreate_users_domains) > 0 ? true : false
+    enabled = len(var.saml_autocreate_users_domains)
   }]
 
   saml_idp_initiated_login = [{
