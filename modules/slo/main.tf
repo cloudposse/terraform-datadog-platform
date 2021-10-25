@@ -7,8 +7,8 @@ locals {
   temp_datadog_slo_metric_monitors = flatten([
     for name, slo in var.datadog_slos : [
       for i, threshold in slo.thresholds : {
-        slo = slo,
-        slo_name = format("%s_threshold%s",name, i)
+        slo       = slo,
+        slo_name  = format("%s_threshold%s", name, i)
         threshold = threshold
       }
       if slo.type == "metric" && local.enabled
@@ -93,12 +93,12 @@ resource "datadog_monitor" "metric_slo_alert" {
   type    = "slo alert"
   message = format("%s%s", each.value.slo.message, local.alert_tags)
 
-#  query   = format("error_budget("%s").over(%s) > %s", datadog_service_level_objective.metric_slo[each.value.slo.name].id, each.value.threshold.timeframe, lookup(each.value.threshold, "target", "99.00"))
-  query   = <<EOF
+  #  query   = format("error_budget("%s").over(%s) > %s", datadog_service_level_objective.metric_slo[each.value.slo.name].id, each.value.threshold.timeframe, lookup(each.value.threshold, "target", "99.00"))
+  query = <<EOF
     error_budget("${datadog_service_level_objective.metric_slo[each.value.slo.name].id}").over("${each.value.threshold.timeframe}") > ${lookup(each.value.threshold, "target", "99.00")}
   EOF
   monitor_thresholds {
-      critical = lookup(each.value.threshold, "target", null)
+    critical = lookup(each.value.threshold, "target", null)
   }
 
   tags = lookup(each.value.slo, "tags", module.this.tags)
