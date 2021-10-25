@@ -1,4 +1,9 @@
 # https://docs.datadoghq.com/account_management/org_settings/#overview
+
+variable "organization_name" {
+  type = string
+  description = "The name of the datadog child organization"
+}
 variable "saml_enabled" {
   type        = bool
   default     = true
