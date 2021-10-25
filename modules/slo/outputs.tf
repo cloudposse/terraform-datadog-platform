@@ -7,3 +7,7 @@ output "datadog_monitor_slos" {
   value       = datadog_service_level_objective.monitor_slo[*]
   description = "Map of created Monitor Based SLOs"
 }
+
+output "test_monitors" {
+  value = local.datadog_slo_metric_monitors
+}
