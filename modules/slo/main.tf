@@ -85,7 +85,6 @@ resource "datadog_service_level_objective" "metric_slo" {
 }
 
 
-// this one
 resource "datadog_monitor" "metric_slo_alert" {
   for_each = local.datadog_slo_metric_monitors
 
@@ -93,7 +92,6 @@ resource "datadog_monitor" "metric_slo_alert" {
   type    = "slo alert"
   message = format("%s%s", each.value.slo.message, local.alert_tags)
 
-  #  query   = format("error_budget("%s").over(%s) > %s", datadog_service_level_objective.metric_slo[each.value.slo.name].id, each.value.threshold.timeframe, lookup(each.value.threshold, "target", "99.00"))
   query = <<EOF
     error_budget("${datadog_service_level_objective.metric_slo[each.value.slo.name].id}").over("${each.value.threshold.timeframe}") > ${lookup(each.value.threshold, "target", "99.00")}
   EOF
