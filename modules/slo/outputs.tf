@@ -9,6 +9,6 @@ output "datadog_monitor_slos" {
 }
 
 output "datadog_slo_alerts" {
-  value = datadog_monitor.metric_slo_alert
+  value       = datadog_monitor.metric_slo_alert
   description = "Map of created SLO Based Alerts"
 }
