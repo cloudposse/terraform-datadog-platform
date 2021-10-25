@@ -9,5 +9,8 @@ module "datadog_slo" {
 
   datadog_slos = local.slo_map
 
+  alert_tags = var.alert_tags
+  alert_tags_separator = var.alert_tags_separator
+
   context = module.this.context
 }
