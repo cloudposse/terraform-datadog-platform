@@ -1,7 +1,7 @@
 # https://docs.datadoghq.com/account_management/org_settings/#overview
 
 variable "name" {
-  type = string
+  type        = string
   description = "The name of the datadog child organization"
 }
 variable "saml_enabled" {

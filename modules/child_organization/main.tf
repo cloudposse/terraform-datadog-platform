@@ -4,11 +4,11 @@
 # Create a new Datadog Child Organization
 
 resource "datadog_child_organization" "default" {
-  name                          = var.organization_name
+  name = var.organization_name
 }
 
 resource "datadog_organization_settings" "default" {
-  name                          = var.organization_name
+  name = var.organization_name
   settings {
     saml {
       enabled = var.saml_enabled
