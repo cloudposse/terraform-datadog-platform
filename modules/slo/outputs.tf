@@ -9,5 +9,5 @@ output "datadog_monitor_slos" {
 }
 
 output "test_monitors" {
-  value = local.datadog_slo_metric_monitors
+  value = local.temp_datadog_slo_metric_monitors
 }
