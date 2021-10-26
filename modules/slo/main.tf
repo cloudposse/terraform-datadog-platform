@@ -3,7 +3,7 @@ locals {
 
   datadog_monitor_slos = { for slo in var.datadog_slos : slo.name => slo if slo.type == "monitor" && local.enabled }
   datadog_metric_slos  = { for slo in var.datadog_slos : slo.name => slo if slo.type == "metric" && local.enabled }
-  #  datadog_slos         = { for slo in var.datadog_slos : slo.name => slo if local.enabled }
+
   temp_datadog_slo_metric_monitors = flatten([
     for name, slo in var.datadog_slos : [
       for i, threshold in slo.thresholds : {
