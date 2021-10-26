@@ -5,7 +5,7 @@ variable "region" {
 
 variable "slo_paths" {
   type        = list(string)
-  description = "List of paths to Datadog slo configurations"
+  description = "List of paths to Datadog SLO configurations"
 }
 
 variable "alert_tags" {
