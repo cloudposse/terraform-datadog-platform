@@ -8,4 +8,4 @@ stage = "test"
 
 name = "datadog-slo"
 
-slo_paths = ["slo/*.yaml"]
+slo_paths = ["catalog/*.yaml"]
