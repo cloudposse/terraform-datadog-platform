@@ -13,7 +13,7 @@ variable "organization_name" {
 variable "saml_enabled" {
   type        = bool
   default     = true
-  description = "Whether or not SAML is enabled for the child organization"
+  description = "Whether or not SAML is enabled for the child organization. Note that Free and Trial organizations cannot enable SAML"
 }
 
 variable "saml_autocreate_users_domains" {

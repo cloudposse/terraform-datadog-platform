@@ -18,7 +18,9 @@ test: init
 	go mod download
 	go test -v -timeout 5m -run TestExamplesComplete
 	go test -v -timeout 5m -run TestExamplesSynthetics
-	go test -v -timeout 5m -run TestExamplesChildOrganization
+    # We can only create Datadog child organizations with terraform, but cannot destroy them
+    # Warning: Cannot delete organization. Remove organization by contacting support (https://docs.datadoghq.com/help/).
+	# go test -v -timeout 5m -run TestExamplesChildOrganization
 
 ## Run tests in docker container
 docker/test:

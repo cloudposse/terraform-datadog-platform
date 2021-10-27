@@ -38,6 +38,17 @@ The module consists of the following submodules:
   - [roles](modules/roles) - to provision Datadog [roles](https://docs.datadoghq.com/account_management/rbac)
   - [child_organization](modules/child_organization) - to provision Datadog [child organizations](https://docs.datadoghq.com/account_management/multi_organization/)
 
+__Notes on Datadog child organizations:__
+
+* Users can be added to the parent-organization and/or multiple child-organizations and switch between them from the user account settings menu
+* The parent-organization can view the usage of individual child-organizations, allowing them to track trends in usage
+* The Multi-organization account feature is not enabled by default. Contact Datadog support to have it enabled
+* Free and Trial organizations cannot enable SAML
+* We can only create Datadog child organizations with terraform, but cannot destroy them. When trying to destroy, the following error is thrown:
+  ```
+    Warning: Cannot delete organization. Remove organization by contacting support (https://docs.datadoghq.com/help/).
+  ```
+
 ---
 
 This project is part of our comprehensive ["SweetOps"](https://cpco.io/sweetops) approach towards DevOps.
@@ -144,21 +155,17 @@ Provision Datadog monitors from the catalog of YAML definitions:
 Provision Datadog synthetics:
 
 ```hcl
-  module "synthetic_configs" {
-    source  = "cloudposse/config/yaml"
-    version = "0.8.1"
-
-    map_config_local_base_path = path.module
-    map_config_paths           = var.synthetic_paths
-
-    context = module.this.context
+  locals {
+    synthetics_files = flatten([for p in var.synthetic_paths : fileset(path.module, p)])
+    synthetics_list  = [for f in local.synthetics_files : yamldecode(file(f))]
+    synthetics_map   = merge(local.synthetics_list...)
   }
 
   module "datadog_synthetics" {
     source = "cloudposse/platform/datadog//modules/synthetics"
     # version = "x.x.x"
 
-    datadog_synthetics   = module.synthetic_configs.map_configs
+    datadog_synthetics   = local.synthetics_map
     alert_tags           = var.alert_tags
     alert_tags_separator = var.alert_tags_separator
 
@@ -218,6 +225,26 @@ Provision Datadog monitors, Datadog roles with defined permissions, and assign r
     alert_tags           = var.alert_tags
     alert_tags_separator = var.alert_tags_separator
     restricted_roles_map = local.monitors_roles_map
+
+    context = module.this.context
+  }
+```
+
+Provision a Datadog child organization:
+
+```hcl
+  module "datadog_child_organization" {
+    source = "cloudposse/platform/datadog//modules/child_organization"
+    # version = "x.x.x"
+
+    organization_name                = "test"
+    saml_enabled                     = false  # Note that Free and Trial organizations cannot enable SAML
+    saml_autocreate_users_domains    = []
+    saml_autocreate_users_enabled    = false
+    saml_idp_initiated_login_enabled = true
+    saml_strict_mode_enabled         = false
+    private_widget_share             = false
+    saml_autocreate_access_role      = "ro"
 
     context = module.this.context
   }
@@ -335,6 +362,7 @@ For additional context, refer to some of these links.
 - [Terraform Datadog role resources](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/role) - Provides a Datadog role resource. Used to create and manage Datadog roles
 - [Datadog permissions](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/data-sources/permissions) - Use this data source to retrieve the list of Datadog permissions by name and their corresponding ID, for use in the role resource
 - [Role Based Access Control](https://docs.datadoghq.com/account_management/rbac) - Roles categorize users and define what account permissions those users have, such as what data they can read or what account assets they can modify
+- [Managing Multiple-Organization Accounts](https://docs.datadoghq.com/account_management/multi_organization) - It is possible to manage multiple child-organizations from one parent-organization account. This is typically used by Managed Service Providers that have customers which should not have access to each others' data
 
 
 ## Help
