@@ -46,7 +46,9 @@ __Notes on Datadog child organizations:__
 * Free and Trial organizations cannot enable SAML
 * We can only create Datadog child organizations with terraform, but cannot destroy them. When trying to destroy, the following error is thrown:
   ```
-    Warning: Cannot delete organization. Remove organization by contacting support (https://docs.datadoghq.com/help/).
+    Warning: Cannot delete organization.
+
+    Remove organization by contacting support (https://docs.datadoghq.com/help).
   ```
 
 ---
