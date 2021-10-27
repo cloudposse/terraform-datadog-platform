@@ -18,6 +18,7 @@ test: init
 	go mod download
 	go test -v -timeout 5m -run TestExamplesComplete
 	go test -v -timeout 5m -run TestExamplesSynthetics
+	go test -v -timeout 5m -run TestExamplesChildOrganization
 
 ## Run tests in docker container
 docker/test:
