@@ -59,6 +59,7 @@ description: |-
     - [synthetics](modules/synthetics) - to provision Datadog [synthetics](https://docs.datadoghq.com/synthetics/)
     - [permissions](modules/permissions) - to look up all available Datadog [permissions](https://docs.datadoghq.com/account_management/rbac/permissions/)
     - [roles](modules/roles) - to provision Datadog [roles](https://docs.datadoghq.com/account_management/rbac)
+    - [child_organization](modules/child_organization) - to provision Datadog [child organizations](https://docs.datadoghq.com/account_management/multi_organization/)
 
 introduction: |-
   Datadog resources (monitors, roles, etc.) are defined as [catalog](catalog) of YAML configuration files.
@@ -71,6 +72,7 @@ introduction: |-
 
   The [examples/rbac](examples/rbac) shows how to use custom RBAC to provision Datadog roles with permissions and assign roles to monitors.
 
+  The [examples/child_organization](examples/child_organization) shows how to provision Datadog child organizations.
 
 references:
   - name: "Terraform Datadog monitor resources"

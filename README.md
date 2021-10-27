@@ -36,6 +36,7 @@ The module consists of the following submodules:
   - [synthetics](modules/synthetics) - to provision Datadog [synthetics](https://docs.datadoghq.com/synthetics/)
   - [permissions](modules/permissions) - to look up all available Datadog [permissions](https://docs.datadoghq.com/account_management/rbac/permissions/)
   - [roles](modules/roles) - to provision Datadog [roles](https://docs.datadoghq.com/account_management/rbac)
+  - [child_organization](modules/child_organization) - to provision Datadog [child organizations](https://docs.datadoghq.com/account_management/multi_organization/)
 
 ---
 
@@ -77,6 +78,8 @@ The [examples/complete](examples/complete) in this module uses the catalog to pr
 The [examples/synthetics](examples/synthetics) shows how to provision synthetics on Datadog for synthetic monitoring.
 
 The [examples/rbac](examples/rbac) shows how to use custom RBAC to provision Datadog roles with permissions and assign roles to monitors.
+
+The [examples/child_organization](examples/child_organization) shows how to provision Datadog child organizations.
 
 
 ## Security & Compliance [<img src="https://cloudposse.com/wp-content/uploads/2020/11/bridgecrew.svg" width="250" align="right" />](https://bridgecrew.io/)
