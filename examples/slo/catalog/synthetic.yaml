@@ -1,0 +1,28 @@
+
+synthetics-slo:
+  name: "(SLO) Synthetic Checks"
+  type: metric
+  query:
+    numerator: sum:synthetics.test_runs{status:success}.as_count()
+    denominator: sum:synthetics.test_runs{*}.as_count()
+  description: |
+    Number of Successful Synthetic Checks.
+  message: |
+    ({stage} {region}) {instance_id} failed a SLO check
+  force_delete: true
+  validate: true
+  thresholds:
+    - target: "99.5"
+      target_display: "99.50"
+      timeframe: "7d"
+      warning: "99.9"
+      warning_display: "99.90"
+    - target: "99"
+      target_display: "99.00"
+      timeframe: "30d"
+      warning: "99.5"
+      warning_display: "99.50"
+  groups: []
+  monitor_ids: []
+  tags:
+    - managedby:terraform
