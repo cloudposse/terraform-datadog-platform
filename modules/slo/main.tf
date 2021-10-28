@@ -20,7 +20,6 @@ locals {
 
 }
 
-
 resource "datadog_service_level_objective" "monitor_slo" {
   for_each = local.datadog_monitor_slos
 
@@ -83,7 +82,6 @@ resource "datadog_service_level_objective" "metric_slo" {
 
   tags = lookup(each.value, "tags", module.this.tags)
 }
-
 
 resource "datadog_monitor" "metric_slo_alert" {
   for_each = local.datadog_slo_metric_monitors
