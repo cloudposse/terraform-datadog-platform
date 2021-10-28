@@ -47,7 +47,6 @@ resource "datadog_service_level_objective" "monitor_slo" {
   force_delete = lookup(each.value, "force_delete", true)
   validate     = lookup(each.value, "validate", false)
 
-
   tags = lookup(each.value, "tags", module.this.tags)
 }
 
