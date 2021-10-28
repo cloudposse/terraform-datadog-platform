@@ -1,11 +1,11 @@
 # Datadog SLO
 
-This module of the datadog platform is responsible for creating SLOs and their related alerts.
+This module is responsible for creating Datadog [Service Level Objectives](https://docs.datadoghq.com/monitors/service_level_objectives/) and their related alerts.
 
 ## Alerts
 Datadog Alerts for SLOs are terraformed through the monitor object.
 
-This creates a problem in that an SLO can have many thresholds set, but a monitor can only have one. In order to get around this the local variable `datadog_slo_metric_monitors` Creates Objects for each threshold within an SLO. 
+An SLO can have many thresholds set, but a monitor can only have one. In order to get around this, the module creates Datadog monitors for each threshold within an SLO. 
 
 For example 
 
@@ -144,4 +144,5 @@ This allows a monitor to be created for each threshold.
 
 
 ## References
+ - [Service Level Objectives](https://docs.datadoghq.com/monitors/service_level_objectives/)
  - [Datadog Error Budget](https://docs.datadoghq.com/monitors/service_level_objectives/error_budget/)
