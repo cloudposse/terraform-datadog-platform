@@ -23,6 +23,7 @@ resource "datadog_monitor" "default" {
   include_tags        = lookup(each.value, "include_tags", null)
   enable_logs_sample  = lookup(each.value, "enable_logs_sample", null)
   force_delete        = lookup(each.value, "force_delete", null)
+  priority            = lookup(each.value, "priority", null)
 
   monitor_thresholds {
     warning           = lookup(each.value.thresholds, "warning", null)
