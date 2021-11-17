@@ -15,6 +15,7 @@ rds-cpuutilization:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -50,6 +51,7 @@ rds-disk-queue-depth:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -85,6 +87,7 @@ rds-freeable-memory:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -120,6 +123,7 @@ rds-swap-usage:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -155,6 +159,7 @@ rds-database-connections:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -172,7 +177,7 @@ rds-database-connections:
     recovery_window: "last_15m"
   thresholds:
     critical: 1
-    #warning: 
+    #warning:
     #unknown:
     #ok:
     critical_recovery: 0

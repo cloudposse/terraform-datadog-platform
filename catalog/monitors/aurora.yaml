@@ -15,6 +15,7 @@ aurora-replica-lag:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: false
