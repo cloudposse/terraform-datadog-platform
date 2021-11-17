@@ -12,6 +12,7 @@ redshift-health-status:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -44,6 +45,7 @@ redshift-database-connections:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -81,6 +83,7 @@ redshift-cpuutilization:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -116,6 +119,7 @@ redshift-write-latency:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -151,6 +155,7 @@ redshift-disk-space-used:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -183,6 +188,7 @@ redshift-network-receive:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -217,6 +223,7 @@ redshift-network-transmit:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -251,6 +258,7 @@ redshift-read-throughput:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -285,6 +293,7 @@ redshift-write-throughput:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true

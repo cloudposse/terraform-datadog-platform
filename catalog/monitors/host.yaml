@@ -9,6 +9,7 @@ host-io-wait-times:
     The I/O wait time for ({{host.name}} {{host.ip}}) is very high
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -38,6 +39,7 @@ host-disk-use:
     Disk Usage has been above threshold over 30 minutes on ({{host.name}} {{host.ip}})
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -67,6 +69,7 @@ host-high-mem-use:
     Running out of free memory on ({{host.name}} {{host.ip}})
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -96,6 +99,7 @@ host-high-load-avg:
     Load average is high on ({{host.name}} {{host.ip}})
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true

@@ -15,6 +15,7 @@ amq-cpu-utilization:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -50,6 +51,7 @@ amq-heap-usage:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -69,7 +71,7 @@ amq-heap-usage:
     #unknown:
     #ok:
     #critical_recovery:
-    #warning_recovery:   
+    #warning_recovery:
 
 amq-network-in:
   name: "(AMQ) Anomaly of a large variance in network-in bytes"
@@ -82,6 +84,7 @@ amq-network-in:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -99,7 +102,7 @@ amq-network-in:
     recovery_window: "last_15m"
   thresholds:
     critical: 1
-    #warning: 
+    #warning:
     #unknown:
     #ok:
     critical_recovery: 0
@@ -116,6 +119,7 @@ amq-network-out:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -133,7 +137,7 @@ amq-network-out:
     recovery_window: "last_15m"
   thresholds:
     critical: 1
-    #warning: 
+    #warning:
     #unknown:
     #ok:
     critical_recovery: 0
@@ -150,6 +154,7 @@ amq-current-connections-count:
     {{/is_alert}}
   escalation_message: ""
   tags: [ "ManagedBy:Terraform" ]
+  priority: 3
   notify_no_data: false
   notify_audit: true
   require_full_window: true
@@ -167,7 +172,7 @@ amq-current-connections-count:
     recovery_window: "last_15m"
   thresholds:
     critical: 1
-    #warning: 
+    #warning:
     #unknown:
     #ok:
     critical_recovery: 0
