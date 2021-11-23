@@ -5,13 +5,18 @@ locals {
   enabled = module.this.enabled
 }
 
+# Creates a new organization
 resource "datadog_child_organization" "default" {
   count = local.enabled ? 1 : 0
   name  = var.organization_name
 }
 
+# If provider is not set, it will try to modify the root org settings
+# New provider cannot be set until org is created
+# This resource needs to be moved out of this component and provisioned separately
+# due to provider not allowed in a for_each.
 resource "datadog_organization_settings" "default" {
-  count = local.enabled ? 1 : 0
+  count = 0
 
   name = var.organization_name
 

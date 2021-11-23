@@ -132,124 +132,124 @@ The table below correctly indicates which inputs are required.
 Provision Datadog monitors from the catalog of YAML definitions:
 
 ```hcl
-  module "monitor_configs" {
-    source  = "cloudposse/config/yaml"
-    version = "0.8.1"
+module "monitor_configs" {
+  source  = "cloudposse/config/yaml"
+  version = "0.8.1"
 
-    map_config_local_base_path = path.module
-    map_config_paths           = var.monitor_paths
+  map_config_local_base_path = path.module
+  map_config_paths           = var.monitor_paths
 
-    context = module.this.context
-  }
+  context = module.this.context
+}
 
-  module "datadog_monitors" {
-    source = "cloudposse/platform/datadog//modules/monitors"
-    # version = "x.x.x"
+module "datadog_monitors" {
+  source = "cloudposse/platform/datadog//modules/monitors"
+  # version = "x.x.x"
 
-    datadog_monitors     = module.monitor_configs.map_configs
-    alert_tags           = var.alert_tags
-    alert_tags_separator = var.alert_tags_separator
+  datadog_monitors     = module.monitor_configs.map_configs
+  alert_tags           = var.alert_tags
+  alert_tags_separator = var.alert_tags_separator
 
-    context = module.this.context
- }
+  context = module.this.context
+}
 ```
 
 Provision Datadog synthetics:
 
 ```hcl
-  locals {
-    synthetics_files = flatten([for p in var.synthetic_paths : fileset(path.module, p)])
-    synthetics_list  = [for f in local.synthetics_files : yamldecode(file(f))]
-    synthetics_map   = merge(local.synthetics_list...)
-  }
+locals {
+  synthetics_files = flatten([for p in var.synthetic_paths : fileset(path.module, p)])
+  synthetics_list  = [for f in local.synthetics_files : yamldecode(file(f))]
+  synthetics_map   = merge(local.synthetics_list...)
+}
 
-  module "datadog_synthetics" {
-    source = "cloudposse/platform/datadog//modules/synthetics"
-    # version = "x.x.x"
+module "datadog_synthetics" {
+  source = "cloudposse/platform/datadog//modules/synthetics"
+  # version = "x.x.x"
 
-    datadog_synthetics   = local.synthetics_map
-    alert_tags           = var.alert_tags
-    alert_tags_separator = var.alert_tags_separator
+  datadog_synthetics   = local.synthetics_map
+  alert_tags           = var.alert_tags
+  alert_tags_separator = var.alert_tags_separator
 
-    context = module.this.context
-  }
+  context = module.this.context
+}
 ```
 
 Provision Datadog monitors, Datadog roles with defined permissions, and assign roles to monitors:
 
 ```hcl
-  module "monitor_configs" {
-    source  = "cloudposse/config/yaml"
-    version = "0.8.1"
+module "monitor_configs" {
+  source  = "cloudposse/config/yaml"
+  version = "0.8.1"
 
-    map_config_local_base_path = path.module
-    map_config_paths           = var.monitor_paths
+  map_config_local_base_path = path.module
+  map_config_paths           = var.monitor_paths
 
-    context = module.this.context
+  context = module.this.context
+}
+
+module "role_configs" {
+  source  = "cloudposse/config/yaml"
+  version = "0.8.1"
+
+  map_config_local_base_path = path.module
+  map_config_paths           = var.role_paths
+
+  context = module.this.context
+}
+
+locals {
+  monitors_write_role_name    = module.datadog_roles.datadog_roles["monitors-write"].name
+  monitors_downtime_role_name = module.datadog_roles.datadog_roles["monitors-downtime"].name
+
+  monitors_roles_map = {
+    aurora-replica-lag              = [local.monitors_write_role_name, local.monitors_downtime_role_name]
+    ec2-failed-status-check         = [local.monitors_write_role_name, local.monitors_downtime_role_name]
+    redshift-health-status          = [local.monitors_downtime_role_name]
+    k8s-deployment-replica-pod-down = [local.monitors_write_role_name]
   }
+}
 
-  module "role_configs" {
-    source  = "cloudposse/config/yaml"
-    version = "0.8.1"
+module "datadog_roles" {
+  source = "cloudposse/platform/datadog//modules/roles"
+  # version = "x.x.x"
 
-    map_config_local_base_path = path.module
-    map_config_paths           = var.role_paths
+  datadog_roles = module.role_configs.map_configs
 
-    context = module.this.context
-  }
+  context = module.this.context
+}
 
-  locals {
-    monitors_write_role_name    = module.datadog_roles.datadog_roles["monitors-write"].name
-    monitors_downtime_role_name = module.datadog_roles.datadog_roles["monitors-downtime"].name
+module "datadog_monitors" {
+  source = "cloudposse/platform/datadog//modules/monitors"
+  # version = "x.x.x"
 
-    monitors_roles_map = {
-      aurora-replica-lag              = [local.monitors_write_role_name, local.monitors_downtime_role_name]
-      ec2-failed-status-check         = [local.monitors_write_role_name, local.monitors_downtime_role_name]
-      redshift-health-status          = [local.monitors_downtime_role_name]
-      k8s-deployment-replica-pod-down = [local.monitors_write_role_name]
-    }
-  }
+  datadog_monitors     = module.monitor_configs.map_configs
+  alert_tags           = var.alert_tags
+  alert_tags_separator = var.alert_tags_separator
+  restricted_roles_map = local.monitors_roles_map
 
-  module "datadog_roles" {
-    source = "cloudposse/platform/datadog//modules/roles"
-    # version = "x.x.x"
-
-    datadog_roles = module.role_configs.map_configs
-
-    context = module.this.context
-  }
-
-  module "datadog_monitors" {
-    source = "cloudposse/platform/datadog//modules/monitors"
-    # version = "x.x.x"
-
-    datadog_monitors     = module.monitor_configs.map_configs
-    alert_tags           = var.alert_tags
-    alert_tags_separator = var.alert_tags_separator
-    restricted_roles_map = local.monitors_roles_map
-
-    context = module.this.context
-  }
+  context = module.this.context
+}
 ```
 
 Provision a Datadog child organization:
 
 ```hcl
-  module "datadog_child_organization" {
-    source = "cloudposse/platform/datadog//modules/child_organization"
-    # version = "x.x.x"
+module "datadog_child_organization" {
+  source = "cloudposse/platform/datadog//modules/child_organization"
+  # version = "x.x.x"
 
-    organization_name                = "test"
-    saml_enabled                     = false  # Note that Free and Trial organizations cannot enable SAML
-    saml_autocreate_users_domains    = []
-    saml_autocreate_users_enabled    = false
-    saml_idp_initiated_login_enabled = true
-    saml_strict_mode_enabled         = false
-    private_widget_share             = false
-    saml_autocreate_access_role      = "ro"
+  organization_name                = "test"
+  saml_enabled                     = false  # Note that Free and Trial organizations cannot enable SAML
+  saml_autocreate_users_domains    = []
+  saml_autocreate_users_enabled    = false
+  saml_idp_initiated_login_enabled = true
+  saml_strict_mode_enabled         = false
+  private_widget_share             = false
+  saml_autocreate_access_role      = "ro"
 
-    context = module.this.context
-  }
+  context = module.this.context
+}
 ```
 
 
@@ -496,8 +496,8 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
 ### Contributors
 
 <!-- markdownlint-disable -->
-|  [![Erik Osterman][osterman_avatar]][osterman_homepage]<br/>[Erik Osterman][osterman_homepage] | [![Andriy Knysh][aknysh_avatar]][aknysh_homepage]<br/>[Andriy Knysh][aknysh_homepage] | [![Vladimir][SweetOps_avatar]][SweetOps_homepage]<br/>[Vladimir][SweetOps_homepage] | [![Yonatan Koren][korenyoni_avatar]][korenyoni_homepage]<br/>[Yonatan Koren][korenyoni_homepage] |
-|---|---|---|---|
+|  [![Erik Osterman][osterman_avatar]][osterman_homepage]<br/>[Erik Osterman][osterman_homepage] | [![Andriy Knysh][aknysh_avatar]][aknysh_homepage]<br/>[Andriy Knysh][aknysh_homepage] | [![Vladimir][SweetOps_avatar]][SweetOps_homepage]<br/>[Vladimir][SweetOps_homepage] | [![Yonatan Koren][korenyoni_avatar]][korenyoni_homepage]<br/>[Yonatan Koren][korenyoni_homepage] | [![RB][nitrocode_avatar]][nitrocode_homepage]<br/>[RB][nitrocode_homepage] |
+|---|---|---|---|---|
 <!-- markdownlint-restore -->
 
   [osterman_homepage]: https://github.com/osterman
@@ -508,6 +508,8 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
   [SweetOps_avatar]: https://img.cloudposse.com/150x150/https://github.com/SweetOps.png
   [korenyoni_homepage]: https://github.com/korenyoni
   [korenyoni_avatar]: https://img.cloudposse.com/150x150/https://github.com/korenyoni.png
+  [nitrocode_homepage]: https://github.com/nitrocode
+  [nitrocode_avatar]: https://img.cloudposse.com/150x150/https://github.com/nitrocode.png
 
 [![README Footer][readme_footer_img]][readme_footer_link]
 [![Beacon][beacon]][website]
