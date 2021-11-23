@@ -11,24 +11,14 @@ resource "datadog_child_organization" "default" {
   name  = var.organization_name
 }
 
-# Sets a new provider
-provider "datadog" {
-  alias = "organization"
-
-  validate = local.enabled
-
-  datadog_api_key = local.enabled ? join("", datadog_child_organization.default.*.api_key) : null
-  datadog_app_key = local.enabled ? join("", datadog_child_organization.default.*.application_key) : null
-}
-
-# Set organization settings for the new org
 # If provider is not set, it will try to modify the root org settings
+# New provider cannot be set until org is created
+# This resource needs to be moved out of this component and provisioned separately
+# due to provider not allowed in a for_each.
 resource "datadog_organization_settings" "default" {
-  count = local.enabled ? 1 : 0
+  count = 0
 
   name = var.organization_name
-
-  providers = datadog.organization
 
   settings {
     saml {
