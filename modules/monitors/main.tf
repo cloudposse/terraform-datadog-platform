@@ -14,7 +14,7 @@ resource "datadog_monitor" "default" {
   escalation_message     = lookup(each.value, "escalation_message", null)
   require_full_window    = lookup(each.value, "require_full_window", null)
   notify_no_data         = lookup(each.value, "notify_no_data", null)
-  new_group_delay        = lookup(each.value, "new_host_delay", null)
+  new_group_delay        = lookup(each.value, "new_group_delay", null)
   evaluation_delay       = lookup(each.value, "evaluation_delay", null)
   no_data_timeframe      = lookup(each.value, "no_data_timeframe", null)
   renotify_interval      = lookup(each.value, "renotify_interval", null)
