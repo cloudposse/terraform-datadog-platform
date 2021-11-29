@@ -7,23 +7,30 @@ locals {
 resource "datadog_monitor" "default" {
   for_each = local.enabled ? var.datadog_monitors : {}
 
-  name                = each.value.name
-  type                = each.value.type
-  query               = each.value.query
-  message             = format("%s%s", each.value.message, local.alert_tags)
-  escalation_message  = lookup(each.value, "escalation_message", null)
-  require_full_window = lookup(each.value, "require_full_window", null)
-  notify_no_data      = lookup(each.value, "notify_no_data", null)
-  new_host_delay      = lookup(each.value, "new_host_delay", null)
-  evaluation_delay    = lookup(each.value, "evaluation_delay", null)
-  no_data_timeframe   = lookup(each.value, "no_data_timeframe", null)
-  renotify_interval   = lookup(each.value, "renotify_interval", null)
-  notify_audit        = lookup(each.value, "notify_audit", null)
-  timeout_h           = lookup(each.value, "timeout_h", null)
-  include_tags        = lookup(each.value, "include_tags", null)
-  enable_logs_sample  = lookup(each.value, "enable_logs_sample", null)
-  force_delete        = lookup(each.value, "force_delete", null)
-  priority            = lookup(each.value, "priority", null)
+  name                   = each.value.name
+  type                   = each.value.type
+  query                  = each.value.query
+  message                = format("%s%s", each.value.message, local.alert_tags)
+  escalation_message     = lookup(each.value, "escalation_message", null)
+  require_full_window    = lookup(each.value, "require_full_window", null)
+  notify_no_data         = lookup(each.value, "notify_no_data", null)
+  new_group_delay        = lookup(each.value, "new_group_delay", null)
+  evaluation_delay       = lookup(each.value, "evaluation_delay", null)
+  no_data_timeframe      = lookup(each.value, "no_data_timeframe", null)
+  renotify_interval      = lookup(each.value, "renotify_interval", null)
+  notify_audit           = lookup(each.value, "notify_audit", null)
+  timeout_h              = lookup(each.value, "timeout_h", null)
+  include_tags           = lookup(each.value, "include_tags", null)
+  enable_logs_sample     = lookup(each.value, "enable_logs_sample", null)
+  force_delete           = lookup(each.value, "force_delete", null)
+  priority               = lookup(each.value, "priority", null)
+  groupby_simple_monitor = lookup(each.value, "groupby_simple_monitor", null)
+  renotify_occurrences   = lookup(each.value, "renotify_occurrences", null)
+  renotify_statuses      = lookup(each.value, "renotify_statuses", null)
+  validate               = lookup(each.value, "validate", null)
+
+  # DEPRECATED: use new_group_delay instead
+  new_host_delay = lookup(each.value, "new_host_delay", null)
 
   monitor_thresholds {
     warning           = lookup(each.value.thresholds, "warning", null)
