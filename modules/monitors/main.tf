@@ -28,7 +28,7 @@ resource "datadog_monitor" "default" {
   renotify_occurrences   = lookup(each.value, "renotify_occurrences", null)
   renotify_statuses      = lookup(each.value, "renotify_statuses", null)
   validate               = lookup(each.value, "validate", null)
-  
+
   # DEPRECATED: use new_group_delay instead
   new_host_delay = lookup(each.value, "new_host_delay", null)
 
