@@ -26,7 +26,7 @@ redshift-health-status:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -63,7 +63,7 @@ redshift-database-connections:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows:
@@ -105,7 +105,7 @@ redshift-cpuutilization:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -145,7 +145,7 @@ redshift-write-latency:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -185,7 +185,7 @@ redshift-disk-space-used:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -222,7 +222,7 @@ redshift-network-receive:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows:
@@ -261,7 +261,7 @@ redshift-network-transmit:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows:
@@ -300,7 +300,7 @@ redshift-read-throughput:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows:
@@ -339,7 +339,7 @@ redshift-write-throughput:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows:

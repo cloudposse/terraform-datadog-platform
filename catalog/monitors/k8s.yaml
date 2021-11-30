@@ -24,7 +24,7 @@ k8s-deployment-replica-pod-down:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 5
   threshold_windows: { }
@@ -54,7 +54,7 @@ k8s-pod-restarting:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -85,7 +85,7 @@ k8s-statefulset-replica-down:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -116,7 +116,7 @@ k8s-daemonset-pod-down:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -146,7 +146,7 @@ k8s-crashloopBackOff:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -176,7 +176,7 @@ k8s-multiple-pods-failing:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -207,7 +207,7 @@ k8s-unavailable-deployment-replica:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -242,7 +242,7 @@ k8s-unavailable-statefulset-replica:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -277,7 +277,7 @@ k8s-node-status-unschedulable:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -312,7 +312,7 @@ k8s-imagepullbackoff:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -347,7 +347,7 @@ k8s-high-cpu-usage:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -382,7 +382,7 @@ k8s-high-disk-usage:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -422,7 +422,7 @@ k8s-high-memory-usage:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -462,7 +462,7 @@ k8s-high-filesystem-usage:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -502,7 +502,7 @@ k8s-network-tx-errors:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -542,7 +542,7 @@ k8s-network-rx-errors:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -577,7 +577,7 @@ k8s-node-not-ready:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -612,7 +612,7 @@ k8s-kube-api-down:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -647,7 +647,7 @@ k8s-increased-pod-crash:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -682,7 +682,7 @@ k8s-hpa-errors:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -718,7 +718,7 @@ k8s-pending-pods:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }

@@ -23,7 +23,7 @@ host-io-wait-times:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -57,7 +57,7 @@ host-disk-use:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -91,7 +91,7 @@ host-high-mem-use:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
@@ -125,7 +125,7 @@ host-high-load-avg:
   new_group_delay: 300
   groupby_simple_monitor: false
   renotify_occurrences: 0
-  renotify_statuses: [ "alert" ]
+  renotify_statuses: []
   validate: true
   no_data_timeframe: 10
   threshold_windows: { }
