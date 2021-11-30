@@ -27,6 +27,10 @@ amq-cpu-utilization:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -63,6 +67,10 @@ amq-heap-usage:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -96,6 +104,10 @@ amq-network-in:
   timeout_h: 60
   evaluation_delay: 900
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"
@@ -131,6 +143,10 @@ amq-network-out:
   timeout_h: 60
   evaluation_delay: 900
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"
@@ -166,6 +182,10 @@ amq-current-connections-count:
   timeout_h: 60
   evaluation_delay: 900
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"

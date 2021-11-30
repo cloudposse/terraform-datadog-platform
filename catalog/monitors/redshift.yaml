@@ -24,6 +24,10 @@ redshift-health-status:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -57,6 +61,10 @@ redshift-database-connections:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"
@@ -95,6 +103,10 @@ redshift-cpuutilization:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -131,6 +143,10 @@ redshift-write-latency:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -167,6 +183,10 @@ redshift-disk-space-used:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -200,6 +220,10 @@ redshift-network-receive:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"
@@ -235,6 +259,10 @@ redshift-network-transmit:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"
@@ -270,6 +298,10 @@ redshift-read-throughput:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"
@@ -305,6 +337,10 @@ redshift-write-throughput:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"

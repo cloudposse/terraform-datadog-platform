@@ -22,6 +22,10 @@ k8s-deployment-replica-pod-down:
   timeout_h: 0
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 5
   threshold_windows: { }
   thresholds:
@@ -48,6 +52,10 @@ k8s-pod-restarting:
   timeout_h: 0
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -75,12 +83,15 @@ k8s-statefulset-replica-down:
   timeout_h: 0
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
     warning: 1
     critical: 2
-
 
 k8s-daemonset-pod-down:
   name: "(k8s) DaemonSet Pod is down"
@@ -103,6 +114,10 @@ k8s-daemonset-pod-down:
   timeout_h: 0
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -129,6 +144,10 @@ k8s-crashloopBackOff:
   timeout_h: 0
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -155,6 +174,10 @@ k8s-multiple-pods-failing:
   timeout_h: 0
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -182,6 +205,10 @@ k8s-unavailable-deployment-replica:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -213,6 +240,10 @@ k8s-unavailable-statefulset-replica:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -244,6 +275,10 @@ k8s-node-status-unschedulable:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -275,6 +310,10 @@ k8s-imagepullbackoff:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -306,6 +345,10 @@ k8s-high-cpu-usage:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -337,6 +380,10 @@ k8s-high-disk-usage:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -373,6 +420,10 @@ k8s-high-memory-usage:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -409,6 +460,10 @@ k8s-high-filesystem-usage:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -445,6 +500,10 @@ k8s-network-tx-errors:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -481,6 +540,10 @@ k8s-network-rx-errors:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -512,6 +575,10 @@ k8s-node-not-ready:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -543,6 +610,10 @@ k8s-kube-api-down:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -574,6 +645,10 @@ k8s-increased-pod-crash:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -605,6 +680,10 @@ k8s-hpa-errors:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -637,6 +716,10 @@ k8s-pending-pods:
   timeout_h: 60
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:

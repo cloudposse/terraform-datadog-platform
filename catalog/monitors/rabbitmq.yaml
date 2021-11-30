@@ -24,6 +24,10 @@ rabbitmq-messages-unacknowledged-rate-too-high:
   timeout_h: 0
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: null
   threshold_windows: { }
   thresholds:
@@ -58,6 +62,10 @@ rabbitmq-disk-usage-too-high:
   timeout_h: 0
   evaluation_delay: 60
   new_group_delay: 300
+  groupby_simple_monitor: false
+  renotify_occurrences: 0
+  renotify_statuses: [ "alert" ]
+  validate: true
   no_data_timeframe: null
   threshold_windows: { }
   thresholds:
