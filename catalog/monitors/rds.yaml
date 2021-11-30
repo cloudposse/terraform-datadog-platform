@@ -26,7 +26,7 @@ rds-cpuutilization:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -62,7 +62,7 @@ rds-disk-queue-depth:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -98,7 +98,7 @@ rds-freeable-memory:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -134,7 +134,7 @@ rds-swap-usage:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -170,7 +170,7 @@ rds-database-connections:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"

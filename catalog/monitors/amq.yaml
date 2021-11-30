@@ -26,7 +26,7 @@ amq-cpu-utilization:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -62,7 +62,7 @@ amq-heap-usage:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -95,7 +95,7 @@ amq-network-in:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 900
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"
@@ -130,7 +130,7 @@ amq-network-out:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 900
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"
@@ -165,7 +165,7 @@ amq-current-connections-count:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 900
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"

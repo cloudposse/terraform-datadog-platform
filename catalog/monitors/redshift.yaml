@@ -23,7 +23,7 @@ redshift-health-status:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -56,7 +56,7 @@ redshift-database-connections:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"
@@ -94,7 +94,7 @@ redshift-cpuutilization:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -130,7 +130,7 @@ redshift-write-latency:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -166,7 +166,7 @@ redshift-disk-space-used:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -199,7 +199,7 @@ redshift-network-receive:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"
@@ -234,7 +234,7 @@ redshift-network-transmit:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"
@@ -269,7 +269,7 @@ redshift-read-throughput:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"
@@ -304,7 +304,7 @@ redshift-write-throughput:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows:
     trigger_window: "last_15m"

@@ -8,7 +8,6 @@ variable "datadog_monitors" {
     query                  = string
     tags                   = list(string)
     notify_no_data         = bool
-    new_host_delay         = number
     new_group_delay        = number
     evaluation_delay       = number
     no_data_timeframe      = number

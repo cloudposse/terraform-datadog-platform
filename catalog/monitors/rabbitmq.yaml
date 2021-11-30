@@ -23,7 +23,7 @@ rabbitmq-messages-unacknowledged-rate-too-high:
   renotify_interval: 0
   timeout_h: 0
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: null
   threshold_windows: { }
   thresholds:
@@ -57,7 +57,7 @@ rabbitmq-disk-usage-too-high:
   renotify_interval: 0
   timeout_h: 0
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: null
   threshold_windows: { }
   thresholds:

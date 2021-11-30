@@ -21,7 +21,7 @@ k8s-deployment-replica-pod-down:
   renotify_interval: 0
   timeout_h: 0
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 5
   threshold_windows: { }
   thresholds:
@@ -47,7 +47,7 @@ k8s-pod-restarting:
   renotify_interval: 0
   timeout_h: 0
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -74,7 +74,7 @@ k8s-statefulset-replica-down:
   renotify_interval: 0
   timeout_h: 0
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -102,7 +102,7 @@ k8s-daemonset-pod-down:
   renotify_interval: 0
   timeout_h: 0
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -128,7 +128,7 @@ k8s-crashloopBackOff:
   renotify_interval: 0
   timeout_h: 0
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -154,7 +154,7 @@ k8s-multiple-pods-failing:
   renotify_interval: 0
   timeout_h: 0
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -181,7 +181,7 @@ k8s-unavailable-deployment-replica:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -212,7 +212,7 @@ k8s-unavailable-statefulset-replica:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -243,7 +243,7 @@ k8s-node-status-unschedulable:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -274,7 +274,7 @@ k8s-imagepullbackoff:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -305,7 +305,7 @@ k8s-high-cpu-usage:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -336,7 +336,7 @@ k8s-high-disk-usage:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -372,7 +372,7 @@ k8s-high-memory-usage:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -408,7 +408,7 @@ k8s-high-filesystem-usage:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -444,7 +444,7 @@ k8s-network-tx-errors:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -480,7 +480,7 @@ k8s-network-rx-errors:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -511,7 +511,7 @@ k8s-node-not-ready:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -542,7 +542,7 @@ k8s-kube-api-down:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -573,7 +573,7 @@ k8s-increased-pod-crash:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -604,7 +604,7 @@ k8s-hpa-errors:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
@@ -636,7 +636,7 @@ k8s-pending-pods:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_host_delay: 300
+  new_group_delay: 300
   no_data_timeframe: 10
   threshold_windows: { }
   thresholds:
