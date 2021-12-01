@@ -20,6 +20,7 @@ host-io-wait-times:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
+  new_host_delay: 300
   new_group_delay: 0
   groupby_simple_monitor: false
   renotify_occurrences: 0
@@ -54,6 +55,7 @@ host-disk-use:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
+  new_host_delay: 300
   new_group_delay: 0
   groupby_simple_monitor: false
   renotify_occurrences: 0
@@ -88,6 +90,7 @@ host-high-mem-use:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
+  new_host_delay: 300
   new_group_delay: 0
   groupby_simple_monitor: false
   renotify_occurrences: 0
@@ -122,6 +125,7 @@ host-high-load-avg:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
+  new_host_delay: 300
   new_group_delay: 0
   groupby_simple_monitor: false
   renotify_occurrences: 0

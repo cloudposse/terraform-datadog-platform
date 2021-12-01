@@ -26,6 +26,10 @@ variable "datadog_monitors" {
     priority               = number
     groupby_simple_monitor = bool
     validate               = bool
+
+    # TODO: deprecate in favor of new_group_delay once the options are fully clarified
+    # See https://github.com/DataDog/terraform-provider-datadog/issues/1292
+    new_host_delay = number
   }))
   description = "Map of Datadog monitor configurations. See catalog for examples"
 }
