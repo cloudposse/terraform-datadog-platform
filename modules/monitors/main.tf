@@ -62,7 +62,7 @@ resource "datadog_monitor" "default" {
   # if a key is supplied without a value (null), it will render "key" as a tag
   #   tags:
   #     key = null
-  tags = {
+  tags = [
     for tagk, tagv in lookup(each.value, "tags", module.this.tags) :
     tagv != null ? format("%s:%s", tagk, tagv) : tagk
   ]
