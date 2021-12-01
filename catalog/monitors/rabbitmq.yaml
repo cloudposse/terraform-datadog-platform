@@ -23,7 +23,7 @@ rabbitmq-messages-unacknowledged-rate-too-high:
   renotify_interval: 0
   timeout_h: 0
   evaluation_delay: 60
-  new_group_delay: 300
+  new_group_delay: 0
   groupby_simple_monitor: false
   renotify_occurrences: 0
   renotify_statuses: []
@@ -61,7 +61,7 @@ rabbitmq-disk-usage-too-high:
   renotify_interval: 0
   timeout_h: 0
   evaluation_delay: 60
-  new_group_delay: 300
+  new_group_delay: 0
   groupby_simple_monitor: false
   renotify_occurrences: 0
   renotify_statuses: []

@@ -23,7 +23,7 @@ redshift-health-status:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_group_delay: 300
+  new_group_delay: 0
   groupby_simple_monitor: false
   renotify_occurrences: 0
   renotify_statuses: []
@@ -60,7 +60,7 @@ redshift-database-connections:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_group_delay: 300
+  new_group_delay: 0
   groupby_simple_monitor: false
   renotify_occurrences: 0
   renotify_statuses: []
@@ -102,7 +102,7 @@ redshift-cpuutilization:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_group_delay: 300
+  new_group_delay: 0
   groupby_simple_monitor: false
   renotify_occurrences: 0
   renotify_statuses: []
@@ -142,7 +142,7 @@ redshift-write-latency:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_group_delay: 300
+  new_group_delay: 0
   groupby_simple_monitor: false
   renotify_occurrences: 0
   renotify_statuses: []
@@ -182,7 +182,7 @@ redshift-disk-space-used:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_group_delay: 300
+  new_group_delay: 0
   groupby_simple_monitor: false
   renotify_occurrences: 0
   renotify_statuses: []
@@ -219,7 +219,7 @@ redshift-network-receive:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_group_delay: 300
+  new_group_delay: 0
   groupby_simple_monitor: false
   renotify_occurrences: 0
   renotify_statuses: []
@@ -258,7 +258,7 @@ redshift-network-transmit:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_group_delay: 300
+  new_group_delay: 0
   groupby_simple_monitor: false
   renotify_occurrences: 0
   renotify_statuses: []
@@ -297,7 +297,7 @@ redshift-read-throughput:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_group_delay: 300
+  new_group_delay: 0
   groupby_simple_monitor: false
   renotify_occurrences: 0
   renotify_statuses: []
@@ -336,7 +336,7 @@ redshift-write-throughput:
   renotify_interval: 60
   timeout_h: 60
   evaluation_delay: 60
-  new_group_delay: 300
+  new_group_delay: 0
   groupby_simple_monitor: false
   renotify_occurrences: 0
   renotify_statuses: []
