@@ -14,7 +14,8 @@ rds-cpuutilization:
     ({dbinstanceidentifier}) CPU Utilization above 90%
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -50,7 +51,8 @@ rds-disk-queue-depth:
     ({dbinstanceidentifier}) Disk queue depth above 64
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -86,7 +88,8 @@ rds-freeable-memory:
     ({dbinstanceidentifier}) Freeable memory below 256 MB
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -122,7 +125,8 @@ rds-swap-usage:
     ({dbinstanceidentifier}) Swap usage above 256 MB
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -158,7 +162,8 @@ rds-database-connections:
     ({dbinstanceidentifier}) Anomaly of a large variance in RDS connection count
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true

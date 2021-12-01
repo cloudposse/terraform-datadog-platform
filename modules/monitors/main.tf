@@ -1,5 +1,6 @@
 locals {
-  enabled    = module.this.enabled
+  enabled = module.this.enabled
+
   alert_tags = local.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
 }
 
@@ -54,5 +55,11 @@ resource "datadog_monitor" "default" {
   # Use `locked`` only if `restricted_roles` is not provided
   locked = try(var.restricted_roles_map[each.key], null) == null ? lookup(each.value, "locked", null) : null
 
-  tags = lookup(each.value, "tags", module.this.tags)
+  # convert terraform tags map to datadog tags map
+  # if a key is supplied with a value i.e. { key = value } it will render "key:value" as a tag
+  # if a key is supplied without a value i.e. { key = null } it will render "key" as a tag
+  tags = [
+    for tagk, tagv in lookup(each.value, "tags", module.this.tags) :
+    tagv != null ? format("%s:%s", tagk, tagv) : tagk
+  ]
 }

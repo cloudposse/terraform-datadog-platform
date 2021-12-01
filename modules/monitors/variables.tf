@@ -6,7 +6,7 @@ variable "datadog_monitors" {
     message             = string
     escalation_message  = string
     query               = string
-    tags                = list(string)
+    tags                = map(string)
     notify_no_data      = bool
     new_host_delay      = number
     evaluation_delay    = number
