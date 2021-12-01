@@ -14,7 +14,8 @@ amq-cpu-utilization:
     ({broker}) - CPU Utilization above 90%
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -55,7 +56,8 @@ amq-heap-usage:
     ({broker}) - JVM heap usage above 95%
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -93,7 +95,8 @@ amq-network-in:
     ({broker}) - Anomaly of a large variance in network-in bytes
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -133,7 +136,8 @@ amq-network-out:
     ({broker}) - Anomaly of a large variance in network-out bytes
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -173,7 +177,8 @@ amq-current-connections-count:
     ({broker}) - Anomaly of a large variance in broker connections
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true

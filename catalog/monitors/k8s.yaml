@@ -9,7 +9,8 @@ k8s-deployment-replica-pod-down:
   message: |
     ({{cluster_name.name}}) More than one Deployments Replica's pods are down on {{deployment.name}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -40,7 +41,8 @@ k8s-pod-restarting:
   message: |
     ({{cluster_name.name}}) pod {{pod_name.name}} is restarting multiple times on {{kube_namespace.name}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -72,7 +74,8 @@ k8s-statefulset-replica-down:
   message: |
     ({{cluster_name.name}} {{statefulset.name}}) More than one StatefulSet Replica's pods are down on {{kube_namespace.name}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -104,7 +107,8 @@ k8s-daemonset-pod-down:
   message: |
     ({{cluster_name.name}} {{daemonset.name}}) One or more DaemonSet pods are down on {{kube_namespace.name}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -135,7 +139,8 @@ k8s-crashloopBackOff:
   message: |
     ({{cluster_name.name}}) pod {{pod_name.name}} is CrashloopBackOff on {{kube_namespace.name}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -166,7 +171,8 @@ k8s-multiple-pods-failing:
   message: |
     ({{cluster_name.name}}) More than ten pods are failing on {{kube_namespace.name}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -198,7 +204,8 @@ k8s-unavailable-deployment-replica:
   message: |
     ({{cluster_name.name}}) Detected unavailable Deployment replicas for longer than 10 minutes on {{kube_namespace.name}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -234,7 +241,8 @@ k8s-unavailable-statefulset-replica:
   message: |
     ({{cluster_name.name}}) Detected unavailable Statefulset replicas for longer than 10 minutes on {{kube_namespace.name}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -270,7 +278,8 @@ k8s-node-status-unschedulable:
   message: |
     More than 20% of nodes are unschedulable on ({{cluster_name}} cluster). \n Keep in mind that this might be expected based on your infrastructure.
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -306,7 +315,8 @@ k8s-imagepullbackoff:
   message: |
     Pod {{pod_name.name}} is ImagePullBackOff on namespace {{kube_namespace.name}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -342,7 +352,8 @@ k8s-high-cpu-usage:
   message: |
     ({{host.cluster_name}}) High CPU usage for the last 10 minutes on {{host.name}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -378,7 +389,8 @@ k8s-high-disk-usage:
   message: |
     ({{cluster_name.name}}) High disk usage detected on {{host.name}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -419,7 +431,8 @@ k8s-high-memory-usage:
     {{cluster_name.name}} memory usage greater than 90% for 10 minutes
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -460,7 +473,8 @@ k8s-high-filesystem-usage:
     {{cluster_name.name}} filesystem usage greater than 90% for 10 minutes
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -501,7 +515,8 @@ k8s-network-tx-errors:
     {{cluster_name.name}} network TX (send) errors occurring 100 times per second
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -542,7 +557,8 @@ k8s-network-rx-errors:
     {{cluster_name.name}} network RX (receive) errors occurring 100 times per second
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -578,7 +594,8 @@ k8s-node-not-ready:
   message: |
     ({{host.cluster_name}} {{host.name}} {{host.region}}) Node is reporting 'Not Ready' status
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -614,7 +631,8 @@ k8s-kube-api-down:
   message: |
     ({{cluster_name.name}}) KubeAPI is down
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -650,7 +668,8 @@ k8s-increased-pod-crash:
   message: |-
     ({{cluster_name.name}} {{kube_namespace.name}} {{pod.name}}) has crashed repeatedly over the last hour
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: false
@@ -686,7 +705,8 @@ k8s-hpa-errors:
   message: |-
     ({{event.tags.cluster_name}}) A high number of hpa failures (> ({{threshold}}) are occurring.
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: false
@@ -723,7 +743,8 @@ k8s-pending-pods:
     ({{cluster_name.name}}) There has been at least 1 pod Pending for 30 minutes.
     There are currently ({{value}}) pods Pending.
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: false

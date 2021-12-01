@@ -11,7 +11,8 @@ redshift-health-status:
     ({clusteridentifier}) Redshift cluster is failing health checks
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -49,7 +50,8 @@ redshift-database-connections:
     ({clusteridentifier}) Anomaly of a large variance in Redshift connection count
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -92,7 +94,8 @@ redshift-cpuutilization:
     ({clusteridentifier}) CPU Utilization above 90%
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -133,7 +136,8 @@ redshift-write-latency:
     ({clusteridentifier}) Redshift write latency is > 15s
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -174,7 +178,8 @@ redshift-disk-space-used:
     ({clusteridentifier}) Redshift disk used is > 85%
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -212,7 +217,8 @@ redshift-network-receive:
     ({clusteridentifier}) Anomaly of a large variance in Redshift network traffic received
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -252,7 +258,8 @@ redshift-network-transmit:
     ({clusteridentifier}) Anomaly of a large variance in Redshift network traffic sent
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -292,7 +299,8 @@ redshift-read-throughput:
     ({clusteridentifier}) Anomaly of a large variance in Redshift read throughput
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
@@ -332,7 +340,8 @@ redshift-write-throughput:
     ({clusteridentifier}) Anomaly of a large variance in Redshift write throughput
     {{/is_alert}}
   escalation_message: ""
-  tags: [ "ManagedBy:Terraform" ]
+  tags:
+    ManagedBy: Terraform
   priority: 3
   notify_no_data: false
   notify_audit: true
