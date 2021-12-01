@@ -1,7 +1,7 @@
 locals {
   monitor_files = flatten([for p in var.monitor_paths : fileset(path.module, p)])
   monitor_list  = [for f in local.monitor_files : yamldecode(file(f))]
-  monitor_map   = merge(local.monitor...)
+  monitor_map   = merge(local.monitor_list...)
 }
 
 module "datadog_monitors" {
