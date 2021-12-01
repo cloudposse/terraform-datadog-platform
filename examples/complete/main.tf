@@ -1,17 +1,13 @@
-module "monitor_configs" {
-  source  = "cloudposse/config/yaml"
-  version = "0.8.1"
-
-  map_config_local_base_path = path.module
-  map_config_paths           = var.monitor_paths
-
-  context = module.this.context
+locals {
+  monitor_files = flatten([for p in var.monitor_paths : fileset(path.module, p)])
+  monitor_list  = [for f in local.monitor_files : yamldecode(file(f))]
+  monitor_map   = merge(local.monitor...)
 }
 
 module "datadog_monitors" {
   source = "../../modules/monitors"
 
-  datadog_monitors     = module.monitor_configs.map_configs
+  datadog_monitors     = local.monitor_map
   alert_tags           = var.alert_tags
   alert_tags_separator = var.alert_tags_separator
 
