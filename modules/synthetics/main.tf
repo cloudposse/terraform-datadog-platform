@@ -18,6 +18,13 @@ resource "datadog_synthetics_test" "default" {
   # Optional
   message = lookup(each.value, "message", null) != null ? format("%s%s", each.value.message, local.alert_tags) : null
   subtype = lookup(each.value, "subtype", null)
+  # convert terraform tags map to datadog tags list
+  # if a key is supplied with a value, it will render "key:value" as a tag
+  #   tags:
+  #     key = value
+  # if a key is supplied without a value (null), it will render "key" as a tag
+  #   tags:
+  #     key = null
   tags = [
     for tagk, tagv in lookup(each.value, "tags", module.this.tags) :
     tagv != null ? format("%s:%s", tagk, tagv) : tagk
