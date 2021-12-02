@@ -19,11 +19,6 @@ variable "alert_tags_separator" {
 variable "locations" {
   type        = list(string)
   description = "Array of locations used to run synthetic tests"
-  default     = []
-}
-
-variable "public_locations" {
-  type        = list(string)
-  description = "Array of locations used to run synthetic tests, `[\"all\"]` runs from every supported DataDog Location"
   default     = ["all"]
 }
+
