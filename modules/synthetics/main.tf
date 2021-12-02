@@ -5,6 +5,8 @@ locals {
   alert_tags         = local.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
   datadog_synthetics = { for k, v in var.datadog_synthetics : k => v if local.enabled }
 
+#  https://docs.datadoghq.com/api/latest/synthetics/#get-all-locations-public-and-private
+#    curl -X GET "https://api.datadoghq.com/api/v1/synthetics/locations" -H "Content-Type: application/json" -H "DD-API-KEY: ${DD_API_KEY}" -H "DD-APPLICATION-KEY: ${DD_APP_KEY}" | jq -r '.locations[] | .id'
   all_public_locations = [
     "aws:ap-northeast-1",
     "aws:ap-northeast-2",
