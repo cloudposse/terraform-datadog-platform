@@ -27,9 +27,9 @@ complex:
   type: api
   subtype: http
   tags:
-    - "ManagedBy:Terraform"
+    ManagedBy: Terraform
   locations:
-    - "aws:us-east-2"
+    - "all"
   status: "live"
   request_definition:
     url: "https://cloudposse.com"
