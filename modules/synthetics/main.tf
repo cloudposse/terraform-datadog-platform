@@ -16,9 +16,12 @@ resource "datadog_synthetics_test" "default" {
   locations = try(each.value.locations, var.locations)
 
   # Optional
-  message         = lookup(each.value, "message", null) != null ? format("%s%s", each.value.message, local.alert_tags) : null
-  subtype         = lookup(each.value, "subtype", null)
-  tags            = lookup(each.value, "tags", module.this.tags)
+  message = lookup(each.value, "message", null) != null ? format("%s%s", each.value.message, local.alert_tags) : null
+  subtype = lookup(each.value, "subtype", null)
+  tags = [
+    for tagk, tagv in lookup(each.value, "tags", module.this.tags) :
+    tagv != null ? format("%s:%s", tagk, tagv) : tagk
+  ]
   request_headers = lookup(each.value, "request_headers", null)
   request_query   = lookup(each.value, "request_query", null)
   set_cookie      = lookup(each.value, "set_cookie", null)
