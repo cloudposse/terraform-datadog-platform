@@ -21,3 +21,9 @@ variable "locations" {
   description = "Array of locations used to run synthetic tests"
   default     = []
 }
+
+variable "public_locations" {
+  type        = list(string)
+  description = "Array of locations used to run synthetic tests, `[\"all\"]` runs from every supported DataDog Location"
+  default     = []
+}
