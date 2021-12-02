@@ -6,7 +6,7 @@ locals {
   datadog_synthetics = { for k, v in var.datadog_synthetics : k => v if local.enabled }
 
   all_public_locations = sort(keys(data.datadog_synthetics_locations.public_locations.locations))
-  public_locations = contains(split(",", lower(join(",", var.public_locations))), "all") ? local.all_public_locations : var.public_locations
+  public_locations     = contains(split(",", lower(join(",", var.public_locations))), "all") ? local.all_public_locations : var.public_locations
 
 }
 
