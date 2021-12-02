@@ -4,7 +4,7 @@ simple:
   type: api
   subtype: http
   tags:
-    - "ManagedBy:Terraform"
+    ManagedBy: Terraform
   locations:
     - "aws:us-west-2"
   status: "live"

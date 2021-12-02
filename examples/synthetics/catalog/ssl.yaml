@@ -4,7 +4,7 @@ ssl-test:
   type: api
   subtype: ssl
   tags:
-    - "ManagedBy:Terraform"
+    ManagedBy: Terraform
   locations:
     - "aws:us-west-2"
   status: "live"

@@ -16,9 +16,19 @@ resource "datadog_synthetics_test" "default" {
   locations = try(each.value.locations, var.locations)
 
   # Optional
-  message         = lookup(each.value, "message", null) != null ? format("%s%s", each.value.message, local.alert_tags) : null
-  subtype         = lookup(each.value, "subtype", null)
-  tags            = lookup(each.value, "tags", module.this.tags)
+  message = lookup(each.value, "message", null) != null ? format("%s%s", each.value.message, local.alert_tags) : null
+  subtype = lookup(each.value, "subtype", null)
+  # convert terraform tags map to datadog tags list
+  # if a key is supplied with a value, it will render "key:value" as a tag
+  #   tags:
+  #     key = value
+  # if a key is supplied without a value (null), it will render "key" as a tag
+  #   tags:
+  #     key = null
+  tags = [
+    for tagk, tagv in lookup(each.value, "tags", module.this.tags) :
+    tagv != null ? format("%s:%s", tagk, tagv) : tagk
+  ]
   request_headers = lookup(each.value, "request_headers", null)
   request_query   = lookup(each.value, "request_query", null)
   set_cookie      = lookup(each.value, "set_cookie", null)
