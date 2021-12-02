@@ -17,3 +17,7 @@ output "datadog_synthetic_tests" {
   value       = datadog_synthetics_test.default
   description = "The synthetic tests created in DataDog"
 }
+
+output "test" {
+  value = local.all_public_locations
+}

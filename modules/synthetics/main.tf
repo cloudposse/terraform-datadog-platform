@@ -5,30 +5,12 @@ locals {
   alert_tags         = local.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
   datadog_synthetics = { for k, v in var.datadog_synthetics : k => v if local.enabled }
 
-#  https://docs.datadoghq.com/api/latest/synthetics/#get-all-locations-public-and-private
-#    curl -X GET "https://api.datadoghq.com/api/v1/synthetics/locations" -H "Content-Type: application/json" -H "DD-API-KEY: ${DD_API_KEY}" -H "DD-APPLICATION-KEY: ${DD_APP_KEY}" | jq -r '.locations[] | .id'
-  all_public_locations = [
-    "aws:ap-northeast-1",
-    "aws:ap-northeast-2",
-    "aws:ap-south-1",
-    "aws:ap-southeast-1",
-    "aws:ap-southeast-2",
-    "aws:ca-central-1",
-    "aws:eu-central-1",
-    "aws:eu-north-1",
-    "aws:eu-west-1",
-    "aws:eu-west-2",
-    "aws:eu-west-3",
-    "aws:sa-east-1",
-    "aws:us-east-2",
-    "aws:us-west-1",
-    "aws:us-west-2",
-    "azure:eastus"
-  ]
-
+  all_public_locations = sort(keys(data.datadog_synthetics_locations.public_locations.locations))
   public_locations = contains(split(",", lower(join(",", var.public_locations))), "all") ? local.all_public_locations : var.public_locations
 
 }
+
+data "datadog_synthetics_locations" "public_locations" {}
 
 
 resource "datadog_synthetics_test" "default" {
@@ -38,7 +20,7 @@ resource "datadog_synthetics_test" "default" {
   name      = each.value.name
   type      = each.value.type
   status    = each.value.status
-  locations = coalescelist(concat(try(each.value.locations, var.locations), local.public_locations), local.all_public_locations)
+  locations = concat(try(each.value.locations, var.locations), local.public_locations)
 
   # Optional
   message = lookup(each.value, "message", null) != null ? format("%s%s", each.value.message, local.alert_tags) : null
