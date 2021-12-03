@@ -4,16 +4,24 @@ locals {
   enabled            = module.this.enabled
   alert_tags         = local.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
   datadog_synthetics = { for k, v in var.datadog_synthetics : k => v if local.enabled }
+
+  all_public_locations = sort(keys(data.datadog_synthetics_locations.public_locations.locations))
 }
+
+data "datadog_synthetics_locations" "public_locations" {}
+
 
 resource "datadog_synthetics_test" "default" {
   for_each = local.datadog_synthetics
 
   # Required
-  name      = each.value.name
-  type      = each.value.type
-  status    = each.value.status
-  locations = try(each.value.locations, var.locations)
+  name   = each.value.name
+  type   = each.value.type
+  status = each.value.status
+
+  locations = distinct([for loc in concat(concat(try(each.value.locations, []), var.locations), contains(split(",", lower(join(",", concat(try(each.value.locations, []), var.locations)))), "all") ? local.all_public_locations : []) : loc
+    if loc != "all"
+  ])
 
   # Optional
   message = lookup(each.value, "message", null) != null ? format("%s%s", each.value.message, local.alert_tags) : null
