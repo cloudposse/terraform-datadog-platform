@@ -19,7 +19,9 @@ resource "datadog_synthetics_test" "default" {
   type   = each.value.type
   status = each.value.status
 
-  locations = contains(split(",", lower(join(",", try(each.value.locations, var.locations)))), "all") ? local.all_public_locations : try(each.value.locations, var.locations)
+  locations = distinct([for loc in concat(concat(try(each.value.locations, []), var.locations), contains(split(",", lower(join(",", concat(try(each.value.locations, []), var.locations)))), "all") ? local.all_public_locations : []) : loc
+    if loc != "all"
+  ])
 
   # Optional
   message = lookup(each.value, "message", null) != null ? format("%s%s", each.value.message, local.alert_tags) : null
