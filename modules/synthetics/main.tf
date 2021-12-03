@@ -6,8 +6,6 @@ locals {
   datadog_synthetics = { for k, v in var.datadog_synthetics : k => v if local.enabled }
 
   all_public_locations = sort(keys(data.datadog_synthetics_locations.public_locations.locations))
-  locations            = contains(split(",", lower(join(",", var.locations))), "all") ? local.all_public_locations : var.locations
-
 }
 
 data "datadog_synthetics_locations" "public_locations" {}
@@ -20,7 +18,8 @@ resource "datadog_synthetics_test" "default" {
   name      = each.value.name
   type      = each.value.type
   status    = each.value.status
-  locations = try(each.value.locations, local.locations)
+
+  locations =  contains(split(",", lower(join(",", try(each.value.locations, var.locations)))), "all") ? local.all_public_locations : try(each.value.locations, var.locations)
 
   # Optional
   message = lookup(each.value, "message", null) != null ? format("%s%s", each.value.message, local.alert_tags) : null
