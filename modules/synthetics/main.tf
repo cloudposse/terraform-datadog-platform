@@ -15,11 +15,11 @@ resource "datadog_synthetics_test" "default" {
   for_each = local.datadog_synthetics
 
   # Required
-  name      = each.value.name
-  type      = each.value.type
-  status    = each.value.status
+  name   = each.value.name
+  type   = each.value.type
+  status = each.value.status
 
-  locations =  contains(split(",", lower(join(",", try(each.value.locations, var.locations)))), "all") ? local.all_public_locations : try(each.value.locations, var.locations)
+  locations = contains(split(",", lower(join(",", try(each.value.locations, var.locations)))), "all") ? local.all_public_locations : try(each.value.locations, var.locations)
 
   # Optional
   message = lookup(each.value, "message", null) != null ? format("%s%s", each.value.message, local.alert_tags) : null
