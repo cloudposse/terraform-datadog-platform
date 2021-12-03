@@ -12,6 +12,4 @@ module "datadog_synthetics" {
   alert_tags_separator = var.alert_tags_separator
 
   context = module.this.context
-
-  locations =
 }
