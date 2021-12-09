@@ -36,7 +36,9 @@ The module consists of the following submodules:
   - [synthetics](modules/synthetics) - to provision Datadog [synthetics](https://docs.datadoghq.com/synthetics/)
   - [permissions](modules/permissions) - to look up all available Datadog [permissions](https://docs.datadoghq.com/account_management/rbac/permissions/)
   - [roles](modules/roles) - to provision Datadog [roles](https://docs.datadoghq.com/account_management/rbac)
+  - [slo](modules/slo) - to provision Datadog [Service Level Objectives](https://docs.datadoghq.com/monitors/service_level_objectives/)
   - [child_organization](modules/child_organization) - to provision Datadog [child organizations](https://docs.datadoghq.com/account_management/multi_organization/)
+  - [organization_settings](modules/organization_settings) - to manage Datadog organization's settings
 
 __Notes on Datadog child organizations:__
 
@@ -92,7 +94,11 @@ The [examples/synthetics](examples/synthetics) shows how to provision synthetics
 
 The [examples/rbac](examples/rbac) shows how to use custom RBAC to provision Datadog roles with permissions and assign roles to monitors.
 
+The [examples/slo](examples/slo) shows how to provision Service Level Objectives on Datadog for SLO monitoring.
+
 The [examples/child_organization](examples/child_organization) shows how to provision Datadog child organizations.
+
+The [examples/organization_settings](examples/organization_settings) shows how to provision Datadog organization settings.
 
 
 ## Security & Compliance [<img src="https://cloudposse.com/wp-content/uploads/2020/11/bridgecrew.svg" width="250" align="right" />](https://bridgecrew.io/)

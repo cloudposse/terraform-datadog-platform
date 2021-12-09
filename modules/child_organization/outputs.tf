@@ -19,7 +19,7 @@ output "user" {
 }
 
 output "settings" {
-  value       = try(datadog_child_organization.default[0].settings, [])
+  value       = try(datadog_child_organization.default[0].settings, {})
   description = "Organization settings"
 }
 
