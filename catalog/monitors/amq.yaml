@@ -3,6 +3,7 @@
 
 amq-cpu-utilization:
   name: "(AMQ) CPU Utilization above 90%"
+  enabled: true
   type: metric alert
   query: |
     avg(last_15m):avg:aws.amazonmq.cpu_utilization{*} by {broker} > 90
@@ -45,6 +46,7 @@ amq-cpu-utilization:
 
 amq-heap-usage:
   name: "(AMQ) JVM heap usage above 95%"
+  enabled: true
   type: metric alert
   query: |
     avg(last_15m):avg:aws.amazonmq.heap_usage{*} by {broker} > 95
@@ -87,6 +89,7 @@ amq-heap-usage:
 
 amq-network-in:
   name: "(AMQ) Anomaly of a large variance in network-in bytes"
+  enabled: true
   type: metric alert
   query: |
     avg(last_4h):anomalies(avg:aws.amazonmq.network_in{*} by {broker}, 'agile', 2, direction='both', alert_window='last_15m', interval=60, count_default_zero='true', seasonality='hourly') >= 1
@@ -128,6 +131,7 @@ amq-network-in:
 
 amq-network-out:
   name: "(AMQ) Anomaly of a large variance in network-out bytes"
+  enabled: true
   type: metric alert
   query: |
     avg(last_4h):anomalies(avg:aws.amazonmq.network_out{*} by {broker}, 'agile', 2, direction='both', alert_window='last_15m', interval=60, count_default_zero='true', seasonality='hourly') >= 1
@@ -169,6 +173,7 @@ amq-network-out:
 
 amq-current-connections-count:
   name: "(AMQ) Anomaly of a large variance in broker connections"
+  enabled: true
   type: metric alert
   query: |
     avg(last_4h):anomalies(avg:aws.amazonmq.current_connections_count{*}.as_count(), 'basic', 2, direction='both', alert_window='last_15m', interval=60, count_default_zero='true') >= 1
