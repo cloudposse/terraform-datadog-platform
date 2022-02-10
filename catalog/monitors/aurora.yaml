@@ -3,7 +3,6 @@
 
 aurora-replica-lag:
   name: "(RDS) Aurora Replica Lag Detected"
-  enabled: true
   type: metric alert
   query: |
     min(last_15m):min:aws.rds.aurora_replica_lag{*} by {dbinstanceidentifier} > 1000

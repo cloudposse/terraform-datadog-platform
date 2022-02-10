@@ -3,7 +3,6 @@
 
 redshift-health-status:
   name: (Redshift) Health Status
-  enabled: true
   type: metric alert
   query: |
     min(last_1h):min:aws.redshift.health_status{*} by {clusteridentifier} <= 0
@@ -43,7 +42,6 @@ redshift-health-status:
 
 redshift-database-connections:
   name: (Redshift) Anomaly of a large variance in Redshift connection count
-  enabled: true
   type: metric alert
   query: |
     avg(last_4h):anomalies(avg:aws.redshift.database_connections{*} by {clusteridentifier}, 'basic', 2, direction='both', alert_window='last_15m', interval=60, count_default_zero='true') >= 1
@@ -85,7 +83,6 @@ redshift-database-connections:
 
 redshift-cpuutilization:
   name: (Redshift) CPU Utilization above 90%
-  enabled: true
   type: metric alert
   query: |
     avg(last_15m):avg:aws.redshift.cpuutilization{*} by {clusteridentifier} > 90
@@ -128,7 +125,6 @@ redshift-cpuutilization:
 
 redshift-write-latency:
   name: (Redshift) Write latency/cluster
-  enabled: true
   type: metric alert
   query: |
     avg(last_15m):avg:aws.redshift.write_latency{*} by {clusteridentifier} > 15
@@ -171,7 +167,6 @@ redshift-write-latency:
 
 redshift-disk-space-used:
   name: (Redshift) Percent disk space used/cluster
-  enabled: true
   type: metric alert
   query: |
     avg(last_15m):avg:aws.redshift.percentage_disk_space_used{*} by {clusteridentifier} > 85
@@ -214,7 +209,6 @@ redshift-disk-space-used:
 
 redshift-network-receive:
   name: (Redshift) Network throughput - received
-  enabled: true
   type: metric alert
   query: |
     avg(last_4h):anomalies(avg:aws.redshift.network_receive_throughput{*} by {clusteridentifier}.as_count(), 'agile', 2, direction='both', alert_window='last_15m', interval=60, count_default_zero='true', seasonality='hourly') >= 1
@@ -256,7 +250,6 @@ redshift-network-receive:
 
 redshift-network-transmit:
   name: (Redshift) Network throughput - sent
-  enabled: true
   type: metric alert
   query: |
     avg(last_4h):anomalies(avg:aws.redshift.network_transmit_throughput{*} by {clusteridentifier}.as_count(), 'agile', 2, direction='both', alert_window='last_15m', interval=60, count_default_zero='true', seasonality='hourly') >= 1
@@ -298,7 +291,6 @@ redshift-network-transmit:
 
 redshift-read-throughput:
   name: (Redshift) Read throughput/cluster
-  enabled: true
   type: metric alert
   query: |
     avg(last_4h):anomalies(avg:aws.redshift.read_throughput{*} by {clusteridentifier}.as_count(), 'agile', 2, direction='both', alert_window='last_15m', interval=60, count_default_zero='true', seasonality='hourly') >= 1
@@ -340,7 +332,6 @@ redshift-read-throughput:
 
 redshift-write-throughput:
   name: (Redshift) Write throughput/cluster
-  enabled: true
   type: metric alert
   query: |
     avg(last_4h):anomalies(avg:aws.redshift.write_throughput{*} by {clusteridentifier}.as_count(), 'agile', 2, direction='both', alert_window='last_15m', interval=60, count_default_zero='true', seasonality='hourly') >= 1

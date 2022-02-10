@@ -3,7 +3,6 @@
 
 ec2-failed-status-check:
   name: "(EC2) Failed Status Check"
-  enabled: true
   type: metric alert
   query: |
     avg(last_10m):avg:aws.ec2.status_check_failed{*} by {instance_id} > 0

@@ -3,7 +3,6 @@
 
 rds-cpuutilization:
   name: "(RDS) CPU Utilization above 90%"
-  enabled: true
   type: metric alert
   query: |
     avg(last_15m):avg:aws.rds.cpuutilization{*} by {dbinstanceidentifier} > 90
@@ -46,7 +45,6 @@ rds-cpuutilization:
 
 rds-disk-queue-depth:
   name: "(RDS) Disk queue depth above 64"
-  enabled: true
   type: metric alert
   query: |
     avg(last_15m):avg:aws.rds.disk_queue_depth{*} by {dbinstanceidentifier} > 64
@@ -89,7 +87,6 @@ rds-disk-queue-depth:
 
 rds-freeable-memory:
   name: "(RDS) Freeable memory below 256 MB"
-  enabled: true
   type: metric alert
   query: |
     avg(last_5m):avg:aws.rds.freeable_memory{*} < 256000000
@@ -132,7 +129,6 @@ rds-freeable-memory:
 
 rds-swap-usage:
   name: "(RDS) Swap usage above 256 MB"
-  enabled: true
   type: metric alert
   query: |
     avg(last_15m):avg:aws.rds.swap_usage{*} by {dbinstanceidentifier} > 256000000
@@ -175,7 +171,6 @@ rds-swap-usage:
 
 rds-database-connections:
   name: "(RDS) Anomaly of a large variance in RDS connection count"
-  enabled: true
   type: metric alert
   query: |
     avg(last_4h):anomalies(avg:aws.rds.database_connections{*}, 'basic', 2, direction='both', alert_window='last_15m', interval=60, count_default_zero='true') >= 1
