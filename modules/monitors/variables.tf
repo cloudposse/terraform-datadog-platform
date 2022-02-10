@@ -1,6 +1,7 @@
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor
 variable "datadog_monitors" {
   type = map(object({
+    enabled                = bool
     name                   = string
     type                   = string
     message                = string
