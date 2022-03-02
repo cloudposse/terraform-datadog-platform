@@ -4,9 +4,9 @@ variable "datadog_slos" {
     type = string
 
     thresholds = list(object({
-      target          = string
-      timeframe       = string
-      warning         = string
+      target    = string
+      timeframe = string
+      warning   = string
     }))
 
     query = map(any)

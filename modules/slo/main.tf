@@ -72,7 +72,7 @@ resource "datadog_service_level_objective" "metric_slo" {
     content {
       target    = lookup(thresholds.value, "target", null)
       timeframe = lookup(thresholds.value, "timeframe", null)
-      warning         = lookup(thresholds.value, "warning", null)
+      warning   = lookup(thresholds.value, "warning", null)
     }
   }
 
