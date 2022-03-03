@@ -13,15 +13,11 @@ synthetics-slo:
   validate: true
   thresholds:
     - target: "99.5"
-      target_display: "99.50"
       timeframe: "7d"
       warning: "99.9"
-      warning_display: "99.90"
     - target: "99"
-      target_display: "99.00"
       timeframe: "30d"
       warning: "99.5"
-      warning_display: "99.50"
   groups: []
   monitor_ids: []
   tags:
