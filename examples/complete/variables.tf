@@ -17,13 +17,3 @@ variable "monitor_paths" {
   type        = list(string)
   description = "List of paths to Datadog monitor configurations"
 }
-
-variable "slo_paths" {
-  type        = list(string)
-  description = "List of paths to Datadog SLO configurations"
-}
-
-variable "synthetic_paths" {
-  type        = list(string)
-  description = "List of paths to Datadog synthetic configurations"
-}
