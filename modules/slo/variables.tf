@@ -1,5 +1,5 @@
 variable "datadog_slos" {
-  type = any
+  type        = any
   description = "Map of Datadog SLO configurations"
 }
 

@@ -95,7 +95,7 @@ resource "datadog_service_level_objective" "metric_slo" {
   #     key = null
   tags = [
     for tagk, tagv in lookup(each.value, "tags", module.this.tags) :
-      tagv != null ? format("%s:%s", tagk, tagv) : tagk
+    tagv != null ? format("%s:%s", tagk, tagv) : tagk
   ]
 
 }
@@ -123,7 +123,7 @@ resource "datadog_monitor" "metric_slo_alert" {
   #     key = null
   tags = [
     for tagk, tagv in lookup(each.value.slo, "tags", module.this.tags) :
-      tagv != null ? format("%s:%s", tagk, tagv) : tagk
+    tagv != null ? format("%s:%s", tagk, tagv) : tagk
   ]
 
 }
