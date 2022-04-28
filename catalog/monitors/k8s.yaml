@@ -698,6 +698,8 @@ k8s-increased-pod-crash:
     #warning_recovery:
 
 k8s-hpa-errors:
+  ## disabling this, event-v2 follows new structure which needs further testing.
+  enabled: false
   name: "(k8s) HPA Errors"
   # must use `event-v2 alert`: https://docs.datadoghq.com/events/guides/migrating_to_new_events_features/
   type: event-v2 alert

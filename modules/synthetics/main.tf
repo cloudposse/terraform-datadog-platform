@@ -11,7 +11,7 @@ data "datadog_synthetics_locations" "public_locations" {}
 
 
 resource "datadog_synthetics_test" "default" {
-  for_each = local.enabled ? { for k, v in var.datadog_synthetics : k => v if lookup(v, "enabled", true) } : {}
+  for_each = { for k, v in var.datadog_synthetics : k => v if local.enabled && lookup(v, "enabled", true) }
 
   # Required
   name   = each.value.name
