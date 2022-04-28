@@ -265,6 +265,8 @@ module "datadog_child_organization" {
 
 Review the [examples](examples) folder to see how to use the Datadog modules.
 
+Also checkout our [terraform-aws-components](https://github.com/cloudposse/terraform-aws-components) repository for more examples of how to use a mixture of modules to enhance monitors, slos, and synthetics with inheritence and templating!
+
 
 
 <!-- markdownlint-disable -->
