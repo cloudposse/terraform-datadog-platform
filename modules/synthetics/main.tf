@@ -3,7 +3,6 @@
 locals {
   enabled            = module.this.enabled
   alert_tags         = local.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
-  datadog_synthetics = { for k, v in var.datadog_synthetics : k => v if local.enabled }
 
   all_public_locations = sort(keys({ for k, v in data.datadog_synthetics_locations.public_locations.locations : k => v if ! (length(regexall(".*pl:.*", k)) > 0) }))
 }
@@ -12,7 +11,7 @@ data "datadog_synthetics_locations" "public_locations" {}
 
 
 resource "datadog_synthetics_test" "default" {
-  for_each = local.datadog_synthetics
+  for_each = local.enabled ? { for k, v in var.datadog_synthetics : k => v if lookup(v, "enabled", true) } : {}
 
   # Required
   name   = each.value.name

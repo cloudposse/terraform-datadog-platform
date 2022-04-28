@@ -1,8 +1,8 @@
 locals {
   enabled = module.this.enabled
 
-  datadog_monitor_slos = { for slo in var.datadog_slos : slo.name => slo if slo.type == "monitor" && local.enabled }
-  datadog_metric_slos  = { for slo in var.datadog_slos : slo.name => slo if slo.type == "metric" && local.enabled }
+  datadog_monitor_slos = { for slo in var.datadog_slos : slo.name => slo if slo.type == "monitor" && lookup(v, "enabled", true) && local.enabled }
+  datadog_metric_slos  = { for slo in var.datadog_slos : slo.name => slo if slo.type == "metric" && lookup(v, "enabled", true) && local.enabled }
 
   temp_datadog_slo_metric_monitors = flatten([
     for name, slo in var.datadog_slos : [
