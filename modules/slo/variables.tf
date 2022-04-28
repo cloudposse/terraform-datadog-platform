@@ -1,26 +1,5 @@
 variable "datadog_slos" {
-  type = map(object({
-    name = string
-    type = string
-
-    thresholds = list(object({
-      target    = string
-      timeframe = string
-      warning   = string
-    }))
-
-    query = map(any)
-
-    groups      = list(string)
-    monitor_ids = list(number)
-
-    message      = string
-    description  = string
-    force_delete = bool
-    validate     = bool
-
-    tags = list(string)
-  }))
+  type = any
   description = "Map of Datadog SLO configurations"
 }
 
