@@ -699,7 +699,8 @@ k8s-increased-pod-crash:
 
 k8s-hpa-errors:
   name: "(k8s) HPA Errors"
-  type: event alert
+  # must use `event-v2 alert`: https://docs.datadoghq.com/events/guides/migrating_to_new_events_features/
+  type: event-v2 alert
   query: |
     events('sources:kubernetes priority:all \"unable to fetch metrics from resource metrics API:\"').by('hpa').rollup('count').last('1h') > 200
   message: |-
