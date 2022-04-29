@@ -12,4 +12,4 @@ alert_tags = ["@opsgenie"]
 
 alert_tags_separator = "\n"
 
-synthetic_paths = ["catalog/synthetics/*.yaml"]
+synthetic_paths = ["catalog/*.yaml"]
