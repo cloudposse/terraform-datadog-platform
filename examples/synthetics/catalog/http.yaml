@@ -47,7 +47,7 @@ complex:
       count: 3
       interval: 5
     monitor_options:
-      renotify_interval: 2400
+      renotify_interval: 1440
   assertion:
     - type: statusCode
       operator: is
