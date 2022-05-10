@@ -265,6 +265,8 @@ module "datadog_child_organization" {
 
 Review the [examples](examples) folder to see how to use the Datadog modules.
 
+Also checkout our [terraform-aws-components](https://github.com/cloudposse/terraform-aws-components) repository for more examples of how to use a mixture of modules to enhance monitors, slos, and synthetics with inheritence and templating!
+
 
 
 <!-- markdownlint-disable -->
@@ -501,8 +503,8 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
 ### Contributors
 
 <!-- markdownlint-disable -->
-|  [![Erik Osterman][osterman_avatar]][osterman_homepage]<br/>[Erik Osterman][osterman_homepage] | [![Andriy Knysh][aknysh_avatar]][aknysh_homepage]<br/>[Andriy Knysh][aknysh_homepage] | [![Vladimir][SweetOps_avatar]][SweetOps_homepage]<br/>[Vladimir][SweetOps_homepage] | [![Yonatan Koren][korenyoni_avatar]][korenyoni_homepage]<br/>[Yonatan Koren][korenyoni_homepage] | [![RB][nitrocode_avatar]][nitrocode_homepage]<br/>[RB][nitrocode_homepage] |
-|---|---|---|---|---|
+|  [![Erik Osterman][osterman_avatar]][osterman_homepage]<br/>[Erik Osterman][osterman_homepage] | [![Andriy Knysh][aknysh_avatar]][aknysh_homepage]<br/>[Andriy Knysh][aknysh_homepage] | [![Vladimir][SweetOps_avatar]][SweetOps_homepage]<br/>[Vladimir][SweetOps_homepage] | [![Yonatan Koren][korenyoni_avatar]][korenyoni_homepage]<br/>[Yonatan Koren][korenyoni_homepage] | [![RB][nitrocode_avatar]][nitrocode_homepage]<br/>[RB][nitrocode_homepage] | [![Benjamin Smith][benbentwo_avatar]][benbentwo_homepage]<br/>[Benjamin Smith][benbentwo_homepage] |
+|---|---|---|---|---|---|
 <!-- markdownlint-restore -->
 
   [osterman_homepage]: https://github.com/osterman
@@ -515,6 +517,8 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
   [korenyoni_avatar]: https://img.cloudposse.com/150x150/https://github.com/korenyoni.png
   [nitrocode_homepage]: https://github.com/nitrocode
   [nitrocode_avatar]: https://img.cloudposse.com/150x150/https://github.com/nitrocode.png
+  [benbentwo_homepage]: https://github.com/benbentwo
+  [benbentwo_avatar]: https://img.cloudposse.com/150x150/https://github.com/benbentwo.png
 
 [![README Footer][readme_footer_img]][readme_footer_link]
 [![Beacon][beacon]][website]
