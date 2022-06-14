@@ -25,7 +25,7 @@ rds-cpuutilization:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -67,7 +67,7 @@ rds-disk-queue-depth:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -109,7 +109,7 @@ rds-freeable-memory:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -151,7 +151,7 @@ rds-swap-usage:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -193,7 +193,7 @@ rds-database-connections:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0

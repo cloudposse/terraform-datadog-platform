@@ -20,7 +20,7 @@ ec2-failed-status-check:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
