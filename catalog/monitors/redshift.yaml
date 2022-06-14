@@ -22,7 +22,7 @@ redshift-health-status:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -61,7 +61,7 @@ redshift-database-connections:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -105,7 +105,7 @@ redshift-cpuutilization:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -147,7 +147,7 @@ redshift-write-latency:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -189,7 +189,7 @@ redshift-disk-space-used:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -228,7 +228,7 @@ redshift-network-receive:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -269,7 +269,7 @@ redshift-network-transmit:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -310,7 +310,7 @@ redshift-read-throughput:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -351,7 +351,7 @@ redshift-write-throughput:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0

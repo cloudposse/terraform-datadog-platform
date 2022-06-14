@@ -25,7 +25,7 @@ amq-cpu-utilization:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -67,7 +67,7 @@ amq-heap-usage:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -106,7 +106,7 @@ amq-network-in:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 900
   new_host_delay: 300
   new_group_delay: 0
@@ -147,7 +147,7 @@ amq-network-out:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 900
   new_host_delay: 300
   new_group_delay: 0
@@ -188,7 +188,7 @@ amq-current-connections-count:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 900
   new_host_delay: 300
   new_group_delay: 0

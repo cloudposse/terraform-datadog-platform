@@ -215,7 +215,7 @@ k8s-unavailable-deployment-replica:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -252,7 +252,7 @@ k8s-unavailable-statefulset-replica:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -289,7 +289,7 @@ k8s-node-status-unschedulable:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -326,7 +326,7 @@ k8s-imagepullbackoff:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -363,7 +363,7 @@ k8s-high-cpu-usage:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -400,7 +400,7 @@ k8s-high-disk-usage:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -442,7 +442,7 @@ k8s-high-memory-usage:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -484,7 +484,7 @@ k8s-high-filesystem-usage:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -526,7 +526,7 @@ k8s-network-tx-errors:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -568,7 +568,7 @@ k8s-network-rx-errors:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -605,7 +605,7 @@ k8s-node-not-ready:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -642,7 +642,7 @@ k8s-kube-api-down:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -679,7 +679,7 @@ k8s-increased-pod-crash:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -719,7 +719,7 @@ k8s-hpa-errors:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
@@ -757,7 +757,7 @@ k8s-pending-pods:
   include_tags: true
   locked: false
   renotify_interval: 60
-  timeout_h: 60
+  timeout_h: 0
   evaluation_delay: 60
   new_host_delay: 300
   new_group_delay: 0
