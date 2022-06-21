@@ -14,10 +14,10 @@ locals {
       if slo.type == "metric" && local.enabled && lookup(slo, "enabled", true)
     ]
   ])
+
   datadog_slo_metric_monitors = { for monitor in local.temp_datadog_slo_metric_monitors : monitor.slo_name => monitor }
 
   alert_tags = local.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
-
 }
 
 resource "datadog_service_level_objective" "monitor_slo" {
@@ -47,16 +47,15 @@ resource "datadog_service_level_objective" "monitor_slo" {
   force_delete = lookup(each.value, "force_delete", true)
   validate     = lookup(each.value, "validate", false)
 
-  # convert terraform tags map to datadog tags map
-  # if a key is supplied with a value, it will render "key:value" as a tag
+  # Convert terraform tags map to Datadog tags map
+  # If a key is supplied with a value, it will render "key:value" as a tag
   #   tags:
-  #     key = value
-  # if a key is supplied without a value (null), it will render "key" as a tag
+  #     key: value
+  # If a key is supplied without a value (null), it will render "key" as a tag
   #   tags:
-  #     key = null
+  #     key: null
   tags = [
-    for tagk, tagv in lookup(each.value, "tags", module.this.tags) :
-    tagv != null ? format("%s:%s", tagk, tagv) : tagk
+    for tagk, tagv in lookup(each.value, "tags", module.this.tags) : (tagv != null ? format("%s:%s", tagk, tagv) : tagk)
   ]
 }
 
@@ -86,18 +85,16 @@ resource "datadog_service_level_objective" "metric_slo" {
     }
   }
 
-  # convert terraform tags map to datadog tags map
-  # if a key is supplied with a value, it will render "key:value" as a tag
+  # Convert terraform tags map to Datadog tags map
+  # If a key is supplied with a value, it will render "key:value" as a tag
   #   tags:
-  #     key = value
-  # if a key is supplied without a value (null), it will render "key" as a tag
+  #     key: value
+  # If a key is supplied without a value (null), it will render "key" as a tag
   #   tags:
-  #     key = null
+  #     key: null
   tags = [
-    for tagk, tagv in lookup(each.value, "tags", module.this.tags) :
-    tagv != null ? format("%s:%s", tagk, tagv) : tagk
+    for tagk, tagv in lookup(each.value, "tags", module.this.tags) : (tagv != null ? format("%s:%s", tagk, tagv) : tagk)
   ]
-
 }
 
 resource "datadog_monitor" "metric_slo_alert" {
@@ -114,17 +111,14 @@ resource "datadog_monitor" "metric_slo_alert" {
     critical = lookup(each.value.threshold, "target", null)
   }
 
-  # convert terraform tags map to datadog tags map
-  # if a key is supplied with a value, it will render "key:value" as a tag
+  # Convert terraform tags map to Datadog tags map
+  # If a key is supplied with a value, it will render "key:value" as a tag
   #   tags:
-  #     key = value
-  # if a key is supplied without a value (null), it will render "key" as a tag
+  #     key: value
+  # If a key is supplied without a value (null), it will render "key" as a tag
   #   tags:
-  #     key = null
+  #     key: null
   tags = [
-    for tagk, tagv in lookup(each.value.slo, "tags", module.this.tags) :
-    tagv != null ? format("%s:%s", tagk, tagv) : tagk
+    for tagk, tagv in lookup(each.value.slo, "tags", module.this.tags) : (tagv != null ? format("%s:%s", tagk, tagv) : tagk)
   ]
-
 }
-

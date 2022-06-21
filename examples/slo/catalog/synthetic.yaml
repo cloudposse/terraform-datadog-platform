@@ -1,4 +1,3 @@
-
 synthetics-slo:
   name: "(SLO) Synthetic Checks"
   type: metric
@@ -21,4 +20,6 @@ synthetics-slo:
   groups: []
   monitor_ids: []
   tags:
-    - managedby:terraform
+    managedby: terraform
+    test: true
+    api_version: null
