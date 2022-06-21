@@ -55,15 +55,14 @@ resource "datadog_monitor" "default" {
   # Use `locked`` only if `restricted_roles` is not provided
   locked = try(var.restricted_roles_map[each.key], null) == null ? lookup(each.value, "locked", null) : null
 
-  # convert terraform tags map to datadog tags map
-  # if a key is supplied with a value, it will render "key:value" as a tag
+  # Convert terraform tags map to Datadog tags map
+  # If a key is supplied with a value, it will render "key:value" as a tag
   #   tags:
-  #     key = value
-  # if a key is supplied without a value (null), it will render "key" as a tag
+  #     key: value
+  # If a key is supplied without a value (null), it will render "key" as a tag
   #   tags:
-  #     key = null
+  #     key: null
   tags = [
-    for tagk, tagv in lookup(each.value, "tags", module.this.tags) :
-    tagv != null ? format("%s:%s", tagk, tagv) : tagk
+    for tagk, tagv in lookup(each.value, "tags", module.this.tags) : (tagv != null ? format("%s:%s", tagk, tagv) : tagk)
   ]
 }

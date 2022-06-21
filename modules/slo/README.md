@@ -36,7 +36,7 @@ synthetics-slo:
   groups: []
   monitor_ids: []
   tags:
-    - managedby:terraform
+    managedby: terraform
 
 ```
 

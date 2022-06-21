@@ -4,7 +4,7 @@ locals {
   enabled    = module.this.enabled
   alert_tags = local.enabled && var.alert_tags != null ? format("%s%s", var.alert_tags_separator, join(var.alert_tags_separator, var.alert_tags)) : ""
 
-  all_public_locations = sort(keys({ for k, v in data.datadog_synthetics_locations.public_locations.locations : k => v if ! (length(regexall(".*pl:.*", k)) > 0) }))
+  all_public_locations = sort(keys({ for k, v in data.datadog_synthetics_locations.public_locations.locations : k => v if !(length(regexall(".*pl:.*", k)) > 0) }))
 }
 
 data "datadog_synthetics_locations" "public_locations" {}
@@ -25,17 +25,18 @@ resource "datadog_synthetics_test" "default" {
   # Optional
   message = lookup(each.value, "message", null) != null ? format("%s%s", each.value.message, local.alert_tags) : null
   subtype = lookup(each.value, "subtype", null)
-  # convert terraform tags map to datadog tags list
-  # if a key is supplied with a value, it will render "key:value" as a tag
+
+  # Convert terraform tags map to Datadog tags map
+  # If a key is supplied with a value, it will render "key:value" as a tag
   #   tags:
-  #     key = value
-  # if a key is supplied without a value (null), it will render "key" as a tag
+  #     key: value
+  # If a key is supplied without a value (null), it will render "key" as a tag
   #   tags:
-  #     key = null
+  #     key: null
   tags = [
-    for tagk, tagv in lookup(each.value, "tags", module.this.tags) :
-    tagv != null ? format("%s:%s", tagk, tagv) : tagk
+    for tagk, tagv in lookup(each.value, "tags", module.this.tags) : (tagv != null ? format("%s:%s", tagk, tagv) : tagk)
   ]
+
   request_headers = lookup(each.value, "request_headers", null)
   request_query   = lookup(each.value, "request_query", null)
   set_cookie      = lookup(each.value, "set_cookie", null)
