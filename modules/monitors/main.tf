@@ -6,7 +6,7 @@ locals {
 
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor
 resource "datadog_monitor" "default" {
-  for_each = local.enabled ? tomap({ for k, v in var.datadog_monitors : k => v if lookup(v, "enabled", true) }) : {}
+  for_each = local.enabled ? { for k, v in var.datadog_monitors : k => v if lookup(v, "enabled", true) } : null
 
   name                   = each.value.name
   type                   = each.value.type
