@@ -107,6 +107,7 @@ resource "datadog_monitor" "metric_slo_alert" {
   query = <<EOF
     error_budget("${datadog_service_level_objective.metric_slo[each.value.slo.name].id}").over("${each.value.threshold.timeframe}") > ${lookup(each.value.threshold, "target", "99.00")}
   EOF
+
   monitor_thresholds {
     critical = lookup(each.value.threshold, "target", null)
   }
