@@ -53,22 +53,26 @@ resource "datadog_service_level_objective" "metric_slo" {
   ]
 }
 
+# https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor
 resource "datadog_monitor" "metric_slo_alert" {
   for_each = local.datadog_metric_slo_alerts
 
-  name    = format("(SLO Error Budget Alert) %s", each.value.slo.name)
   type    = "slo alert"
-  message = format("%s%s", each.value.slo.message, local.alert_tags)
+  name    = format("(SLO Error Budget Alert) %s", each.value.slo.name)
+  message = format("%s %s", each.value.slo.message, local.alert_tags)
 
   query = <<EOF
     error_budget("${datadog_service_level_objective.metric_slo[each.value.slo.name].id}").over("${each.value.threshold.timeframe}") > ${lookup(each.value.threshold, "target", "99.00")}
   EOF
 
-  force_delete = lookup(each.value, "force_delete", true)
-
   monitor_thresholds {
     critical = lookup(each.value.threshold, "target", null)
   }
+
+  force_delete           = lookup(each.value, "force_delete", false)
+  enable_logs_sample     = lookup(each.value, "enable_logs_sample", false)
+  groupby_simple_monitor = lookup(each.value, "groupby_simple_monitor", false)
+  include_tags           = lookup(each.value, "include_tags ", true)
 
   # Convert terraform tags map to Datadog tags map
   # If a key is supplied with a value, it will render "key:value" as a tag
