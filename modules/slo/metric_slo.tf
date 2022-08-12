@@ -1,7 +1,7 @@
 locals {
   datadog_metric_slos = { for slo in var.datadog_slos : slo.name => slo if slo.type == "metric" && lookup(slo, "enabled", true) && local.enabled }
 
-  temp_datadog_slo_metric_monitors = flatten([
+  temp_datadog_metric_slo_alerts = flatten([
     for name, slo in var.datadog_slos : [
       for i, threshold in slo.thresholds : {
         slo       = slo,
@@ -12,7 +12,7 @@ locals {
     ]
   ])
 
-  datadog_slo_metric_monitors = { for monitor in local.temp_datadog_slo_metric_monitors : monitor.slo_name => monitor }
+  datadog_metric_slo_alerts = { for monitor in local.temp_datadog_metric_slo_alerts : monitor.slo_name => monitor }
 }
 
 resource "datadog_service_level_objective" "metric_slo" {
@@ -54,7 +54,7 @@ resource "datadog_service_level_objective" "metric_slo" {
 }
 
 resource "datadog_monitor" "metric_slo_alert" {
-  for_each = local.datadog_slo_metric_monitors
+  for_each = local.datadog_metric_slo_alerts
 
   name    = format("(SLO Error Budget Alert) %s", each.value.slo.name)
   type    = "slo alert"
