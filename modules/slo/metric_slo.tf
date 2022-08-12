@@ -69,11 +69,6 @@ resource "datadog_monitor" "metric_slo_alert" {
     critical = lookup(each.value.threshold, "target", null)
   }
 
-  force_delete           = lookup(each.value, "force_delete", false)
-  enable_logs_sample     = lookup(each.value, "enable_logs_sample", false)
-  groupby_simple_monitor = lookup(each.value, "groupby_simple_monitor", false)
-  include_tags           = lookup(each.value, "include_tags ", true)
-
   # Convert terraform tags map to Datadog tags map
   # If a key is supplied with a value, it will render "key:value" as a tag
   #   tags:
