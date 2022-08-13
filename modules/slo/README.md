@@ -105,3 +105,4 @@ monitor-slo:
  - [Service Level Objectives](https://docs.datadoghq.com/monitors/service_level_objectives/)
  - [Monitor-based SLOs](https://docs.datadoghq.com/monitors/service_level_objectives/monitor/)
  - [Datadog Error Budget](https://docs.datadoghq.com/monitors/service_level_objectives/error_budget/)
+ - [Monitor-based SLO example](https://github.com/DataDog/terraform-provider-datadog/issues/667)
