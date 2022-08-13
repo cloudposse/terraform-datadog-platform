@@ -16,7 +16,7 @@ monitor-slo:
       warning: "99.5"
   # Either `monitor_ids` or `monitors` should be provided
   # `monitor_ids` is a list of externally created monitors to use for this monitor-based SLO
-  # If `monitors` mao is provided, the monitors will be created by the module and assigned to the SLO
+  # If `monitors` map is provided, the monitors will be created by the module and assigned to the SLO
   monitor_ids: null
   monitors:
     ec2-failed-status-check:
