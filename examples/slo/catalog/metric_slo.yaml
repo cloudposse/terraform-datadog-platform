@@ -18,6 +18,6 @@ metric-slo:
       timeframe: "30d"
       warning: "99.5"
   tags:
-    managedby: terraform
+    ManagedBy: terraform
     test: true
     api_version: null

@@ -1,11 +1,8 @@
 monitor-slo:
-  name: "(SLO) Availability"
+  name: "(SLO) EC2 Availability"
   type: monitor
-  query:
-    numerator: sum:synthetics.test_runs{status:success}.as_count()
-    denominator: sum:synthetics.test_runs{*}.as_count()
   description: |
-    Number of Successful Synthetic Checks.
+    Number of EC2 failed status checks.
   message: |
     ({stage} {region}) {instance_id} failed a SLO check
   force_delete: true
@@ -17,8 +14,43 @@ monitor-slo:
     - target: "99"
       timeframe: "30d"
       warning: "99.5"
+  # Either `monitor_ids` or `monitors` should be provided
+  # `monitor_ids` is a list of externally created monitors to use for this monitor-based SLO
+  # If `monitors` mao is provided, the monitors will be created by the module and assigned to the SLO
   monitor_ids: null
+  monitors:
+    ec2-failed-status-check:
+      name: "(EC2) Status Check"
+      type: metric alert
+      query: |
+        avg(last_10m):avg:aws.ec2.status_check_failed{*} by {instance_id} > 0
+      message: |
+        ({stage} {region}) {instance_id} failed a status check
+      escalation_message: ""
+      tags:
+        ManagedBy: Terraform
+      priority: 3
+      notify_no_data: false
+      notify_audit: true
+      require_full_window: true
+      enable_logs_sample: false
+      force_delete: true
+      include_tags: true
+      locked: false
+      renotify_interval: 60
+      timeout_h: 0
+      evaluation_delay: 60
+      new_host_delay: 300
+      new_group_delay: 0
+      groupby_simple_monitor: false
+      renotify_occurrences: 0
+      renotify_statuses: []
+      validate: true
+      no_data_timeframe: 10
+      threshold_windows: {}
+      thresholds:
+        critical: 0
   tags:
-    managedby: terraform
+    ManagedBy: terraform
     test: true
     api_version: null
