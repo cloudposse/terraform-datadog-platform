@@ -1,6 +1,6 @@
-metric-slo:
-  name: "(SLO) Synthetic Checks"
-  type: metric
+monitor-slo:
+  name: "(SLO) Availability"
+  type: monitor
   query:
     numerator: sum:synthetics.test_runs{status:success}.as_count()
     denominator: sum:synthetics.test_runs{*}.as_count()
@@ -17,6 +17,7 @@ metric-slo:
     - target: "99"
       timeframe: "30d"
       warning: "99.5"
+  monitor_ids: null
   tags:
     managedby: terraform
     test: true

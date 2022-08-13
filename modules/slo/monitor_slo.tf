@@ -24,11 +24,9 @@ resource "datadog_service_level_objective" "monitor_slo" {
   dynamic "thresholds" {
     for_each = each.value.thresholds
     content {
-      target          = lookup(thresholds, "target", "99.00")
-      timeframe       = lookup(thresholds, "timeframe", "7d")
-      target_display  = lookup(thresholds, "target_display", "98.00")
-      warning         = lookup(thresholds, "warning", "99.95")
-      warning_display = lookup(thresholds, "warning_display", "98.00")
+      target    = lookup(thresholds, "target", "99.00")
+      timeframe = lookup(thresholds, "timeframe", "7d")
+      warning   = lookup(thresholds, "warning", "99.95")
     }
   }
 
