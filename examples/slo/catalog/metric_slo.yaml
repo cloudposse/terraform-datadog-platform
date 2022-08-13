@@ -17,8 +17,6 @@ synthetics-slo:
     - target: "99"
       timeframe: "30d"
       warning: "99.5"
-  groups: []
-  monitor_ids: []
   tags:
     managedby: terraform
     test: true

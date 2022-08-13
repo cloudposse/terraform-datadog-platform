@@ -2,6 +2,18 @@ locals {
   datadog_monitor_slos = { for slo in var.datadog_slos : slo.name => slo if slo.type == "monitor" && lookup(slo, "enabled", true) && local.enabled }
 }
 
+module "datadog_monitors" {
+  source = "../monitors"
+
+  for_each = local.datadog_monitor_slos
+
+  datadog_monitors     = lookup(each.value, "monitors", {})
+  alert_tags           = var.alert_tags
+  alert_tags_separator = var.alert_tags_separator
+
+  context = module.this.context
+}
+
 resource "datadog_service_level_objective" "monitor_slo" {
   for_each = local.datadog_monitor_slos
 
@@ -12,17 +24,19 @@ resource "datadog_service_level_objective" "monitor_slo" {
   dynamic "thresholds" {
     for_each = each.value.thresholds
     content {
-      target    = lookup(thresholds, "target", "99.00")
-      timeframe = lookup(thresholds, "timeframe", "7d")
-
+      target          = lookup(thresholds, "target", "99.00")
+      timeframe       = lookup(thresholds, "timeframe", "7d")
       target_display  = lookup(thresholds, "target_display", "98.00")
       warning         = lookup(thresholds, "warning", "99.95")
       warning_display = lookup(thresholds, "warning_display", "98.00")
     }
   }
 
-  groups      = lookup(each.value, "groups", [])
-  monitor_ids = each.value.monitor_ids
+  groups = lookup(each.value, "groups", [])
+
+  # Either `monitor_ids` or `monitors` should be provided
+  # If `monitors` map is provided, the monitors are created in the `datadog_monitors` module
+  monitor_ids = try(each.value.monitor_ids, null) != null ? each.value.monitor_ids : module.datadog_monitors[each.key].datadog_monitor_ids
 
   #  Optional
   description  = lookup(each.value, "description", null)
