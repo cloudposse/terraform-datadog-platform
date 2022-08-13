@@ -3,6 +3,11 @@ output "datadog_monitor_slos" {
   description = "Map of created monitor-based SLOs"
 }
 
+output "datadog_monitor_slo_monitors" {
+  value       = module.datadog_monitors.datadog_monitors
+  description = "Map of created monitors for the monitor-based SLOs"
+}
+
 output "datadog_metric_slos" {
   value       = datadog_service_level_objective.metric_slo
   description = "Map of created metric-based SLOs"
