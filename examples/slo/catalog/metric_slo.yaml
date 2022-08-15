@@ -1,4 +1,4 @@
-synthetics-slo:
+metric-slo:
   name: "(SLO) Synthetic Checks"
   type: metric
   query:
@@ -17,9 +17,7 @@ synthetics-slo:
     - target: "99"
       timeframe: "30d"
       warning: "99.5"
-  groups: []
-  monitor_ids: []
   tags:
-    managedby: terraform
+    ManagedBy: terraform
     test: true
     api_version: null
