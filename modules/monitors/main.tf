@@ -8,27 +8,31 @@ locals {
 resource "datadog_monitor" "default" {
   for_each = { for k, v in var.datadog_monitors : k => v if local.enabled && lookup(v, "enabled", true) }
 
-  name                   = each.value.name
-  type                   = each.value.type
-  query                  = each.value.query
-  message                = format("%s%s", each.value.message, local.alert_tags)
-  escalation_message     = lookup(each.value, "escalation_message", null)
-  require_full_window    = lookup(each.value, "require_full_window", null)
-  notify_no_data         = lookup(each.value, "notify_no_data", null)
-  new_group_delay        = lookup(each.value, "new_group_delay", null)
-  evaluation_delay       = lookup(each.value, "evaluation_delay", null)
-  no_data_timeframe      = lookup(each.value, "no_data_timeframe", null)
-  renotify_interval      = lookup(each.value, "renotify_interval", null)
-  notify_audit           = lookup(each.value, "notify_audit", null)
-  timeout_h              = lookup(each.value, "timeout_h", null)
-  include_tags           = lookup(each.value, "include_tags", null)
-  enable_logs_sample     = lookup(each.value, "enable_logs_sample", null)
-  force_delete           = lookup(each.value, "force_delete", null)
-  priority               = lookup(each.value, "priority", null)
-  groupby_simple_monitor = lookup(each.value, "groupby_simple_monitor", null)
-  renotify_occurrences   = lookup(each.value, "renotify_occurrences", null)
-  renotify_statuses      = lookup(each.value, "renotify_statuses", null)
-  validate               = lookup(each.value, "validate", null)
+  name                     = each.value.name
+  type                     = each.value.type
+  query                    = each.value.query
+  message                  = format("%s%s", each.value.message, local.alert_tags)
+  escalation_message       = lookup(each.value, "escalation_message", null)
+  require_full_window      = lookup(each.value, "require_full_window", null)
+  notify_no_data           = lookup(each.value, "notify_no_data", null)
+  new_group_delay          = lookup(each.value, "new_group_delay", null)
+  group_retention_duration = lookup(each.value, "group_retention_duration", null)
+  evaluation_delay         = lookup(each.value, "evaluation_delay", null)
+  no_data_timeframe        = lookup(each.value, "no_data_timeframe", null)
+  renotify_interval        = lookup(each.value, "renotify_interval", null)
+  notification_preset_name = lookup(each.value, "notification_preset_name", null)
+  notify_audit             = lookup(each.value, "notify_audit", null)
+  notify_by                = lookup(each.value, "notify_by", null)
+  on_missing_data          = lookup(each.value, "on_missing_data", null)
+  timeout_h                = lookup(each.value, "timeout_h", null)
+  include_tags             = lookup(each.value, "include_tags", null)
+  enable_logs_sample       = lookup(each.value, "enable_logs_sample", null)
+  force_delete             = lookup(each.value, "force_delete", null)
+  priority                 = lookup(each.value, "priority", null)
+  groupby_simple_monitor   = lookup(each.value, "groupby_simple_monitor", null)
+  renotify_occurrences     = lookup(each.value, "renotify_occurrences", null)
+  renotify_statuses        = lookup(each.value, "renotify_statuses", null)
+  validate                 = lookup(each.value, "validate", null)
 
   # DEPRECATED: use new_group_delay instead
   new_host_delay = lookup(each.value, "new_host_delay", null)
@@ -45,6 +49,57 @@ resource "datadog_monitor" "default" {
   monitor_threshold_windows {
     recovery_window = lookup(each.value.threshold_windows, "recovery_window", null)
     trigger_window  = lookup(each.value.threshold_windows, "trigger_window", null)
+  }
+
+  dynamic "scheduling_options" {
+    for_each = lookup(each.value, "scheduling_options", [])
+    content {
+      dynamic "evaluation_window" {
+        for_each = lookup(scheduling_options.value, "evaluation_window", [])
+        content {
+          day_starts   = lookup(evaluation_window.value, "day_starts", null)
+          hour_starts  = lookup(evaluation_window.value, "hour_starts", null)
+          month_starts = lookup(evaluation_window.value, "month_starts", null)
+        }
+      }
+    }
+  }
+
+  variables {
+    dynamic "event_query" {
+      for_each = lookup(lookup(each.value, "variables", {}), "event_query", [])
+      content {
+        dynamic "compute" {
+          for_each = lookup(event_query.value, "compute", [])
+          content {
+            aggregation = lookup(compute.value, "aggregation", null)
+            interval    = lookup(compute.value, "interval", null)
+            metric      = lookup(compute.value, "metric", null)
+          }
+        }
+        data_source = lookup(event_query.value, "data_source", null)
+        name        = lookup(event_query.value, "name", null)
+        dynamic "group_by" {
+          for_each = lookup(event_query.value, "group_by", [])
+          content {
+            facet = lookup(group_by.value, "facet", null)
+            limit = lookup(group_by.value, "limit", null)
+            dynamic "sort" {
+              for_each = lookup(group_by.value, "sort", [])
+              content {
+                aggregation = lookup(sort.value, "aggregation", null)
+                metric       = lookup(sort.value, "metric", null)
+                order       = lookup(sort.value, "order", null)
+              }
+            }
+          }
+        }
+        indexes = lookup(event_query.value, "indexes", null)
+        search {
+          query = lookup(lookup(event_query.value, "search", {}), "query", null)
+        }
+      }
+    }
   }
 
   # Assign restricted roles
