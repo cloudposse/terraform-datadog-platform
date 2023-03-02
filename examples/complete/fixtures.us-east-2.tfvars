@@ -10,4 +10,7 @@ alert_tags = ["@opsgenie"]
 
 alert_tags_separator = "\n"
 
-monitor_paths = ["../../catalog/monitors/*.yaml"]
+monitor_paths = [
+  "../../catalog/monitors/*.yaml",
+  "./complex-monitor.yaml"
+]

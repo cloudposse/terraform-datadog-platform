@@ -65,38 +65,44 @@ resource "datadog_monitor" "default" {
     }
   }
 
-  variables {
-    dynamic "event_query" {
-      for_each = lookup(lookup(each.value, "variables", {}), "event_query", [])
-      content {
-        dynamic "compute" {
-          for_each = lookup(event_query.value, "compute", [])
-          content {
-            aggregation = lookup(compute.value, "aggregation", null)
-            interval    = lookup(compute.value, "interval", null)
-            metric      = lookup(compute.value, "metric", null)
+  dynamic "variables" {
+    for_each = lookup(each.value, "variables", [])
+    content {
+      dynamic "event_query" {
+        for_each = lookup(variables.value, "event_query", [])
+        content {
+          dynamic "compute" {
+            for_each = lookup(event_query.value, "compute", [])
+            content {
+              aggregation = lookup(compute.value, "aggregation", null)
+              interval    = lookup(compute.value, "interval", null)
+              metric      = lookup(compute.value, "metric", null)
+            }
           }
-        }
-        data_source = lookup(event_query.value, "data_source", null)
-        name        = lookup(event_query.value, "name", null)
-        dynamic "group_by" {
-          for_each = lookup(event_query.value, "group_by", [])
-          content {
-            facet = lookup(group_by.value, "facet", null)
-            limit = lookup(group_by.value, "limit", null)
-            dynamic "sort" {
-              for_each = lookup(group_by.value, "sort", [])
-              content {
-                aggregation = lookup(sort.value, "aggregation", null)
-                metric       = lookup(sort.value, "metric", null)
-                order       = lookup(sort.value, "order", null)
+          data_source = lookup(event_query.value, "data_source", null)
+          name        = lookup(event_query.value, "name", null)
+          dynamic "group_by" {
+            for_each = lookup(event_query.value, "group_by", [])
+            content {
+              facet = lookup(group_by.value, "facet", null)
+              limit = lookup(group_by.value, "limit", null)
+              dynamic "sort" {
+                for_each = lookup(group_by.value, "sort", [])
+                content {
+                  aggregation = lookup(sort.value, "aggregation", null)
+                  metric      = lookup(sort.value, "metric", null)
+                  order       = lookup(sort.value, "order", null)
+                }
               }
             }
           }
-        }
-        indexes = lookup(event_query.value, "indexes", null)
-        search {
-          query = lookup(lookup(event_query.value, "search", {}), "query", null)
+          indexes = lookup(event_query.value, "indexes", null)
+          dynamic "search" {
+            for_each = lookup(event_query.value, "search", [])
+            content {
+              query = lookup(search.value, "query", null)
+            }
+          }
         }
       }
     }
