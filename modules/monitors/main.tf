@@ -47,6 +47,20 @@ resource "datadog_monitor" "default" {
     trigger_window  = lookup(each.value.threshold_windows, "trigger_window", null)
   }
 
+  dynamic "scheduling_options" {
+    for_each = lookup(each.value, "scheduling_options", [])
+    content {
+      dynamic "evaluation_window" {
+        for_each = lookup(scheduling_options.value, "evaluation_window", [])
+        content {
+          day_starts   = lookup(evaluation_window.value, "day_starts", null)
+          hour_starts  = lookup(evaluation_window.value, "hour_starts", null)
+          month_starts = lookup(evaluation_window.value, "month_starts", null)
+        }
+      }
+    }
+  }
+
   # Assign restricted roles
   # Only these roles will have access to the monitor according to their permissions
   restricted_roles = try(var.restricted_roles_map[each.key], null)
