@@ -2,7 +2,3 @@
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs#argument-reference
 provider "datadog" {
 }
-
-provider "aws" {
-  region = var.region
-}
