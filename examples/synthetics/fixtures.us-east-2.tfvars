@@ -8,5 +8,4 @@ alert_tags = ["@opsgenie"]
 
 alert_tags_separator = "\n"
 
-terraform_synthetic_paths = ["catalog/terraform-schema/*.yaml"]
-api_synthetic_paths       = ["catalog/api-schema/*.yaml"]
+synthetic_paths = ["catalog/terraform-schema/*.yaml", "catalog/api-schema/*.yaml"]

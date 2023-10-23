@@ -8,12 +8,7 @@ variable "alert_tags_separator" {
   description = "Separator for the alert tags. All strings from the `alert_tags` variable will be joined into one string using the separator and then added to the alert message"
 }
 
-variable "terraform_synthetic_paths" {
+variable "synthetic_paths" {
   type        = list(string)
-  description = "List of paths to Datadog synthetic configurations using Terraform schema"
-}
-
-variable "api_synthetic_paths" {
-  type        = list(string)
-  description = "List of paths to Datadog synthetic configurations using Terraform schema"
+  description = "List of paths to Datadog synthetic test configurations to be deployed"
 }
