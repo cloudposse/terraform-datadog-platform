@@ -1,8 +1,3 @@
-variable "region" {
-  type        = string
-  description = "AWS region"
-}
-
 variable "alert_tags" {
   type        = list(string)
   description = "List of alert tags to add to all alert messages, e.g. `[\"@opsgenie\"]` or `[\"@devops\", \"@opsgenie\"]`"

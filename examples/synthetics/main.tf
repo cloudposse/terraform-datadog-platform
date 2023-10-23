@@ -11,5 +11,6 @@ module "datadog_synthetics" {
   alert_tags           = var.alert_tags
   alert_tags_separator = var.alert_tags_separator
 
-  context = module.this.context
+  locations = ["aws:us-east-2"]
+  context   = module.this.context
 }

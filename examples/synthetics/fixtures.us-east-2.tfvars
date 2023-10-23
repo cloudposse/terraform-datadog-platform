@@ -1,7 +1,3 @@
-enabled = true
-
-region = "us-east-2"
-
 namespace = "eg"
 
 stage = "test"
@@ -12,4 +8,4 @@ alert_tags = ["@opsgenie"]
 
 alert_tags_separator = "\n"
 
-synthetic_paths = ["catalog/*.yaml"]
+synthetic_paths = ["catalog/terraform-schema/*.yaml", "catalog/api-schema/*.yaml"]
