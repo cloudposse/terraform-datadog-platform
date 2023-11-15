@@ -1,8 +1,3 @@
-variable "region" {
-  type        = string
-  description = "AWS region"
-}
-
 variable "alert_tags" {
   type        = list(string)
   description = "List of alert tags to add to all alert messages, e.g. `[\"@opsgenie\"]` or `[\"@devops\", \"@opsgenie\"]`"
@@ -15,5 +10,5 @@ variable "alert_tags_separator" {
 
 variable "synthetic_paths" {
   type        = list(string)
-  description = "List of paths to Datadog synthetic configurations"
+  description = "List of paths to Datadog synthetic test configurations to be deployed"
 }

@@ -85,7 +85,8 @@ introduction: |-
 
   The [examples/complete](examples/complete) in this module uses the catalog to provision the monitors on Datadog.
 
-  The [examples/synthetics](examples/synthetics) shows how to provision synthetics on Datadog for synthetic monitoring.
+  The [examples/synthetics](examples/synthetics) shows how to provision synthetic tests on Datadog for monitoring.
+  Consult the [synthetics README](modules/synthetics) module for more details.
 
   The [examples/rbac](examples/rbac) shows how to use custom RBAC to provision Datadog roles with permissions and assign roles to monitors.
 
@@ -103,6 +104,10 @@ references:
   - name: "Create a monitor"
     description: "Create datadog monitors"
     url: "https://docs.datadoghq.com/api/v1/monitors/#create-a-monitor"
+
+  - name: "Datadog Synthetic Monitoring"
+    description: "Official Datadog documentation on Synthetic Monitoring"
+    url: "https://docs.datadoghq.com/synthetics/"
 
   - name: "Terraform Datadog role resources"
     description: "Provides a Datadog role resource. Used to create and manage Datadog roles"

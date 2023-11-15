@@ -1,0 +1,86 @@
+"Multistep API test":
+  name: Multistep API test
+  status: paused
+  type: api
+  tags: []
+  config:
+    configVariables: []
+    steps:
+      - id: 47q-xx9-2ng
+        name: Top Level echo server
+        subtype: http
+        extractedValues:
+          - type: http_body
+            parser:
+              type: json_path
+              value: $.headers.host
+            name: SERVER_HOST
+            secure: false
+        allowFailure: true
+        isCritical: true
+        retry:
+          count: 1
+          interval: 3000
+        assertions:
+          - operator: lessThan
+            type: responseTime
+            target: 1000
+          - operator: is
+            type: statusCode
+            target: 200
+          - operator: is
+            property: content-type
+            type: header
+            target: application/json
+          - type: body
+            operator: validatesJSONPath
+            target:
+              jsonPath: $.headers.cookie
+              operator: contains
+              targetValue: DatadogTest=yes
+        request:
+          method: GET
+          url: https://echo.free.beeceptor.com
+          headers:
+            cookie: DatadogTest=yes
+          httpVersion: any
+      - id: e5i-w66-4ed
+        name: No file list
+        subtype: http
+        extractedValues: []
+        allowFailure: false
+        isCritical: true
+        retry:
+          count: 0
+          interval: 300
+        assertions:
+          - operator: lessThan
+            type: responseTime
+            target: 1000
+          - operator: is
+            type: statusCode
+            target: 200
+          - operator: is
+            property: content-type
+            type: header
+            target: application/json
+          - type: body
+            operator: doesNotContain
+            target: tmp
+        request:
+          method: GET
+          url: https://echo.free.beeceptor.com/?echo_file=/
+          httpVersion: any
+  message: ""
+  options:
+    tick_every: 86400
+    min_failure_duration: 0
+    min_location_failed: 1
+    retry:
+      count: 0
+      interval: 300
+    monitor_options:
+      renotify_interval: 0
+  locations:
+    - aws:us-west-2
+  subtype: multi

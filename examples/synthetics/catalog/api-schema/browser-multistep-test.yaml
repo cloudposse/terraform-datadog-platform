@@ -1,0 +1,123 @@
+# Example multistep browser test using API schema
+
+"Example multistep test":
+  name: Example multistep test
+  status: paused
+  type: browser
+  config:
+    assertions: []
+    configVariables: []
+    request:
+      method: GET
+      headers: {}
+      url: https://archive.sweetops.com/
+    setCookie: ""
+    variables:
+      - example: Oct
+        name: DELAYED_MONTH
+        pattern: '{{ date(-3d, MMM) }}'
+        secure: false
+        type: text
+      - example: Oct
+        name: THIS_MONTH
+        pattern: '{{ date(0d, MMM) }}'
+        secure: false
+        type: text
+  message: |-
+    Slack Archive outdated
+  options:
+    device_ids:
+      - edge.laptop_large
+      - chrome.mobile_small
+    ignoreServerCertificateError: false
+    disableCors: false
+    disableCsp: false
+    noScreenshot: false
+    tick_every: 43200
+    min_location_failed: 1
+    retry:
+      count: 0
+      interval: 300
+    monitor_options:
+      renotify_interval: 0
+    rumSettings:
+      isEnabled: false
+    enableProfiling: false
+    enableSecurityTesting: false
+  locations:
+    - aws:us-west-2
+  steps:
+    - name: Click on button "leadinModal-close"
+      params:
+        element:
+          multiLocator:
+            ab: /*[local-name()="html"][1]/*[local-name()="body"][1]/*[local-name()="div"][7]/*[local-name()="div"][2]/*[local-name()="button"][1]
+            at: /descendant::*[@role="dialog"]/descendant::*[@*[local-name()="aria-label"]="Close"]
+            cl: /descendant::*[contains(concat(' ', normalize-space(@class), ' '), " leadinModal-close ")]
+            clt: /descendant::*[contains(concat(' ', normalize-space(@class), ' '), " leadinModal-close ")]
+            co: '[{"tagName":"BUTTON","text":"close","textType":"aria-label"}]'
+            ro: //*[contains(concat(' ', normalize-space(@class), ' '), " leadinModal-close ")]
+          targetOuterHTML: <button class="leadinModal-close" aria-label="Close"></button>
+          url: https://archive.sweetops.com/
+      timeout: 11
+      type: click
+      allowFailure: true
+      isCritical: false
+      noScreenshot: true
+    - name: Click on i "menu"
+      params:
+        element:
+          multiLocator:
+            ab: /*[local-name()="html"][1]/*[local-name()="body"][1]/*[local-name()="header"][1]/*[local-name()="nav"][1]/*[local-name()="div"][1]/*[local-name()="a"][2]/*[local-name()="i"][1]
+            at: /descendant::*[@role="banner"]/descendant::*[@href="#"]/*[local-name()="i"][1]
+            cl: /descendant::*[contains(concat(' ', normalize-space(@class), ' '), " sidenav-trigger ")]/descendant::*[contains(concat(' ', normalize-space(@class), ' '), " material-icons ")]
+            clt: /descendant::*[contains(concat(' ', normalize-space(@class), ' '), " sidenav-trigger ")]/descendant::*[contains(concat(' ', normalize-space(@class), ' '), " material-icons ")]
+            co: '[{"text":"menu","textType":"directText"}]'
+            ro: //*[text()[normalize-space(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞŸŽŠŒ', 'abcdefghijklmnopqrstuvwxyzàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿžšœ')) = "menu"]]
+          targetOuterHTML: <i class="material-icons">menu</i>
+          url: https://archive.sweetops.com/
+      type: click
+      allowFailure: false
+      isCritical: true
+      noScreenshot: false
+    - name: Click on link "#terraform"
+      params:
+        element:
+          multiLocator:
+            ab: /*[local-name()="html"][1]/*[local-name()="body"][1]/*[local-name()="ul"][1]/*[local-name()="li"][19]/*[local-name()="a"][1]
+            at: ""
+            cl: /descendant::*[contains(concat(' ', normalize-space(@class), ' '), " sidenav ")]/*[local-name()="li"][19]/descendant::*[contains(concat(' ', normalize-space(@class), ' '), " page-link ")]
+            clt: /descendant::*[contains(concat(' ', normalize-space(@class), ' '), " sidenav ")]/*[local-name()="li"][19]/descendant::*[contains(concat(' ', normalize-space(@class), ' '), " page-link ")]
+            co: '[{"text":"#terraform","textType":"directText"},{"relation":"AFTER","tagName":"LI","text":" #refarch ","textType":"innerText"}]'
+            ro: //*[@href="/terraform/"]
+          targetOuterHTML: <a class="page-link" href="/terraform/">#terraform</a>
+          url: https://archive.sweetops.com/
+      timeout: 0
+      type: click
+      allowFailure: false
+      isCritical: true
+      noScreenshot: false
+    - name: Test link "current month" content
+      params:
+        check: matchRegex
+        element:
+          multiLocator:
+            ab: /*[local-name()="html"][1]/*[local-name()="body"][1]/*[local-name()="main"][1]/*[local-name()="div"][1]/*[local-name()="div"][1]/*[local-name()="div"][1]/*[local-name()="div"][2]/*[local-name()="div"][1]/*[local-name()="ul"][2]/*[local-name()="li"][10]/*[local-name()="a"][1]
+            at: ""
+            cl: /descendant::*[contains(concat(' ', normalize-space(@class), ' '), " post ")]/descendant::*[contains(concat(' ', normalize-space(@class), ' '), " curr-month ")][1]/*[local-name()="a"][1]
+            clt: /descendant::*[contains(concat(' ', normalize-space(@class), ' '), " post ")]/descendant::*[contains(concat(' ', normalize-space(@class), ' '), " curr-month ")][1]/descendant::*[text()[normalize-space(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞŸŽŠŒ', 'abcdefghijklmnopqrstuvwxyzàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿžšœ')) = "oct"]]
+            co: '[{"text":"oct","textType":"directText"},{"relation":"BEFORE","tagName":"DIV","text":" #terraform (2023-10) discussions related to terraform or terraform modules","textType":"innerText"}]'
+            ro: //*[local-name()="div"][1]/*[local-name()="ul"][2]/*[10]/*
+          targetOuterHTML: <a>Oct</a>
+          url: https://archive.sweetops.com/terraform/2023/10/
+          userLocator:
+            failTestOnCannotLocate: true
+            values:
+              - type: css
+                value: div.pagination-wrapper:has(+ header) li.curr-month > a
+        value: '{{ DELAYED_MONTH }}|{{ THIS_MONTH }}'
+      timeout: 5
+      type: assertElementContent
+      allowFailure: false
+      isCritical: true
+      noScreenshot: false
