@@ -21,6 +21,7 @@ variable "datadog_monitors" {
     force_delete        = bool
     threshold_windows   = map(any)
     thresholds          = map(any)
+    notify_by           = list(string)
   }))
   description = "Map of Datadog monitor configurations. See catalog for examples"
 }
