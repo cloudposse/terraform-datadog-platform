@@ -28,6 +28,7 @@ variable "datadog_monitors" {
   #    groupby_simple_monitor = bool
   #    validate               = bool
   #    notify_by              = list(string)
+  #    on_missing_data        = string
 
   # TODO: deprecate in favor of new_group_delay once the options are fully clarified
   # See https://github.com/DataDog/terraform-provider-datadog/issues/1292

@@ -22,6 +22,7 @@ variable "datadog_monitors" {
     threshold_windows   = map(any)
     thresholds          = map(any)
     notify_by           = list(string)
+    on_missing_data     = string
   }))
   description = "Map of Datadog monitor configurations. See catalog for examples"
 }

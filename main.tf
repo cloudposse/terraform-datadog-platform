@@ -24,6 +24,7 @@ resource "datadog_monitor" "default" {
   enable_logs_sample  = lookup(each.value, "enable_logs_sample", null)
   force_delete        = lookup(each.value, "force_delete", null)
   notify_by           = lookup(each.value, "notify_by", [])
+  on_missing_data     = lookup(each.value, "on_missing_data", null)
 
   monitor_thresholds {
     warning           = lookup(each.value.thresholds, "warning", null)
