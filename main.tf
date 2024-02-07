@@ -9,8 +9,8 @@ resource "datadog_monitor" "default" {
 
   name                   = each.value.name
   type                   = each.value.type
-  priority               = lookup(each.value, "priority", null)
   query                  = each.value.query
+  priority               = lookup(each.value, "priority", null)
   message                = format("%s%s", each.value.message, local.alert_tags)
   escalation_message     = lookup(each.value, "escalation_message", null)
   require_full_window    = lookup(each.value, "require_full_window", null)
