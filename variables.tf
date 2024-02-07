@@ -1,28 +1,41 @@
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor
 variable "datadog_monitors" {
-  type = map(object({
-    name                = string
-    type                = string
-    message             = string
-    escalation_message  = string
-    query               = string
-    tags                = list(string)
-    notify_no_data      = bool
-    new_host_delay      = number
-    evaluation_delay    = number
-    no_data_timeframe   = number
-    renotify_interval   = number
-    notify_audit        = bool
-    timeout_h           = number
-    enable_logs_sample  = bool
-    include_tags        = bool
-    require_full_window = bool
-    locked              = bool
-    force_delete        = bool
-    threshold_windows   = map(any)
-    thresholds          = map(any)
-  }))
-  description = "Map of Datadog monitor configurations. See catalog for examples"
+  type        = map(any)
+  description = <<-EOT
+    Map of Datadog monitor configurations. See catalog for examples
+    The objects shall be constructed as follows, since not all data is required, we will use map(any) with
+    lookups and their defaults
+    ```
+    type = map(object({
+      name                   = string
+      type                   = string
+      priority               = number
+      message                = string
+      escalation_message     = string
+      query                  = string
+      tags                   = list(string)
+      notify_no_data         = bool
+      new_host_delay         = number
+      new_group_delay        = number
+      groupby_simple_monitor = bool
+      evaluation_delay       = number
+      no_data_timeframe      = number
+      renotify_interval      = number
+      renotify_occurrences   = number
+      renotify_statuses      = list(string)
+      notify_audit           = bool
+      timeout_h              = number
+      enable_logs_sample     = bool
+      include_tags           = bool
+      require_full_window    = bool
+      locked                 = bool
+      force_delete           = bool
+      threshold_windows      = map(any)
+      thresholds             = map(any)
+      validate               = bool
+    }))
+    ```
+  EOT
 }
 
 variable "alert_tags" {
