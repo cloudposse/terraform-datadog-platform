@@ -1,0 +1,29 @@
+{
+  "name": "anomaly-recovery-test",
+  "type": "query alert",
+  "query": "avg(last_1d):anomalies(avg:system.load.1{*}, 'agile', 2, direction='both', interval=300, alert_window='last_37m', count_default_zero='true', seasonality='weekly') >= 1",
+  "message": "recovery window test",
+  "tags": [],
+  "options": {
+    "thresholds": {
+      "critical": 1,
+      "critical_recovery": 0,
+      "warning": 0.8
+    },
+    "notify_audit": false,
+    "require_full_window": false,
+    "notify_no_data": false,
+    "renotify_interval": 0,
+    "threshold_windows": {
+      "trigger_window": "last_37m",
+      "recovery_window": "last_1h"
+    },
+    "include_tags": false,
+    "timeout_h": 1,
+    "evaluation_delay": 88,
+    "new_host_delay": 300,
+    "silenced": {}
+  },
+  "priority": 5,
+  "restricted_roles": null
+}

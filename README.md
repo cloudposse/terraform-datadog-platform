@@ -1,7 +1,7 @@
 
 <!-- markdownlint-disable -->
 # terraform-datadog-platform <a href="https://cpco.io/homepage"><img align="right" src="https://cloudposse.com/logo-300x69.svg" width="150" /></a>
-<a href="https://github.com/cloudposse/terraform-datadog-platform/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-datadog-platform.svg" alt="Latest Release"/></a><a href="https://slack.cloudposse.com"><img src="https://slack.cloudposse.com/badge.svg" alt="Slack Community"/></a>
+<a href="https://github.com/cloudposse/terraform-datadog-platform/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-datadog-platform.svg?style=for-the-badge" alt="Latest Release"/></a><a href="https://slack.cloudposse.com"><img src="https://slack.cloudposse.com/for-the-badge.svg" alt="Slack Community"/></a>
 <!-- markdownlint-restore -->
 
 <!--
@@ -111,7 +111,7 @@ Provision Datadog monitors from the catalog of YAML definitions:
 ```hcl
 module "monitor_configs" {
   source  = "cloudposse/config/yaml"
-  version = "0.8.1"
+  version = "1.0.2"
 
   map_config_local_base_path = path.module
   map_config_paths           = var.monitor_paths
@@ -157,7 +157,7 @@ Provision Datadog monitors, Datadog roles with defined permissions, and assign r
 ```hcl
 module "monitor_configs" {
   source  = "cloudposse/config/yaml"
-  version = "0.8.1"
+  version = "1.0.2"
 
   map_config_local_base_path = path.module
   map_config_paths           = var.monitor_paths
@@ -167,7 +167,7 @@ module "monitor_configs" {
 
 module "role_configs" {
   source  = "cloudposse/config/yaml"
-  version = "0.8.1"
+  version = "1.0.2"
 
   map_config_local_base_path = path.module
   map_config_paths           = var.role_paths

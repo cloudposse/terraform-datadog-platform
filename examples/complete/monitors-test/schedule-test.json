@@ -1,0 +1,34 @@
+{
+  "name": "schedule-test",
+  "type": "event-v2 alert",
+  "query": "events(\"service:datadog-agent\").rollup(\"cardinality\", \"@evt.id\").current(\"1h\") > 2345",
+  "message": "No message",
+  "tags": [
+    "test:examplemonitor",
+    "Terratest"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 2345,
+      "warning": 987
+    },
+    "enable_logs_sample": false,
+    "notify_audit": false,
+    "on_missing_data": "default",
+    "include_tags": false,
+    "scheduling_options": {
+      "custom_schedule": {
+        "recurrences": [
+          {
+            "rrule": "FREQ=DAILY;INTERVAL=1;BYHOUR=17;BYMINUTE=54",
+            "timezone": "America/Los_Angeles"
+          }
+        ]
+      },
+      "evaluation_window": {
+        "hour_starts": 7
+      }
+    }
+  },
+  "priority": 5
+}

@@ -495,7 +495,7 @@ resource "datadog_synthetics_test" "default" {
   set_cookie    = lookup(each.value, "set_cookie", try(each.value.config.setCookie, null))
   subtype       = lookup(each.value, "subtype", null)
 
-  # Convert terraform tags map to Datadog tags map
+  # Convert Terraform tags map to Datadog tags list
   # If a key is supplied with a value:
   #   tags:
   #     key: value

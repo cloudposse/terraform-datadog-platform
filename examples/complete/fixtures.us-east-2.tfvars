@@ -8,4 +8,6 @@ alert_tags = ["@opsgenie"]
 
 alert_tags_separator = "\n"
 
-monitor_paths = ["../../catalog/monitors/*.yaml"]
+legacy_monitor_paths = ["./monitors-test/*.yaml"]
+
+json_monitor_paths = ["./monitors-test/*.json"]
