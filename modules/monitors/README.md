@@ -19,6 +19,18 @@ part of the Datadog API schema. These are:
 - `enabled` (boolean): If false, the monitor will not be created. This is to 
   allow you to suppress a monitor created through merging configuration snippets.
 
+### Tags
+
+This module provides special handling for tags. The `tags` attribute of a monitor
+definition in the Datadog API and the Terraform resource is a list of strings. 
+However, the Cloud Posse (as well as AWS) default is to use a map of strings
+for tags. This module allows you to provide either a list or a map for the tags.
+
+If you provide a list, it will be used as is. If you provide a map, it will be
+converted to a list of strings in the format `key:value` (or `key` if `value` is
+`null`). If you provide no tag settings at all, not even an empty list or map,
+the module will use the default tags from the [null-label](https://github.com/cloudposse/terraform-null-label/) module.
+
 ### API Schema (preferred)
 
 Datadog provides a REST API for managing monitors. We refer to the responses
@@ -43,19 +55,18 @@ Terraform schema will be ignored.
 
 #### Special Notes
 
-Note that `restricted_roles_map` provides a convenient way to specify the
-`restricted_roles` attribute of the monitor. This is a map of monitors to
-sets of Datadog role names. If provided, this will override the `restricted_roles`
-attribute of the monitor definition. If not provided, the `restricted_roles`
-attribute of the monitor definition will be used, but be aware this the attribute
-value is a list of unique role identifiers, not role names.
-
 The `alert_tags` input is provided for convenience. It is used to add notification
 tags to the monitor message. However, it does not check to see if the tags are
 already present. If the tags are already present, they will still be added again.
 Thus, if you define a monitor via JSON, and then you use `alert_tags` when
 creating it, and then export the JSON representation of the created monitor definition, 
 it will not match because of the added tags.
+
+Note that `restricted_roles_map` provides a convenient way to specify the
+`restricted_roles` attribute of the monitor. This is a map of monitors to
+sets of Datadog unique role identifiers. If provided, this will override the
+`restricted_roles` attribute of the monitor definition. If not provided, the
+`restricted_roles` attribute of the monitor definition will be used, if present.
 
 
 ### Legacy schema (deprecated)
