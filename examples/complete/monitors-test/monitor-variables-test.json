@@ -1,0 +1,56 @@
+{
+  "name": "monitor-variables-test",
+  "type": "event-v2 alert",
+  "query": "formula(\"query2 / query1 * 100\").last(\"15m\") > 0.8",
+  "message": "Test of monitors with variables",
+  "tags": [
+    "test:examplemonitor",
+    "env:ci"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 0.8
+    },
+    "enable_logs_sample": false,
+    "notify_audit": false,
+    "on_missing_data": "default",
+    "include_tags": false,
+    "variables": [
+      {
+        "data_source": "events",
+        "name": "query2",
+        "indexes": [
+          "*"
+        ],
+        "compute": {
+          "aggregation": "count"
+        },
+        "group_by": [],
+        "search": {
+          "query": "status:error"
+        },
+        "storage": "hot"
+      },
+      {
+        "data_source": "events",
+        "name": "query1",
+        "indexes": [
+          "*"
+        ],
+        "compute": {
+          "aggregation": "count"
+        },
+        "group_by": [],
+        "search": {
+          "query": ""
+        },
+        "storage": "hot"
+      }
+    ],
+    "new_host_delay": 300,
+    "groupby_simple_monitor": false,
+    "silenced": {}
+  },
+  "priority": 5,
+  "restricted_roles": null
+}

@@ -97,6 +97,54 @@ resource "datadog_monitor" "default" {
     }
   } # scheduling_options
 
+  dynamic "variables" {
+    # There is only one `variables` block in the Terraform model.
+    for_each = try(length(tolist(each.value.options.variables)), 0) > 0 ? ["variables"] : []
+    content {
+      # The JSON `variables` attribute is a list of objects,
+      # but in Terraform the list is expressed as repeated `event_query` blocks under `variables`.
+      dynamic "event_query" {
+        for_each = each.value.options.variables
+        iterator = query
+        content {
+          compute {
+            aggregation = query.value.compute.aggregation
+            interval    = lookup(query.value.compute, "interval", null)
+            metric      = lookup(query.value.compute, "metric", null)
+          }
+
+          data_source = query.value.data_source
+
+          dynamic "group_by" {
+            for_each = try(query.value.group_by, [])
+            content {
+              facet = group_by.value.facet
+              limit = try(group_by.value.limit, null)
+
+              dynamic "sort" {
+                for_each = try([group_by.value.sort], [])
+                content {
+                  aggregation = sort.value.aggregation
+                  metric      = try(sort.value.metric, null)
+                  order       = try(sort.value.order, null)
+                }
+              } # sort
+            }
+          } # group_by
+
+          indexes = try(query.value.indexes, null)
+          name    = query.value.name
+
+          search {
+            # Cannot be null or empty string, use "*" which is equivalent to "" and matches everything
+            # See https://github.com/DataDog/terraform-provider-datadog/pull/2275
+            query = coalesce(try(query.value.search.query, null), "*")
+          }
+        }
+      } # event_query
+    }
+  } # variables
+
   ###  End of `options` attributes ###
 
   # `force_delete` and `validate` are not part of the Datadog API monitor model.

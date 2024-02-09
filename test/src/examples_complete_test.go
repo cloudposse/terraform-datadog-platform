@@ -56,8 +56,8 @@ func TestExamplesComplete(t *testing.T) {
 	// Verify we're getting back the outputs we expect
 	assert.Greater(t, len(datadogMonitorNames), 0)
 
-	// Ensure legacy scheduling options are preserved
-	//output := terraform.OutputMapOfObjects(t, terraformOptions, "datadog_monitors")
+	// Extract the monitors definitions from the output. Unfortunately, the output is too complex even
+	// for terratest's OutputForMapObject, so we have to parse it manually.
 	output := terraform.OutputForKeys(t, terraformOptions, []string{"datadog_monitors"})["datadog_monitors"].(map[string]interface{})
 
 	var keys []string
@@ -120,13 +120,23 @@ func TestExamplesComplete(t *testing.T) {
 			assert.Contains(t, tags, "test:examplemonitor", "Monitor 'schedule-test' should have a 'test:examplemonitor' tag")
 			assert.NotContains(t, tags, "Stage:test", "Monitor 'schedule-test' should not have default tag 'Stage:test'")
 		}
+
+		// check for formula queries
+		key := "monitor-variables-test"
+		if assert.Contains(t, output, key, fmt.Sprintf("Did not find monitor with key '%s' in output", key)) {
+			queryMap, err2 := extractFormulaQueries(output[key])
+			if assert.NoError(t, err2, fmt.Sprintf("Extracting formula queries from Monitor '%s' failed", key)) {
+				assert.Equal(t, "status:error", queryMap["query2"])
+			}
+		}
 	}
 }
 
+// Extracts the list of tags from the output
 func extractMonitorTags(value interface{}) (result []string, err error) {
 	defer func() {
 		if r := recover(); r != nil {
-			// A panic occurred, return nil and a custom error
+			// A panic occurred, almost certainly due to a type assertion failure
 			result = nil
 			err = errors.New("unable to find tags in output")
 		}
@@ -146,10 +156,12 @@ func extractMonitorTags(value interface{}) (result []string, err error) {
 	}
 }
 
+// Extracts the threshold_windows from the output
+// In JSON, the threshold_windows are at `options.threshold_windows`, but in the output they are at `monitor_threshold_windows[0]`
 func extractMonitorThresholdWindows(value interface{}) (result map[string]interface{}, err error) {
 	defer func() {
 		if r := recover(); r != nil {
-			// A panic occurred, return zero and a custom error
+			// A panic occurred, almost certainly due to a type assertion failure
 			result = nil
 			err = errors.New("unable to find monitor threshold_windows in output")
 		}
@@ -162,10 +174,12 @@ func extractMonitorThresholdWindows(value interface{}) (result map[string]interf
 	}
 }
 
+// Extracts the scheduled evaluation window hour_starts from the output
+// In JSON, the hour_starts is at `options.scheduling_options.evaluation_window.hour_starts`, but in the output they are at `scheduling_options[].evaluation_window[].hour_starts`
 func extractEvaluationWindowHourStarts(value interface{}) (result string, err error) {
 	defer func() {
 		if r := recover(); r != nil {
-			// A panic occurred, return zero and a custom error
+			// A panic occurred, almost certainly due to a type assertion failure
 			result = ""
 			err = errors.New("unable to find hour_starts in evaluation_window")
 		}
@@ -178,8 +192,54 @@ func extractEvaluationWindowHourStarts(value interface{}) (result string, err er
 	}
 }
 
-// .(map[string]interface{})["evaluation_window"])
-// .([]map[string]interface{})[0].(map[string]int)["hour_starts"]
+// Extracts the formula queries from the output
+// In JSON, the queries are at `variables[].search.query`, but in the output they are at `variables[].event_query[].search[].query`
+func extractFormulaQueries(value interface{}) (result map[string]string, err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			// A panic occurred, almost certainly due to a type assertion failure
+			result = nil
+			err = errors.New("unable to find formula queries in output")
+		}
+	}()
+
+	result = make(map[string]string)
+
+	// Check if the key "variables" exists in the map
+	if variables, ok := value.(map[string]interface{})["variables"]; ok {
+		// Access the nested list of maps at `variables.event_query`
+		if eventQueries, ok := variables.([]interface{})[0].(map[string]interface{})["event_query"].([]interface{}); ok {
+			for _, eventQueryList := range eventQueries {
+				if eventQuery, ok := eventQueryList.(map[string]interface{}); ok {
+					// Check if both `name` and `search.query` exist in the nested map
+					if name, ok := eventQuery["name"].(string); ok {
+						if search, ok := eventQuery["search"].([]interface{})[0].(map[string]interface{}); ok {
+							if query, ok := search["query"].(string); ok {
+								// Add them to the new map with `name` as the key and `search.query` as the value
+								result[name] = query
+							} else {
+								return nil, fmt.Errorf("query not found or not a string")
+							}
+						} else {
+							return nil, fmt.Errorf("search not found or not a list of maps")
+						}
+					} else {
+						return nil, fmt.Errorf("name not found or not a string")
+					}
+				} else {
+					return nil, fmt.Errorf("event_query list element not a map")
+				}
+			}
+		} else {
+			return nil, fmt.Errorf("event_query list not found or not a list")
+		}
+	} else {
+		return nil, fmt.Errorf("monitor-variables-test not found in output")
+	}
+
+	return result, nil
+}
+
 func TestExamplesCompleteDisabled(t *testing.T) {
 	t.Parallel()
 	randID := strings.ToLower(random.UniqueId())
