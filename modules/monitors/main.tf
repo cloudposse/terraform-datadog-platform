@@ -35,9 +35,9 @@ resource "datadog_monitor" "default" {
   groupby_simple_monitor   = try(each.value.options.groupby_simple_monitor, null)
   include_tags             = try(each.value.options.include_tags, null)
   # min_failure_duration is not supported in provider v3.36.0
-  min_failure_duration = try(each.value.options.min_failure_duration, null)
+  # min_failure_duration = try(each.value.options.min_failure_duration, null)
   # min_location_failed is not supported in provider v3.36.0
-  min_location_failed      = try(each.value.options.min_location_failed, null)
+  # min_location_failed      = try(each.value.options.min_location_failed, null)
   new_group_delay          = try(each.value.options.new_group_delay, null)
   no_data_timeframe        = try(each.value.options.no_data_timeframe, null)
   notification_preset_name = try(each.value.options.notification_preset_name, null)
