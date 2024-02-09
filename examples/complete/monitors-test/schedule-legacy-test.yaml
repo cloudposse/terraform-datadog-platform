@@ -1,0 +1,17 @@
+schedule-legacy-test:
+  name: schedule-legacy-test
+  type: event-v2 alert
+  query: events("service:datadog-agent").rollup("cardinality", "@evt.id").current("1h") > 2345
+  message: No message
+  threshold_windows: {}
+  thresholds:
+    critical: 2345
+    warning: 987
+  enable_logs_sample: false
+  notify_audit: false
+  on_missing_data: default
+  include_tags: false
+  scheduling_options:
+  - evaluation_window:
+      - hour_starts: 7
+  priority: 5

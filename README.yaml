@@ -37,10 +37,10 @@ github_repo: cloudposse/terraform-datadog-platform
 # Badges to display
 badges:
   - name: "Latest Release"
-    image: "https://img.shields.io/github/release/cloudposse/terraform-datadog-platform.svg"
+    image: "https://img.shields.io/github/release/cloudposse/terraform-datadog-platform.svg?style=for-the-badge"
     url: "https://github.com/cloudposse/terraform-datadog-platform/releases/latest"
   - name: "Slack Community"
-    image: "https://slack.cloudposse.com/badge.svg"
+    image: "https://slack.cloudposse.com/for-the-badge.svg"
     url: "https://slack.cloudposse.com"
 
 related:
@@ -133,7 +133,7 @@ usage: |-
   ```hcl
   module "monitor_configs" {
     source  = "cloudposse/config/yaml"
-    version = "0.8.1"
+    version = "1.0.2"
 
     map_config_local_base_path = path.module
     map_config_paths           = var.monitor_paths
@@ -179,7 +179,7 @@ usage: |-
   ```hcl
   module "monitor_configs" {
     source  = "cloudposse/config/yaml"
-    version = "0.8.1"
+    version = "1.0.2"
 
     map_config_local_base_path = path.module
     map_config_paths           = var.monitor_paths
@@ -189,7 +189,7 @@ usage: |-
 
   module "role_configs" {
     source  = "cloudposse/config/yaml"
-    version = "0.8.1"
+    version = "1.0.2"
 
     map_config_local_base_path = path.module
     map_config_paths           = var.role_paths
@@ -266,6 +266,8 @@ contributors:
     github: "osterman"
   - name: "Andriy Knysh"
     github: "aknysh"
+  - Name: "Nuru"
+    github: "Nuru"
   - name: "Vladimir"
     github: "SweetOps"
   - name: "Yonatan Koren"

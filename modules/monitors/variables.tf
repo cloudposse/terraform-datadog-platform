@@ -1,38 +1,16 @@
 # https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor
 variable "datadog_monitors" {
-  type = any
-  #    enabled                = bool
-  #    name                   = string
-  #    type                   = string
-  #    message                = string
-  #    escalation_message     = string
-  #    query                  = string
-  #    tags                   = map(string)
-  #    notify_no_data         = bool
-  #    new_group_delay        = number
-  #    evaluation_delay       = number
-  #    no_data_timeframe      = number
-  #    renotify_interval      = number
-  #    renotify_occurrences   = number
-  #    renotify_statuses      = set(string)
-  #    notify_audit           = bool
-  #    timeout_h              = number
-  #    enable_logs_sample     = bool
-  #    include_tags           = bool
-  #    require_full_window    = bool
-  #    locked                 = bool
-  #    force_delete           = bool
-  #    threshold_windows      = map(any)
-  #    thresholds             = map(any)
-  #    priority               = number
-  #    groupby_simple_monitor = bool
-  #    validate               = bool
-
-  # TODO: deprecate in favor of new_group_delay once the options are fully clarified
-  # See https://github.com/DataDog/terraform-provider-datadog/issues/1292
-  #    new_host_delay = number
-  #  }))
-  description = "Map of Datadog monitor configurations. See catalog for examples"
+  # We use `any` type here because the `datadog_monitors` map can have multiple configurations
+  # and it is too complex to model all possible configurations in the type system.
+  type        = any
+  description = <<-EOT
+    Map of Datadog monitor configurations. See the README for details on the expected structure.
+    Keys will be used as monitor names if not provided in the `name` attribute.
+    Attributes match [Datadog "Create a monitor" API](https://docs.datadoghq.com/api/v1/monitors/#create-a-monitor).
+    For backward compatibility, attributes under `options` in the API schema that were
+    previously allowed at the top level remain available at the top level if no `options` are provided.
+    Because `new_host_delay` is deprecated, it is ignored unless set to zero.
+    EOT
 }
 
 variable "alert_tags" {
@@ -49,6 +27,20 @@ variable "alert_tags_separator" {
 
 variable "restricted_roles_map" {
   type        = map(set(string))
-  description = "Map of monitors names to sets of Datadog roles to restrict access to each monitor"
+  description = <<-EOT
+    Map of `datadog_monitors` map keys to sets of Datadog unique role IDs
+    to restrict access to each monitor. If provided, it will override
+    the `restricted_roles` attribute in the monitor definition.
+    EOT
   default     = {}
+}
+
+variable "default_tags_enabled" {
+  type        = bool
+  description = <<-EOT
+    If true, monitors without `tags` in their definitions will have tags
+    from `null-label` added to them. Note that even an empty `list` or `map` of tags in
+    the monitor definition will keep the default tags from being added.
+    EOT
+  default     = true
 }

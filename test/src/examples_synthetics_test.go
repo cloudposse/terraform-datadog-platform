@@ -1,6 +1,7 @@
 package test
 
 import (
+	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
@@ -30,6 +31,10 @@ func TestExamplesSynthetics(t *testing.T) {
 		Vars: map[string]interface{}{
 			"attributes": attributes,
 		},
+	}
+	// Keep the output quiet
+	if !testing.Verbose() {
+		terraformOptions.Logger = logger.Discard
 	}
 
 	// At the end of the test, run `terraform destroy` to clean up any resources that were created
