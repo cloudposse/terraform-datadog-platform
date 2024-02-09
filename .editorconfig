@@ -17,9 +17,14 @@ trim_trailing_whitespace = false
 
 # Override for Makefile
 [{Makefile, makefile, GNUmakefile, Makefile.*}]
-tab_width = 2
+tab_width = 4
 indent_style = tab
-indent_size = 4
+indent_size = tab
+
+# Enforce `go` formatting rules
+[*.go]
+indent_size = unset
+indent_style = tab
 
 [COMMIT_EDITMSG]
 max_line_length = 0
