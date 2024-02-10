@@ -26,20 +26,30 @@ resource "datadog_monitor" "default" {
   # Setting tags is complicated and moved to the bottom of this resource.
 
   ##### Attributes under `options` in the API model ####
-  enable_logs_sample     = try(each.value.options.enable_logs_sample, null)
-  escalation_message     = try(each.value.options.escalation_message, null)
-  evaluation_delay       = try(each.value.options.evaluation_delay, null)
-  groupby_simple_monitor = try(each.value.options.groupby_simple_monitor, null)
-  include_tags           = try(each.value.options.include_tags, null)
-  new_group_delay        = try(each.value.options.new_group_delay, null)
-  no_data_timeframe      = try(each.value.options.no_data_timeframe, null)
-  notify_audit           = try(each.value.options.notify_audit, null)
-  notify_no_data         = try(each.value.options.notify_no_data, null)
-  renotify_interval      = try(each.value.options.renotify_interval, null)
-  renotify_occurrences   = try(each.value.options.renotify_occurrences, null)
-  renotify_statuses      = try(each.value.options.renotify_statuses, null)
-  require_full_window    = try(each.value.options.require_full_window, null)
-  timeout_h              = try(each.value.options.timeout_h, null)
+  enable_logs_sample = try(each.value.options.enable_logs_sample, null)
+  # enable_samples is read-only in provider v3.36.0
+  # enable_samples         = try(each.value.options.enable_samples, null)
+  escalation_message       = try(each.value.options.escalation_message, null)
+  evaluation_delay         = try(each.value.options.evaluation_delay, null)
+  group_retention_duration = try(each.value.options.group_retention_duration, null)
+  groupby_simple_monitor   = try(each.value.options.groupby_simple_monitor, null)
+  include_tags             = try(each.value.options.include_tags, null)
+  # min_failure_duration is not supported in provider v3.36.0
+  # min_failure_duration = try(each.value.options.min_failure_duration, null)
+  # min_location_failed is not supported in provider v3.36.0
+  # min_location_failed      = try(each.value.options.min_location_failed, null)
+  new_group_delay          = try(each.value.options.new_group_delay, null)
+  no_data_timeframe        = try(each.value.options.no_data_timeframe, null)
+  notification_preset_name = try(each.value.options.notification_preset_name, null)
+  notify_audit             = try(each.value.options.notify_audit, null)
+  notify_by                = try(each.value.options.notify_by, null)
+  notify_no_data           = try(each.value.options.notify_no_data, null)
+  on_missing_data          = try(each.value.options.on_missing_data, null)
+  renotify_interval        = try(each.value.options.renotify_interval, null)
+  renotify_occurrences     = try(each.value.options.renotify_occurrences, null)
+  renotify_statuses        = try(each.value.options.renotify_statuses, null)
+  require_full_window      = try(each.value.options.require_full_window, null)
+  timeout_h                = try(each.value.options.timeout_h, null)
 
   # DEPRECATED: `new_host_delay` is deprecated, but still needed when set to zero to override default.
   # So it is ignored unless set to zero.
