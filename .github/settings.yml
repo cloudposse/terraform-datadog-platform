@@ -1,0 +1,7 @@
+# Upstream changes from _extends are only recognized when modifications are made to this file in the default branch.
+_extends: .github
+repository:
+  name: terraform-datadog-platform
+  description: Terraform module to configure and provision Datadog monitors, custom RBAC roles with permissions, Datadog synthetic tests, Datadog child organizations, and other Datadog resources from a YAML configuration, complete with automated tests.
+  homepage: https://cloudposse.com/accelerate
+  topics: terraform, terraform-modules, datadog, monitoring, terratest, synthetics
