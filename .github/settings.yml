@@ -5,3 +5,4 @@ repository:
   description: Terraform module to configure and provision Datadog monitors, custom RBAC roles with permissions, Datadog synthetic tests, Datadog child organizations, and other Datadog resources from a YAML configuration, complete with automated tests.
   homepage: https://cloudposse.com/accelerate
   topics: terraform, terraform-modules, datadog, monitoring, terratest, synthetics
+
