@@ -41,7 +41,7 @@ func TestExamplesComplete(t *testing.T) {
 		},
 	}
 	// Keep the output quiet
-	if true || !testing.Verbose() {
+	if !testing.Verbose() {
 		terraformOptions.Logger = logger.Discard
 	}
 
