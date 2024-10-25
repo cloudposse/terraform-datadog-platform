@@ -405,7 +405,7 @@ resource "datadog_synthetics_test" "default" {
           # Required
           timezone = scheduling.value.timezone
           dynamic "timeframes" {
-            for_each = [for v in [lookup(scheduling.value, "timeframes", null)] : v if v != null]
+            for_each = lookup(scheduling.value, "timeframes", [])
 
             content {
               day  = timeframes.value.day
