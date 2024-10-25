@@ -104,7 +104,7 @@ func TestExamplesComplete(t *testing.T) {
 		}
 
 		// anomaly-recovery-test should have no tags
-		assert.Nil(t, output["anomaly-recovery-test"].(map[string]interface{})["tags"], "Monitor 'anomaly-recovery-test' should have no tags")
+		assert.Empty(t, output["anomaly-recovery-test"].(map[string]interface{})["tags"], "Monitor 'anomaly-recovery-test' should have no tags")
 
 		// schedule-legacy-test has no tags defined, should have default tags
 		tags, err = extractMonitorTags(output["schedule-legacy-test"])

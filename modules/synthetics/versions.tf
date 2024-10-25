@@ -3,8 +3,9 @@ terraform {
 
   required_providers {
     datadog = {
-      source  = "datadog/datadog"
-      version = ">= 3.31.0"
+      source = "datadog/datadog"
+      # Must have >= 3.43.1 to have fix for https://github.com/DataDog/terraform-provider-datadog/issues/2531
+      version = ">= 3.43.1"
     }
   }
 }
