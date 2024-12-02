@@ -63,9 +63,10 @@ resource "datadog_synthetics_test" "default" {
             for_each = assertion.value.operator == "validatesJSONPath" ? [lookup(assertion.value, "targetjsonpath", lookup(assertion.value, "target", null))] : []
 
             content {
-              jsonpath    = lookup(targetjsonpath.value, "jsonpath", lookup(targetjsonpath.value, "jsonPath", null))
-              operator    = targetjsonpath.value.operator
-              targetvalue = lookup(targetjsonpath.value, "targetvalue", lookup(targetjsonpath.value, "targetValue", null))
+              jsonpath         = lookup(targetjsonpath.value, "jsonpath", lookup(targetjsonpath.value, "jsonPath", null))
+              elementsoperator = lookup(targetjsonpath.value, "elementsoperator", lookup(targetjsonpath.value, "elementsOperator", null))
+              operator         = targetjsonpath.value.operator
+              targetvalue      = lookup(targetjsonpath.value, "targetvalue", lookup(targetjsonpath.value, "targetValue", null))
             }
           }
 
@@ -199,9 +200,10 @@ resource "datadog_synthetics_test" "default" {
         for_each = assertion.value.operator == "validatesJSONPath" ? [lookup(assertion.value, "targetjsonpath", lookup(assertion.value, "target", null))] : []
 
         content {
-          jsonpath    = lookup(targetjsonpath.value, "jsonpath", lookup(targetjsonpath.value, "jsonPath", null))
-          operator    = targetjsonpath.value.operator
-          targetvalue = lookup(targetjsonpath.value, "targetvalue", lookup(targetjsonpath.value, "targetValue", null))
+          jsonpath         = lookup(targetjsonpath.value, "jsonpath", lookup(targetjsonpath.value, "jsonPath", null))
+          elementsoperator = lookup(targetjsonpath.value, "elementsoperator", lookup(targetjsonpath.value, "elementsOperator", null))
+          operator         = targetjsonpath.value.operator
+          targetvalue      = lookup(targetjsonpath.value, "targetvalue", lookup(targetjsonpath.value, "targetValue", null))
         }
       }
 
