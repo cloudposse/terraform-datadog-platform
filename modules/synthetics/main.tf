@@ -54,10 +54,11 @@ resource "datadog_synthetics_test" "default" {
         for_each = lookup(api_step.value, "assertion", lookup(api_step.value, "assertions", []))
 
         content {
-          operator = assertion.value.operator
+          operator = lookup(assertion.value, "operator", null)
           type     = assertion.value.type
           property = lookup(assertion.value, "property", null)
           target   = try(tostring(assertion.value.target), null)
+          code     = lookup(assertion.value, "code", null)
 
           dynamic "targetjsonpath" {
             for_each = assertion.value.operator == "validatesJSONPath" ? [lookup(assertion.value, "targetjsonpath", lookup(assertion.value, "target", null))] : []
@@ -191,10 +192,11 @@ resource "datadog_synthetics_test" "default" {
   dynamic "assertion" {
     for_each = lookup(each.value, "assertion", try(each.value.config.assertions, []))
     content {
-      operator = assertion.value.operator
+      operator = lookup(assertion.value, "operator", null)
       type     = assertion.value.type
       property = lookup(assertion.value, "property", null)
       target   = try(tostring(assertion.value.target), null)
+      code     = lookup(assertion.value, "code", null)
 
       dynamic "targetjsonpath" {
         for_each = assertion.value.operator == "validatesJSONPath" ? [lookup(assertion.value, "targetjsonpath", lookup(assertion.value, "target", null))] : []
