@@ -2,13 +2,13 @@
 
 This module is responsible for creating Datadog [Service Level Objectives](https://docs.datadoghq.com/monitors/service_level_objectives/) and their related monitors and alerts.
 
-The module can create metric-based SLOs (and the corresponding alerts) and monitor-based SLOs (and the corresponding monitors).
+The module can create metric-based SLOs (and the corresponding alerts), monitor-based SLOs (and the corresponding monitors) and time-slice-based SLOs (and the corresponding alerts).
 
 ## Alerts
 
 Datadog alerts for SLOs are terraformed through the monitor object.
 
-An SLO can have many thresholds set, but a monitor can only have one. In order to get around this, the module creates Datadog monitors for each threshold within an SLO. 
+An SLO can have many thresholds set, but a monitor can only have one. In order to get around this, the module creates Datadog monitors for each threshold within an SLO.
 
 ## Usage
 
@@ -101,8 +101,57 @@ monitor-slo:
     api_version: null
 ```
 
+Example of time-slice-based SLO:
+
+```yaml
+time_slice-slo:
+  name: "(SLO) Test API p95 latency Checks"
+  type: time_slice
+  description: |
+    Test API p95 latency should be less than 1 second.
+  sli_specification:
+    time_slice:
+      query:
+        formula: "query1 + query2"
+        queries:
+          - data_source: "metrics"
+            name: "query1"
+            query: "p95:trace.express.request{env:production,resource_name:get_/api/test,service:my-service}"
+          - data_source: "metrics"
+            name: "query2"
+            query: "p95:trace.express.request{env:production,resource_name:get_/api/test,service:my-service}"
+      comparator: "<="
+      threshold: 1
+      query_interval_seconds: 300
+  thresholds:
+    - target: 99.0
+      timeframe: "30d"
+      warning: 99.5
+
+  error_budget_alert:
+    enabled: true
+    threshold: 80
+    timeframe: "30d"
+    priority: 2
+    message: "Alert on 80% of error budget consumed"
+
+  burn_rate_alert:
+    enabled: true
+    threshold: 3
+    timeframe: "30d"
+    long_window: "24h"
+    short_window: "120m"
+    priority: 2
+    message: "Burn rate is high enough to deplete error budget in one day"
+
+  tags:
+    service: my-service
+    env: production
+```
+
 ## References
  - [Service Level Objectives](https://docs.datadoghq.com/monitors/service_level_objectives/)
  - [Monitor-based SLOs](https://docs.datadoghq.com/monitors/service_level_objectives/monitor/)
+ - [Time-slice-based SLOs](https://docs.datadoghq.com/monitors/service_level_objectives/time_slice/)
  - [Datadog Error Budget](https://docs.datadoghq.com/monitors/service_level_objectives/error_budget/)
  - [Monitor-based SLO example](https://github.com/DataDog/terraform-provider-datadog/issues/667)
