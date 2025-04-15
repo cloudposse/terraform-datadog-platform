@@ -139,7 +139,7 @@ resource "datadog_synthetics_test" "default" {
           # headers is in a separate `request_headers` block below
           host = lookup(req.value, "host", null)
           # httpVersion input is missing from all documentation, but seen in API output
-          http_version = lookup(req.value, "http_version", null)
+          http_version = lookup(req.value, "http_version", lookup(req.value, "httpVersion", null))
           message = lookup(req.value, "message", null)
           # metadata input is missing.
           # See https://github.com/DataDog/terraform-provider-datadog/issues/2155
@@ -361,7 +361,7 @@ resource "datadog_synthetics_test" "default" {
       disable_cors                    = lookup(opts.value, "disable_cors", lookup(opts.value, "disableCors", null))
       disable_csp                     = lookup(opts.value, "disable_csp", lookup(opts.value, "disableCsp", null))
       follow_redirects                = lookup(opts.value, "follow_redirects", false)
-      http_version                    = lookup(opts.value, "http_version", "http2")
+      http_version                    = lookup(opts.value, "http_version", lookup(opts.value, "httpVersion", null))
       ignore_server_certificate_error = lookup(opts.value, "ignore_server_certificate_error", lookup(opts.value, "ignoreServerCertificateError", null))
       initial_navigation_timeout      = lookup(opts.value, "initial_navigation_timeout", lookup(opts.value, "initialNavigationTimeout", null))
       min_failure_duration            = lookup(opts.value, "min_failure_duration", null)
@@ -458,7 +458,8 @@ resource "datadog_synthetics_test" "default" {
       # headers is in a separate `request_headers` block below
       host = lookup(req.value, "host", null)
       # httpVersion input is missing from all documentation, but seen in API output.
-      http_version = "http2" # options_list isn't respected
+      http_version = lookup(req.value, "http_version", lookup(req.value, "httpVersion", null)) # options_list isn't respected yet as of 2025-04-15
+      
       message      = lookup(req.value, "message", null)
       # metadata input is missing.
       # See https://github.com/DataDog/terraform-provider-datadog/issues/2155
