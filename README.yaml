@@ -43,7 +43,7 @@ badges:
     url: https://github.com/cloudposse/terraform-datadog-platform/commits
   - name: Slack Community
     image: https://slack.cloudposse.com/for-the-badge.svg
-    url: https://slack.cloudposse.com
+    url: https://cloudposse.com/slack
 
 # List any related terraform modules that this module may be used with or that this module depends on.
 related:
@@ -259,9 +259,5 @@ examples: |-
 
   Also checkout our [terraform-aws-components](https://github.com/cloudposse/terraform-aws-components) repository for more examples of how to use a mixture of modules to enhance monitors, slos, and synthetics with inheritence and templating!
 
-include:
-  - "docs/targets.md"
-  - "docs/terraform.md"
-
-# Contributors to this project
+include: []
 contributors: []
