@@ -3,7 +3,7 @@
 <!-- markdownlint-disable -->
 <a href="https://cpco.io/homepage"><img src="https://github.com/cloudposse/terraform-datadog-platform/blob/main/.github/banner.png?raw=true" alt="Project Banner"/></a><br/>
     <p align="right">
-<a href="https://github.com/cloudposse/terraform-datadog-platform/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-datadog-platform.svg?style=for-the-badge" alt="Latest Release"/></a><a href="https://github.com/cloudposse/terraform-datadog-platform/commits"><img src="https://img.shields.io/github/last-commit/cloudposse/terraform-datadog-platform.svg?style=for-the-badge" alt="Last Updated"/></a><a href="https://slack.cloudposse.com"><img src="https://slack.cloudposse.com/for-the-badge.svg" alt="Slack Community"/></a></p>
+<a href="https://github.com/cloudposse/terraform-datadog-platform/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-datadog-platform.svg?style=for-the-badge" alt="Latest Release"/></a><a href="https://github.com/cloudposse/terraform-datadog-platform/commits"><img src="https://img.shields.io/github/last-commit/cloudposse/terraform-datadog-platform.svg?style=for-the-badge" alt="Last Updated"/></a><a href="https://cloudposse.com/slack"><img src="https://slack.cloudposse.com/for-the-badge.svg" alt="Slack Community"/></a></p>
 <!-- markdownlint-restore -->
 
 <!--
@@ -88,7 +88,6 @@ The [examples/organization_settings](examples/organization_settings) shows how t
 
 
 ## Usage
-
 
 Provision Datadog monitors from the catalog of YAML definitions:
 
@@ -233,18 +232,6 @@ Also checkout our [terraform-aws-components](https://github.com/cloudposse/terra
 
 
 <!-- markdownlint-disable -->
-## Makefile Targets
-```text
-Available targets:
-
-  help                                Help screen
-  help/all                            Display help for all targets
-  help/short                          This help short screen
-  lint                                Lint terraform code
-
-```
-<!-- markdownlint-restore -->
-<!-- markdownlint-disable -->
 ## Requirements
 
 | Name | Version |
@@ -305,6 +292,11 @@ Available targets:
 | <a name="output_datadog_monitor_names"></a> [datadog\_monitor\_names](#output\_datadog\_monitor\_names) | Names of the created Datadog monitors |
 | <a name="output_datadog_monitors"></a> [datadog\_monitors](#output\_datadog\_monitors) | Datadog monitor outputs |
 <!-- markdownlint-restore -->
+
+
+
+
+
 
 
 ## Related Projects
