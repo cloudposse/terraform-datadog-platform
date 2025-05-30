@@ -32,6 +32,11 @@ resource "datadog_synthetics_test" "default" {
   status = each.value.status
   type   = each.value.type
 
+  # Ignore not supported properties
+  lifecycle {
+    ignore_changes = [ request_basicauth ]
+  }
+
   # Optional
 
   ######## Beginning of API step ########
