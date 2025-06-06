@@ -139,6 +139,7 @@ resource "datadog_synthetics_test" "default" {
           # headers is in a separate `request_headers` block below
           host = lookup(req.value, "host", null)
           # httpVersion input is missing from all documentation, but seen in API output
+          http_version = lookup(req.value, "http_version", lookup(req.value, "httpVersion", null))
           message = lookup(req.value, "message", null)
           # metadata input is missing.
           # See https://github.com/DataDog/terraform-provider-datadog/issues/2155
@@ -456,8 +457,10 @@ resource "datadog_synthetics_test" "default" {
       # follow_redirects          = lookup(req.value, "follow_redirects", null)
       # headers is in a separate `request_headers` block below
       host = lookup(req.value, "host", null)
-      # httpVersion input is missing from all documentation, but seen in API output
-      message = lookup(req.value, "message", null)
+      # httpVersion input is missing from all documentation, but seen in API output.
+      http_version = lookup(req.value, "http_version", lookup(req.value, "httpVersion", null)) # options_list isn't respected yet as of 2025-04-15
+      
+      message      = lookup(req.value, "message", null)
       # metadata input is missing.
       # See https://github.com/DataDog/terraform-provider-datadog/issues/2155
       method                  = lookup(req.value, "method", null)
