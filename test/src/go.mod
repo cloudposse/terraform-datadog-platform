@@ -1,6 +1,8 @@
 module github.com/cloudposse/terraform-datadog-platform
 
-go 1.21
+go 1.24
+
+toolchain go1.24.0
 
 require (
 	// Known security flaws in terratest dependencies prior to v0.40.15
