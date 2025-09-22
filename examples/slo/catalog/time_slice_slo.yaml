@@ -1,0 +1,43 @@
+time_slice-slo:
+  name: "(SLO) Test API p95 latency Checks"
+  type: time_slice
+  description: |
+    Test API p95 latency should be less than 1 second.
+  sli_specification:
+    time_slice:
+      query:
+        formula: "query1 + query2"
+        queries:
+          - data_source: "metrics"
+            name: "query1"
+            query: "p95:trace.express.request{env:production,resource_name:get_/api/test,service:my-service}"
+          - data_source: "metrics"
+            name: "query2"
+            query: "p95:trace.express.request{env:production,resource_name:get_/api/test,service:my-service}"
+      comparator: "<="
+      threshold: 1
+      query_interval_seconds: 300
+  thresholds:
+    - target: 99.0
+      timeframe: "30d"
+      warning: 99.5
+
+  error_budget_alert:
+    enabled: true
+    threshold: 80
+    timeframe: "30d"
+    priority: 2
+    message: "Alert on 80% of error budget consumed"
+
+  burn_rate_alert:
+    enabled: true
+    threshold: 3
+    timeframe: "30d"
+    long_window: "24h"
+    short_window: "120m"
+    priority: 2
+    message: "Burn rate is high enough to deplete error budget in one day"
+
+  tags:
+    service: my-service
+    env: production
