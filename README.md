@@ -58,9 +58,9 @@ __Notes on Datadog child organizations:__
 ## Sponsorship
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://cloudposse.com/images/partners/datadog-white.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://cloudposse.com/images/partners/datadog-purple.svg">
-  <img alt="Datadog" src="https://cloudposse.com/images/partners/datadog-purple.svg" align="right" width="40%">
+  <source media="(prefers-color-scheme: dark)" srcset="https://cloudposse.com/images/partners/datadog-white.svg"/>
+  <source media="(prefers-color-scheme: light)" srcset="https://cloudposse.com/images/partners/datadog-purple.svg"/>
+  <img alt="Datadog" src="https://cloudposse.com/images/partners/datadog-purple.svg" align="right" width="40%"/>
 </picture>
 
 
