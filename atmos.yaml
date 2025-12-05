@@ -10,3 +10,162 @@
 # Import shared configuration used by all modules
 import:
   - https://raw.githubusercontent.com/cloudposse/.github/refs/heads/main/.github/atmos/terraform-module.yaml
+
+docs:
+  generate:
+    readme-submodule-child-organization:
+      base-dir: ./
+      input:
+        - readme: "./modules/child_organization/README.md"
+        - get_support: true
+      template: "https://raw.githubusercontent.com/cloudposse/.github/refs/heads/main/atmos.README.md.submodule.gotmpl"
+      output: "./modules/child_organization/README.md"
+      terraform:
+        source: ./modules/child_organization
+        enabled: true
+        format: "markdown table"
+        show_providers: false
+        show_inputs: true
+        show_outputs: true
+        sort_by: "name"
+        hide_empty: false
+        indent_level: 2
+
+    readme-submodule-monitors:
+      base-dir: ./
+      input:
+        - readme: "./modules/monitors/README.md"
+        - get_support: true
+      template: "https://raw.githubusercontent.com/cloudposse/.github/refs/heads/main/atmos.README.md.submodule.gotmpl"
+      output: "./modules/monitors/README.md"
+      terraform:
+        source: ./modules/monitors
+        enabled: true
+        format: "markdown table"
+        show_providers: false
+        show_inputs: true
+        show_outputs: true
+        sort_by: "name"
+        hide_empty: false
+        indent_level: 2
+
+    readme-submodule-organization-settings:
+      base-dir: ./
+      input:
+        - readme: "./modules/organization_settings/README.md"
+        - get_support: true
+      template: "https://raw.githubusercontent.com/cloudposse/.github/refs/heads/main/atmos.README.md.submodule.gotmpl"
+      output: "./modules/organization_settings/README.md"
+      terraform:
+        source: ./modules/organization_settings
+        enabled: true
+        format: "markdown table"
+        show_providers: false
+        show_inputs: true
+        show_outputs: true
+        sort_by: "name"
+        hide_empty: false
+        indent_level: 2
+
+    readme-submodule-permissions:
+      base-dir: ./
+      input:
+        - readme: "./modules/permissions/README.md"
+        - get_support: true
+      template: "https://raw.githubusercontent.com/cloudposse/.github/refs/heads/main/atmos.README.md.submodule.gotmpl"
+      output: "./modules/permissions/README.md"
+      terraform:
+        source: ./modules/permissions
+        enabled: true
+        format: "markdown table"
+        show_providers: false
+        show_inputs: true
+        show_outputs: true
+        sort_by: "name"
+        hide_empty: false
+        indent_level: 2
+
+    readme-submodule-roles:
+      base-dir: ./
+      input:
+        - readme: "./modules/roles/README.md"
+        - get_support: true
+      template: "https://raw.githubusercontent.com/cloudposse/.github/refs/heads/main/atmos.README.md.submodule.gotmpl"
+      output: "./modules/roles/README.md"
+      terraform:
+        source: ./modules/roles
+        enabled: true
+        format: "markdown table"
+        show_providers: false
+        show_inputs: true
+        show_outputs: true
+        sort_by: "name"
+        hide_empty: false
+        indent_level: 2
+
+    readme-submodule-slo:
+      base-dir: ./
+      input:
+        - readme: "./modules/slo/README.md"
+        - get_support: true
+      template: "https://raw.githubusercontent.com/cloudposse/.github/refs/heads/main/atmos.README.md.submodule.gotmpl"
+      output: "./modules/slo/README.md"
+      terraform:
+        source: ./modules/slo
+        enabled: true
+        format: "markdown table"
+        show_providers: false
+        show_inputs: true
+        show_outputs: true
+        sort_by: "name"
+        hide_empty: false
+        indent_level: 2
+
+    readme-submodule-synthetics:
+      base-dir: ./
+      input:
+        - readme: "./modules/synthetics/README.md"
+        - get_support: true
+      template: "https://raw.githubusercontent.com/cloudposse/.github/refs/heads/main/atmos.README.md.submodule.gotmpl"
+      output: "./modules/synthetics/README.md"
+      terraform:
+        source: ./modules/synthetics
+        enabled: true
+        format: "markdown table"
+        show_providers: false
+        show_inputs: true
+        show_outputs: true
+        sort_by: "name"
+        hide_empty: false
+        indent_level: 2
+
+commands:
+- name: readme
+  steps:
+    - "atmos docs generate readme"
+    - "atmos docs generate readme-submodule-child-organization"
+    - "atmos docs generate readme-submodule-monitors"
+    - "atmos docs generate readme-submodule-organization-settings"
+    - "atmos docs generate readme-submodule-permissions"
+    - "atmos docs generate readme-submodule-roles"
+    - "atmos docs generate readme-submodule-slo"
+    - "atmos docs generate readme-submodule-synthetics"
+
+- name: test
+  commands:
+  - name: "init"
+    description: Initialize tests
+    steps:
+      - "make -C test/src init"
+
+  - name: "run"
+    description: Run tests
+    steps:
+      - "cd test/src && go mod tidy"
+      - "cd test/src && go test -v -timeout 60m"
+
+  - name: "clean"
+    description: Clean tests
+    steps:
+      - "make -C test/src clean"
+      - "rm -rf examples/*/.terraform examples/*/.terraform.lock.hcl"

@@ -108,6 +108,7 @@ The [examples/organization_settings](examples/organization_settings) shows how t
 
 ## Usage
 
+
 Provision Datadog monitors from the catalog of YAML definitions:
 
 ```hcl
