@@ -18,6 +18,9 @@ part of the Datadog API schema. These are:
   the Terraform plan phase.
 - `enabled` (boolean): If false, the monitor will not be created. This is to 
   allow you to suppress a monitor created through merging configuration snippets.
+- `draft_status` (string): When set to `draft` the monitor will be created but does not send
+  notifications. If not set or set to `published`, the monitor will be created and will send 
+  notifications.
 
 ### Tags
 
