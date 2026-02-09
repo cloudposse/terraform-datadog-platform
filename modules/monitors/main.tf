@@ -23,6 +23,9 @@ resource "datadog_monitor" "default" {
   # Use `locked`` only if present and `restricted_roles` is not provided.
   locked = try(var.restricted_roles_map[each.key], try(each.value.restricted_roles, null)) == null ? try(each.value.options.locked, null) : null
 
+  # Allow publishing Monitors as drafts for evaluation
+  draft_status = try(each.value.draft_status, null)
+
   # Setting tags is complicated and moved to the bottom of this resource.
 
   ##### Attributes under `options` in the API model ####
