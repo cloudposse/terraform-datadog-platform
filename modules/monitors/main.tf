@@ -19,10 +19,6 @@ resource "datadog_monitor" "default" {
   # If `restricted_roles` is present var map, it takes precedence over the setting in the monitor definition.
   restricted_roles = try(var.restricted_roles_map[each.key], try(each.value.restricted_roles, null))
 
-  # `restricted_roles` conflicts with `locked`, which is deprecated.
-  # Use `locked`` only if present and `restricted_roles` is not provided.
-  locked = try(var.restricted_roles_map[each.key], try(each.value.restricted_roles, null)) == null ? try(each.value.options.locked, null) : null
-
   # Allow publishing Monitors as drafts for evaluation
   draft_status = try(each.value.draft_status, null)
 

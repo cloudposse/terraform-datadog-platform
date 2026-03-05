@@ -23,7 +23,6 @@ amq-cpu-utilization:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -65,7 +64,6 @@ amq-heap-usage:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -104,7 +102,6 @@ amq-network-in:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 900
@@ -145,7 +142,6 @@ amq-network-out:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 900
@@ -186,7 +182,6 @@ amq-current-connections-count:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 900
