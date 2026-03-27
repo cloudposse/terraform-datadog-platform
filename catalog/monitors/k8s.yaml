@@ -18,7 +18,6 @@ k8s-deployment-replica-pod-down:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 0
   timeout_h: 0
   evaluation_delay: 60
@@ -50,7 +49,6 @@ k8s-pod-restarting:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 0
   timeout_h: 0
   evaluation_delay: 60
@@ -83,7 +81,6 @@ k8s-statefulset-replica-down:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 0
   timeout_h: 0
   evaluation_delay: 60
@@ -116,7 +113,6 @@ k8s-daemonset-pod-down:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 0
   timeout_h: 0
   evaluation_delay: 60
@@ -148,7 +144,6 @@ k8s-crashloopBackOff:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 0
   timeout_h: 0
   evaluation_delay: 60
@@ -180,7 +175,6 @@ k8s-multiple-pods-failing:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 0
   timeout_h: 0
   evaluation_delay: 60
@@ -213,7 +207,6 @@ k8s-unavailable-deployment-replica:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -250,7 +243,6 @@ k8s-unavailable-statefulset-replica:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -287,7 +279,6 @@ k8s-node-status-unschedulable:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -324,7 +315,6 @@ k8s-imagepullbackoff:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -361,7 +351,6 @@ k8s-high-cpu-usage:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -398,7 +387,6 @@ k8s-high-disk-usage:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -440,7 +428,6 @@ k8s-high-memory-usage:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -482,7 +469,6 @@ k8s-high-filesystem-usage:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -524,7 +510,6 @@ k8s-network-tx-errors:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -566,7 +551,6 @@ k8s-network-rx-errors:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -603,7 +587,6 @@ k8s-node-not-ready:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -640,7 +623,6 @@ k8s-kube-api-down:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -677,7 +659,6 @@ k8s-increased-pod-crash:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -717,7 +698,6 @@ k8s-hpa-errors:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -755,7 +735,6 @@ k8s-pending-pods:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60

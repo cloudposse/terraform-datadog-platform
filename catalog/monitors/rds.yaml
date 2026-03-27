@@ -23,7 +23,6 @@ rds-cpuutilization:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -65,7 +64,6 @@ rds-disk-queue-depth:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -107,7 +105,6 @@ rds-freeable-memory:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -149,7 +146,6 @@ rds-swap-usage:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -191,7 +187,6 @@ rds-database-connections:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60

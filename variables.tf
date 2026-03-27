@@ -17,7 +17,6 @@ variable "datadog_monitors" {
     enable_logs_sample  = bool
     include_tags        = bool
     require_full_window = bool
-    locked              = bool
     force_delete        = bool
     threshold_windows   = map(any)
     thresholds          = map(any)

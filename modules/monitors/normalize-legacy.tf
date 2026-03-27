@@ -19,7 +19,6 @@ locals {
     "evaluation_delay",
     "groupby_simple_monitor",
     "include_tags",
-    "locked",
     "new_group_delay",
     "new_host_delay",
     "no_data_timeframe",

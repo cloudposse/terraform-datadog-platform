@@ -20,7 +20,6 @@ redshift-health-status:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -59,7 +58,6 @@ redshift-database-connections:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -103,7 +101,6 @@ redshift-cpuutilization:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -145,7 +142,6 @@ redshift-write-latency:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -187,7 +183,6 @@ redshift-disk-space-used:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -226,7 +221,6 @@ redshift-network-receive:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -267,7 +261,6 @@ redshift-network-transmit:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -308,7 +301,6 @@ redshift-read-throughput:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
@@ -349,7 +341,6 @@ redshift-write-throughput:
   enable_logs_sample: false
   force_delete: true
   include_tags: true
-  locked: false
   renotify_interval: 60
   timeout_h: 0
   evaluation_delay: 60
