@@ -111,9 +111,10 @@ resource "datadog_monitor" "default" {
     for_each = try(length(tolist(each.value.options.variables)), 0) > 0 ? ["variables"] : []
     content {
       # The JSON `variables` attribute is a list of objects,
-      # but in Terraform the list is expressed as repeated `event_query` blocks under `variables`.
+      # but in Terraform the list is expressed as repeated typed query blocks (`event_query`,
+      # `data_quality_query`) under `variables`. The `data_source` of each entry selects the block type.
       dynamic "event_query" {
-        for_each = each.value.options.variables
+        for_each = [for v in each.value.options.variables : v if try(v.data_source, null) != "data_quality_metrics"]
         iterator = query
         content {
           compute {
@@ -151,6 +152,71 @@ resource "datadog_monitor" "default" {
           }
         }
       } # event_query
+
+      dynamic "data_quality_query" {
+        for_each = [for v in each.value.options.variables : v if try(v.data_source, null) == "data_quality_metrics"]
+        iterator = query
+        content {
+          data_source    = query.value.data_source
+          name           = query.value.name
+          measure        = query.value.measure
+          filter         = query.value.filter
+          group_by       = try(query.value.group_by, null)
+          schema_version = try(query.value.schema_version, null)
+          scope          = try(query.value.scope, null)
+
+          dynamic "monitor_options" {
+            for_each = try([query.value.monitor_options], [])
+            iterator = mo
+            content {
+              crontab_override    = try(mo.value.crontab_override, null)
+              custom_sql          = try(mo.value.custom_sql, null)
+              custom_where        = try(mo.value.custom_where, null)
+              group_by_columns    = try(mo.value.group_by_columns, null)
+              model_type_override = try(mo.value.model_type_override, null)
+              sensitivity         = try(mo.value.sensitivity, null)
+
+              dynamic "model_configuration" {
+                for_each = try([mo.value.model_configuration], [])
+                iterator = mc
+                content {
+                  auto_resolve_days         = try(mc.value.auto_resolve_days, null)
+                  enable_flatline_detection = try(mc.value.enable_flatline_detection, null)
+                  function                  = try(mc.value.function, null)
+                  min_lower_bound_size      = try(mc.value.min_lower_bound_size, null)
+                  min_upper_bound_size      = try(mc.value.min_upper_bound_size, null)
+                  model_bounds_override     = try(mc.value.model_bounds_override, null)
+                }
+              } # model_configuration
+
+              dynamic "source_to_target_config" {
+                for_each = try([mo.value.source_to_target_config], [])
+                iterator = st
+                content {
+                  diff_type   = st.value.diff_type
+                  entity_type = st.value.entity_type
+
+                  source {
+                    entity_id        = st.value.source.entity_id
+                    entity_type      = st.value.source.entity_type
+                    custom_sql       = try(st.value.source.custom_sql, null)
+                    custom_where     = try(st.value.source.custom_where, null)
+                    group_by_columns = try(st.value.source.group_by_columns, null)
+                  }
+
+                  target {
+                    entity_id        = st.value.target.entity_id
+                    entity_type      = st.value.target.entity_type
+                    custom_sql       = try(st.value.target.custom_sql, null)
+                    custom_where     = try(st.value.target.custom_where, null)
+                    group_by_columns = try(st.value.target.group_by_columns, null)
+                  }
+                }
+              } # source_to_target_config
+            }
+          } # monitor_options
+        }
+      } # data_quality_query
     }
   } # variables
 

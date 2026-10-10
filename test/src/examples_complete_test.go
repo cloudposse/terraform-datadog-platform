@@ -129,6 +129,15 @@ func TestExamplesComplete(t *testing.T) {
 				assert.Equal(t, "status:error", queryMap["query2"])
 			}
 		}
+
+		// check for data quality queries
+		key = "data-quality-test"
+		if assert.Contains(t, output, key, fmt.Sprintf("Did not find monitor with key '%s' in output", key)) {
+			measure, err2 := extractDataQualityMeasure(output[key])
+			if assert.NoError(t, err2, fmt.Sprintf("Extracting data quality query from Monitor '%s' failed", key)) {
+				assert.Equal(t, "row_count", measure)
+			}
+		}
 	}
 }
 
@@ -238,6 +247,28 @@ func extractFormulaQueries(value interface{}) (result map[string]string, err err
 	}
 
 	return result, nil
+}
+
+// Extracts the measure of the first data quality query from the output
+// In JSON, the queries are at `options.variables[]`, but in the output they are at `variables[].data_quality_query[]`
+func extractDataQualityMeasure(value interface{}) (result string, err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			// A panic occurred, almost certainly due to a type assertion failure
+			result = ""
+			err = errors.New("unable to find data quality query in output")
+		}
+	}()
+
+	queries, ok := value.(map[string]interface{})["variables"].([]interface{})[0].(map[string]interface{})["data_quality_query"].([]interface{})
+	if !ok || len(queries) == 0 {
+		return "", errors.New("data_quality_query list not found or empty")
+	}
+	measure, ok := queries[0].(map[string]interface{})["measure"].(string)
+	if !ok {
+		return "", errors.New("measure not found or not a string")
+	}
+	return measure, nil
 }
 
 func TestExamplesCompleteDisabled(t *testing.T) {

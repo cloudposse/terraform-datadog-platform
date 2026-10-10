@@ -1,0 +1,35 @@
+{
+  "name": "data-quality-test",
+  "type": "data-quality alert",
+  "query": "formula(\"query1\").last(\"30m\") < 1",
+  "message": "Test of data quality monitors",
+  "tags": [
+    "test:examplemonitor",
+    "env:ci"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 1
+    },
+    "notify_no_data": false,
+    "require_full_window": false,
+    "variables": [
+      {
+        "data_source": "data_quality_metrics",
+        "name": "query1",
+        "measure": "row_count",
+        "filter": "search for database_table where `schema:example AND name:orders`",
+        "group_by": [
+          "entity_id",
+          "table",
+          "schema",
+          "database"
+        ],
+        "monitor_options": {
+          "custom_where": "created_at > now() - interval '1' day"
+        }
+      }
+    ]
+  },
+  "priority": 5
+}

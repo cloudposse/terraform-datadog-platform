@@ -103,6 +103,19 @@ relevant point is that this module will accept the monitor definition in this
 schema. Any field in the API schema that does not have a counterpart in the
 Terraform schema will be ignored.
 
+#### Formula and function queries (`options.variables`)
+
+Monitors that use formula and function queries (for example `formula("query1").last("30m") > 1`)
+define their queries in `options.variables`, a list of objects. The `data_source` of each entry
+selects the type of query block created in the Terraform resource:
+
+- `data_quality_metrics`: a Data Observability [`data_quality_query`](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor#nested-schema-for-variablesdata_quality_query)
+  (for monitors of type `data-quality alert`). Supports `name`, `measure`, `filter`, `group_by`,
+  `schema_version`, `scope` and `monitor_options` (including `model_configuration` and `source_to_target_config`).
+- any other value (such as `events` or `logs`): an `event_query`.
+
+See [data-quality-test.json](../../examples/complete/monitors-test/data-quality-test.json) for an example.
+
 #### Special Notes
 
 The `alert_tags` input is provided for convenience. It is used to add notification
