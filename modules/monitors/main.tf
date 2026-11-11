@@ -22,6 +22,17 @@ resource "datadog_monitor" "default" {
   # Allow publishing Monitors as drafts for evaluation
   draft_status = try(each.value.draft_status, null)
 
+  dynamic "assets" {
+    for_each = try(each.value.assets, [])
+    content {
+      category      = assets.value.category
+      name          = assets.value.name
+      url           = assets.value.url
+      resource_key  = try(assets.value.resource_key, null)
+      resource_type = try(assets.value.resource_type, null)
+    }
+  }
+
   # Setting tags is complicated and moved to the bottom of this resource.
 
   ##### Attributes under `options` in the API model ####

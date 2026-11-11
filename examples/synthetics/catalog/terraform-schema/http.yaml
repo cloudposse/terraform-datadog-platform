@@ -6,7 +6,8 @@ simple:
   tags:
     ManagedBy: Terraform
   locations:
-    - "all"
+    - "aws:us-east-2"
+    - "aws:us-west-2"
   status: "paused"
   request_definition:
     url: "https://cloudposse.com"

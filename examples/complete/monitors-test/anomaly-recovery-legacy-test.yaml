@@ -23,3 +23,7 @@ anomaly-recovery-legacy-test:
   new_host_delay: 300
   priority: 5
   restricted_roles: null
+  assets:
+    - category: runbook
+      name: Anomaly recovery runbook
+      url: https://docs.cloudposse.com
